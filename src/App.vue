@@ -2,7 +2,7 @@
   <div id="app">
     <div class="justify-content-center">
       <router-view name="header"/>
-      <fade-transition origin="center" mode="out-in" :duration="400">
+      <fade-transition origin="center" mode="out-in" :duration="200">
         <router-view/>
       </fade-transition>
       <router-view name="footer"/>
