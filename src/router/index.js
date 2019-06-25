@@ -4,6 +4,7 @@ const Header = () => import("../components/Header.vue");
 const Footer = () => import("../components/Footer.vue");
 const Main = () => import("../components/Main.vue");
 const Product = () => import("../components/Product.vue");
+const Customer = () => import("../components/Customer.vue");
 Vue.use(Router);
 
 export default new Router({
@@ -23,6 +24,15 @@ export default new Router({
       components: {
         header: Header,
         default: Product,
+        footer: Footer
+      }
+    },
+    {
+      path: "/Customer",
+      name: "Customer",
+      components: {
+        header: Header,
+        default: Customer,
         footer: Footer
       }
     }
