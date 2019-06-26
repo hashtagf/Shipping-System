@@ -128,7 +128,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(this.form);
+      //console.log(this.form);
       productFirestore.add({
         name: this.form.name,
         price: this.form.price,
@@ -138,6 +138,7 @@ export default {
         sign: this.form.sign,
         import: this.form.import
       });
+      event.target.reset();
     }
   },
   mounted() {
