@@ -13,15 +13,26 @@
 
     <b-form @submit.prevent="onSubmit">
       <b-row>
-        <b-col cols="6">
+        <b-col cols="12">
           <b-form-group id="customer" label="ลูกค้า" label-for="customer">
             <b-form-select v-model="customer" :options="optionCustomer" required>
               <option :value="null" slot="first">เลือกลูกค้า</option>
             </b-form-select>
           </b-form-group>
         </b-col>
-        <b-col cols="6" class="my-auto">
-          <b-button variant="primary" v-b-modal.addProduct block>เพิ่มสินค้า</b-button>
+        <b-col cols="12" class="my-auto" style="height:500px;">
+          <b-row style="height: 450px" class="table-responsive">
+            <b-col cols="12">
+              <table class="table">
+                <thead>
+                  <th>รายการสินค้า</th>
+                  <th>จำนวน</th>
+                  <th>ราคา</th>
+                </thead>
+              </table>
+            </b-col>
+          </b-row>
+          <b-button variant="primary" v-b-modal.addProduct block style="bottom: 0;">เพิ่มสินค้า</b-button>
         </b-col>
         <b-modal id="addProduct" title="เพิ่มสินค้า" size="xl">
           <b-row>
@@ -64,18 +75,7 @@
           </b-row>
         </b-modal>
 
-        <b-col cols="3">
-          <b-form-group id="count" label="จำนวน" label-for="count">
-            <b-form-input
-              id="count"
-              v-model="form.count"
-              type="number"
-              required
-              placeholder="จำนวน"
-            ></b-form-input>
-          </b-form-group>
-        </b-col>
-        <b-col cols="3">
+        <b-col cols="12">
           <b-form-group id="rateTHB" label="ค่าเงินไทย" label-for="rateTHB">
             <b-form-input
               id="rateTHB"
@@ -88,23 +88,6 @@
             ></b-form-input>
           </b-form-group>
         </b-col>
-        <b-col cols="6">
-          <b-form-group id="sign" label="เซ็นรับ" label-for="sign">
-            <b-form-input id="sign" v-model="form.sign" type="text" required placeholder="เซ็นรับ"></b-form-input>
-          </b-form-group>
-        </b-col>
-        <b-col cols="6">
-          <b-form-group id="import" label="เข้าโกดังไทย" label-for="import">
-            <b-form-input
-              id="import"
-              v-model="form.import"
-              type="text"
-              required
-              placeholder="เข้าโกดังไทย"
-            ></b-form-input>
-          </b-form-group>
-        </b-col>
-        <b-col cols="6"></b-col>
         <b-col cols="6">
           <b-button type="submit" variant="primary">เพิ่มสินค้า</b-button>
         </b-col>
