@@ -13,11 +13,9 @@
 
     <b-form @submit.prevent="onSubmit">
       <b-row>
-
-        <b-col cols="6">
-          
-            <b-form-group id="name" label="ชื่อสินค้า" label-for="name">
-              <b-input-group prepend="ชื่อสินค้า" class="">
+        <b-col cols="12">
+          <b-form-group id="name" label="ชื่อสินค้า" label-for="name">
+            <b-input-group prepend="ชื่อสินค้า" class>
               <b-form-input
                 id="name"
                 v-model="form.name"
@@ -25,12 +23,11 @@
                 required
                 placeholder="ชือสินค้า"
               ></b-form-input>
-               </b-input-group>
-            </b-form-group>
-         
+            </b-input-group>
+          </b-form-group>
         </b-col>
 
-        <b-col cols="6">
+        <b-col cols="3">
           <b-form-group id="price" label="ราคาขาย" label-for="price">
             <b-form-input
               id="price"
@@ -42,7 +39,7 @@
           </b-form-group>
         </b-col>
 
-        <b-col cols="6">
+        <b-col cols="3">
           <b-form-group id="cost" label="ราคาต้นทุน" label-for="cost">
             <b-form-input
               id="cost"
@@ -55,18 +52,22 @@
         </b-col>
 
         <b-col cols="6">
-          <b-form-group id="type" label="ประเภทสินค้า" label-for="type">
-            <b-form-input
-              id="type"
-              v-model="form.type"
-              type="text"
-              required
-              placeholder="ประเภทสินค้า"
-            ></b-form-input>
-          </b-form-group>
+          <label class="typo__label">คุณสมบัติ</label>
+          <multiselect
+            class
+            v-model="form.properties"
+            tag-placeholder="Add this as new tag"
+            placeholder="Search or add a tag"
+            label="name"
+            track-by="code"
+            :options="options"
+            :multiple="true"
+            :taggable="true"
+            @tag="addTag"
+          ></multiselect>
         </b-col>
 
-        <b-col cols="6">
+        <b-col cols="4">
           <b-form-group id="export" label="ร้านส่งออก" label-for="export">
             <b-form-input
               id="export"
@@ -78,19 +79,13 @@
           </b-form-group>
         </b-col>
 
-        <b-col cols="6">
+        <b-col cols="4">
           <b-form-group id="sign" label="เซ็นรับ" label-for="sign">
-            <b-form-input
-              id="sign"
-              v-model="form.sign"
-              type="text"
-              required
-              placeholder="เซ็นรับ"
-            ></b-form-input>
+            <b-form-input id="sign" v-model="form.sign" type="text" required placeholder="เซ็นรับ"></b-form-input>
           </b-form-group>
         </b-col>
 
-        <b-col cols="6">
+        <b-col cols="4">
           <b-form-group id="import" label="เข้าโกดังไทย" label-for="import">
             <b-form-input
               id="import"
@@ -101,8 +96,6 @@
             ></b-form-input>
           </b-form-group>
         </b-col>
-        <b-col cols="6"></b-col>
-
 
         <b-col cols="6">
           <b-button type="submit" variant="primary">เพิ่มสินค้า</b-button>
@@ -110,24 +103,12 @@
         <b-col cols="6">
           <b-button type="reset" variant="danger">ยกเลิก</b-button>
         </b-col>
-
-        <b-col cols="6">
-          <label class="typo__label">คุณสมบัติ</label>
-          <multiselect v-model="form.tag" tag-placeholder="Add this as new tag" placeholder="Search or add a tag" label="name" track-by="code" :options="options" :multiple="true" :taggable="true" @tag="addTag"></multiselect>
-          <!-- <pre class="language-json"><code>{{ value  }}</code></pre>       showdata -->
-        </b-col>
-
-    
-
-  
-        
       </b-row>
     </b-form>
-
   </b-container>
 </template>
 <script>
-import Multiselect from 'vue-multiselect';
+import Multiselect from "vue-multiselect";
 //Vue.component('multiselect', Multiselect);
 import firebase from "firebase";
 var productFirestore = firebase.firestore().collection("Products");
@@ -139,11 +120,11 @@ export default {
   data() {
     return {
       showData: [],
-      form: {},
-      value: [
-      ],
-      options: [
-      ]
+      form: {
+        properties: []
+      },
+      value: [],
+      options: [{ name: "ดำ", code: "black" }, { name: "ขาว", code: "white" }]
     };
   },
   methods: {
@@ -153,20 +134,20 @@ export default {
         name: this.form.name,
         price: this.form.price,
         cost: this.form.cost,
-        type: this.form.type,
+        properties: this.form.properties,
         export: this.form.export,
         sign: this.form.sign,
         import: this.form.import
       });
       event.target.reset();
     },
-    addTag (newTag) {
+    addTag(newTag) {
       const tag = {
         name: newTag,
-        code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
-      }
-      this.options.push(tag)
-      this.value.push(tag)
+        code: Date.now()
+      };
+      this.options.push(tag);
+      this.form.properties.push(tag);
     }
   },
   mounted() {
@@ -178,7 +159,6 @@ export default {
     });
   }
 };
-
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style lang="scss" scoped>
