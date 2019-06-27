@@ -56,8 +56,8 @@
           <multiselect
             class
             v-model="form.properties"
-            tag-placeholder="Add this as new tag"
-            placeholder="Search or add a tag"
+            tag-placeholder="Press enter to select"
+            placeholder="เพิ่มรายการ"
             label="name"
             track-by="code"
             :options="options"

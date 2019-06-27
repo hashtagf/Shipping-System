@@ -12,50 +12,56 @@
     </b-row>
     <b-form @submit.prevent="onSubmit">
       <b-row>
-        <b-col cols="6">
-          <b-form-group id="name" label="ชื่อสินค้า" label-for="name">
+
+        <b-col cols="4">
+          <b-form-group id="nickname" label="ชื่อเล่น" label-for="nickname">
             <b-form-input
-              id="name"
-              v-model="form.name"
+              id="nickname"
+              v-model="form.nickname"
               type="text"
               required
-              placeholder="ชือสินค้า"
+              placeholder="ชื่อเล่น"
             ></b-form-input>
           </b-form-group>
         </b-col>
-        <b-col cols="6">
-          <b-form-group id="name" label="ชื่อสินค้า" label-for="name">
+
+        <b-col cols="4">
+          <b-form-group id="fullname" label="ชื่อ-นามสกุล" label-for="fullname">
             <b-form-input
-              id="name"
-              v-model="form.price"
+              id="fullname"
+              v-model="form.fullname"
               type="text"
               required
-              placeholder="ชือสินค้า"
+              placeholder="ชื่อ-นามสกุล"
             ></b-form-input>
           </b-form-group>
         </b-col>
-        <b-col cols="6">
-          <b-form-group id="name" label="ชื่อสินค้า" label-for="name">
+        <b-col cols="4">
+          <b-form-group id="tel" label="เบอร์โทรศัพท์" label-for="tel">
             <b-form-input
-              id="name"
-              v-model="form.name"
-              type="text"
+              id="tel"
+              v-model="form.tel"
+              type="tel"
               required
-              placeholder="ชือสินค้า"
+              placeholder="เบอร์โทรศัพท์"
             ></b-form-input>
           </b-form-group>
         </b-col>
-        <b-col cols="6">
-          <b-form-group id="name" label="ชื่อสินค้า" label-for="name">
-            <b-form-input
-              id="name"
-              v-model="form.name"
+
+
+
+        <b-col cols="12">
+          <b-form-group id="address" label="ที่อยู่" label-for="address">
+            <b-form-textarea
+              id="address"
+              v-model="form.address"
               type="text"
               required
-              placeholder="ชือสินค้า"
-            ></b-form-input>
+              placeholder="ที่อยู่"
+            ></b-form-textarea>
           </b-form-group>
         </b-col>
+
         <b-col cols="6"></b-col>
         <b-col cols="6"></b-col>
         <b-col cols="6">
@@ -71,7 +77,7 @@
 
 <script>
 import firebase from "firebase";
-var productFirestore = firebase.firestore().collection("Products");
+var productFirestore = firebase.firestore().collection("Customers");
 export default {
   name: "Product",
   data() {
@@ -84,8 +90,11 @@ export default {
     onSubmit() {
       console.log(this.form);
       productFirestore.add({
-        name: this.form.name,
-        price: "wdsdasad"
+        nickname: this.form.nickname,
+        fullname: this.form.fullname,
+        tel: this.form.tel,
+        address: this.form.address
+
       });
     }
   },
