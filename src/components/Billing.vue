@@ -21,14 +21,25 @@
           </b-form-group>
         </b-col>
         <b-col cols="12" class="my-auto" style="height:500px;">
-          <b-row style="height: 450px" class="table-responsive">
+          <b-row style="height: 450px" class="table-responsive mb-2">
             <b-col cols="12">
               <table class="table">
                 <thead>
                   <th>รายการสินค้า</th>
                   <th>จำนวน</th>
                   <th>ราคา</th>
+                  <th>จัดการสินค้า</th>
                 </thead>
+                <tbody>
+                  <tr v-for="(val , index) in cart" :key="index">
+                    <td>{{val.product.name}}</td>
+                    <td>{{val.count}}</td>
+                    <td>{{val.count * val.product.price}}</td>
+                    <td>
+                      <b-button variant="danger" block @click="delCart(index)">ลบสินค้า</b-button>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </b-col>
           </b-row>
@@ -46,14 +57,23 @@
                   <th>เลือกสินค้า</th>
                 </thead>
                 <tbody>
-                  <tr v-for="(val, index) in product" :key="val.id">
+                  <tr v-for="(val) in product" :key="val.id">
                     <td>{{val.data.name}}</td>
-                    <td></td>
+                    <td>
+                      <b-form-select v-model="form.properties" required>
+                        <option :value="null" selected slot="first">เลือกคุณสมบัติ</option>
+                        <option
+                          v-for="prop in val.data.properties"
+                          :key="prop.name"
+                          :value="prop.name"
+                        >{{prop.name}}</option>
+                      </b-form-select>
+                    </td>
                     <td>
                       ราคาขาย
                       <b>{{val.data.price}}</b> CNY
                       <br>ราคาต้นทุน
-                      <b>{{val.data.price}}</b> CNY
+                      <b>{{val.data.cost}}</b> CNY
                     </td>
                     <td>
                       <b-form-input
@@ -65,7 +85,10 @@
                       ></b-form-input>
                     </td>
                     <td>
-                      <b-button variant="primary">เพิ่มสินค้า</b-button>
+                      <b-button
+                        variant="primary"
+                        @click="addCart(form, val.id, val.data)"
+                      >เพิ่มสินค้า</b-button>
                     </td>
                   </tr>
                 </tbody>
@@ -108,12 +131,12 @@ export default {
   data() {
     return {
       showData: [],
-      form: {},
+      form: [],
       customer: null,
       optionCustomer: [],
       product: [],
-      properties: null,
-      optionProperties: []
+      optionProperties: [],
+      cart: []
     };
   },
   watch: {
@@ -132,6 +155,18 @@ export default {
         import: this.form.import
       });
       event.target.reset();
+    },
+    addCart(payload, key, data) {
+      this.cart.push({
+        count: payload.count,
+        properties: payload.properties,
+        id: key,
+        product: data
+      });
+      console.log(this.cart);
+    },
+    delCart(index) {
+      this.cart.splice(index, 1);
     }
   },
   mounted() {
