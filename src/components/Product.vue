@@ -15,15 +15,19 @@
       <b-row>
 
         <b-col cols="6">
-          <b-form-group id="name" label="ชื่อสินค้า" label-for="name">
-            <b-form-input
-              id="name"
-              v-model="form.name"
-              type="text"
-              required
-              placeholder="ชือสินค้า"
-            ></b-form-input>
-          </b-form-group>
+          
+            <b-form-group id="name" label="ชื่อสินค้า" label-for="name">
+              <b-input-group prepend="ชื่อสินค้า" class="">
+              <b-form-input
+                id="name"
+                v-model="form.name"
+                type="text"
+                required
+                placeholder="ชือสินค้า"
+              ></b-form-input>
+               </b-input-group>
+            </b-form-group>
+         
         </b-col>
 
         <b-col cols="6">
@@ -31,7 +35,7 @@
             <b-form-input
               id="price"
               v-model="form.price"
-              type="text"
+              type="number"
               required
               placeholder="ราคาขาย"
             ></b-form-input>
@@ -43,7 +47,7 @@
             <b-form-input
               id="cost"
               v-model="form.cost"
-              type="text"
+              type="number"
               required
               placeholder="ราคาทุน"
             ></b-form-input>
@@ -107,23 +111,39 @@
           <b-button type="reset" variant="danger">ยกเลิก</b-button>
         </b-col>
 
-        
+        <b-col cols="6">
+          <label class="typo__label">คุณสมบัติ</label>
+          <multiselect v-model="form.tag" tag-placeholder="Add this as new tag" placeholder="Search or add a tag" label="name" track-by="code" :options="options" :multiple="true" :taggable="true" @tag="addTag"></multiselect>
+          <!-- <pre class="language-json"><code>{{ value  }}</code></pre>       showdata -->
+        </b-col>
 
+    
+
+  
+        
       </b-row>
     </b-form>
 
   </b-container>
 </template>
-
 <script>
+import Multiselect from 'vue-multiselect';
+//Vue.component('multiselect', Multiselect);
 import firebase from "firebase";
 var productFirestore = firebase.firestore().collection("Products");
 export default {
   name: "Product",
+  components: {
+    Multiselect
+  },
   data() {
     return {
       showData: [],
-      form: {}
+      form: {},
+      value: [
+      ],
+      options: [
+      ]
     };
   },
   methods: {
@@ -139,6 +159,14 @@ export default {
         import: this.form.import
       });
       event.target.reset();
+    },
+    addTag (newTag) {
+      const tag = {
+        name: newTag,
+        code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
+      }
+      this.options.push(tag)
+      this.value.push(tag)
     }
   },
   mounted() {
@@ -150,7 +178,8 @@ export default {
     });
   }
 };
-</script>
 
+</script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style lang="scss" scoped>
 </style>
