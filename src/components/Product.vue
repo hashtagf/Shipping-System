@@ -113,6 +113,9 @@
         <b-col cols="12"><br></b-col>
       </b-row>
 
+      <b-col cols="12">
+        <h3>รายการสินค้า</h3>
+      </b-col>
       <table class="table">
         <thead>
           <tr>

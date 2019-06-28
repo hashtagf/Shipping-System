@@ -13,6 +13,7 @@
     <b-form @submit.prevent="onSubmit">
       <b-row>
 
+        <b-col cols="12"><br></b-col>
         <b-col cols="4">
           <b-form-group id="nickname" label="ชื่อเล่น" label-for="nickname">
             <b-form-input
@@ -49,7 +50,7 @@
         </b-col>
 
 
-
+        <b-col cols="12"><br></b-col>
         <b-col cols="12">
           <b-form-group id="address" label="ที่อยู่" label-for="address">
             <b-form-textarea
@@ -62,8 +63,7 @@
           </b-form-group>
         </b-col>
 
-        <b-col cols="6"></b-col>
-        <b-col cols="6"></b-col>
+        <b-col cols="12"><br></b-col>
         <b-col cols="6">
           <b-button type="submit" variant="primary">เพิ่มสินค้า</b-button>
         </b-col>
@@ -71,6 +71,33 @@
           <b-button type="reset" variant="danger">ยกเลิก</b-button>
         </b-col>
       </b-row>
+      <b-col cols="12"><br></b-col>
+
+      <b-col cols="12">
+        <h3>รายชื่อลูกค้า</h3>
+      </b-col>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ชื่อเล่น</th>
+            <th scope="col">ชื่อ-นามสกุล</th>
+            <th scope="col">โทรศัพท์</th>
+            <th scope="col">คุณสมบัติ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(val) in showData" :key="val.id">
+            <td>{{val.data.nickname}}</td>
+            <td>{{val.data.fullname}}</td>
+            <td>{{val.data.tel}}</td>
+            <td>{{val.data.address}}</td>
+
+          </tr>
+
+        </tbody>
+      </table>
+
+
     </b-form>
   </b-container>
 </template>
@@ -101,7 +128,9 @@ export default {
   mounted() {
     productFirestore.onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
-        this.showData.push({ data: doc.data(), id: doc.id });
+        this.showData.push({ 
+          data: doc.data(), 
+          id: doc.id });
       });
       console.log(this.showData);
     });
