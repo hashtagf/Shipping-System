@@ -47,7 +47,7 @@
         </b-col>
         <b-modal id="addProduct" title="เพิ่มสินค้า" size="xl">
           <b-row>
-            <b-col cols="9" class="table-responsive">
+            <b-col cols="12" class="table-responsive">
               <table class="table">
                 <thead>
                   <th>ชือสินค้า</th>
@@ -57,10 +57,10 @@
                   <th>เลือกสินค้า</th>
                 </thead>
                 <tbody>
-                  <tr v-for="(val) in product" :key="val.id">
+                  <tr v-for="(val, index) in product" :key="val.id">
                     <td>{{val.data.name}}</td>
                     <td>
-                      <b-form-select v-model="form.properties" required>
+                      <b-form-select v-model="properties[index]" required>
                         <option :value="null" selected slot="first">เลือกคุณสมบัติ</option>
                         <option
                           v-for="prop in val.data.properties"
@@ -78,7 +78,7 @@
                     <td>
                       <b-form-input
                         id="count"
-                        v-model="form.count"
+                        v-model="count[index]"
                         type="number"
                         required
                         placeholder="จำนวน"
@@ -87,14 +87,13 @@
                     <td>
                       <b-button
                         variant="primary"
-                        @click="addCart(form, val.id, val.data)"
+                        @click="addCart(form, val.id, val.data, index)"
                       >เพิ่มสินค้า</b-button>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </b-col>
-            <b-col cols="3"></b-col>
           </b-row>
         </b-modal>
 
@@ -112,7 +111,7 @@
           </b-form-group>
         </b-col>
         <b-col cols="6">
-          <b-button type="submit" variant="primary">เพิ่มสินค้า</b-button>
+          <b-button type="submit" variant="primary">เพิ่มบิล</b-button>
         </b-col>
         <b-col cols="6">
           <b-button type="reset" variant="danger">ยกเลิก</b-button>
@@ -124,6 +123,7 @@
 
 <script>
 import firebase from "firebase";
+var billingFirestore = firebase.firestore().collection("Billings");
 var productFirestore = firebase.firestore().collection("Products");
 var customerFirestore = firebase.firestore().collection("Customers");
 export default {
@@ -136,7 +136,9 @@ export default {
       optionCustomer: [],
       product: [],
       optionProperties: [],
-      cart: []
+      cart: [],
+      properties: [],
+      count: []
     };
   },
   watch: {
@@ -145,28 +147,52 @@ export default {
   methods: {
     onSubmit() {
       //console.log(this.form);
-      productFirestore.add({
-        name: this.form.name,
-        price: this.form.price,
-        cost: this.form.cost,
-        type: this.form.type,
-        export: this.form.export,
-        sign: this.form.sign,
-        import: this.form.import
+      billingFirestore.add({ billiing: this.cart });
+      this.$swal({
+        title: "สำเร็จ",
+        text: "เพิ่มลงตระกร้าสินค้าแล้ว",
+        type: "success",
+        timer: 2000
       });
+      this.cart = [];
       event.target.reset();
     },
-    addCart(payload, key, data) {
+    addCart(payload, key, data, index) {
       this.cart.push({
-        count: payload.count,
-        properties: payload.properties,
+        count: this.count[index],
+        properties: this.properties[index],
         id: key,
         product: data
       });
       console.log(this.cart);
+      this.count[index] = null;
+      this.properties[index] = null;
+      this.$swal({
+        title: "สำเร็จ",
+        text: "เพิ่มลงตระกร้าสินค้าแล้ว",
+        type: "success",
+        timer: 2000
+      });
     },
     delCart(index) {
-      this.cart.splice(index, 1);
+      this.$swal({
+        title: "ต้องการลบสินค้าออกจากบิล ?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "ลบออกจากบิล!"
+      }).then(result => {
+        if (result.value) {
+          this.cart.splice(index, 1);
+          this.$swal({
+            title: "สำเร็จ",
+            text: "ลบออกจารบิลสำเร็จ",
+            type: "success",
+            timer: 2000
+          });
+        }
+      });
     }
   },
   mounted() {
@@ -182,7 +208,7 @@ export default {
     customerFirestore.onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
         this.optionCustomer.push({
-          text: doc.data().name,
+          text: doc.data().nickname,
           value: doc.id,
           data: doc.data()
         });
