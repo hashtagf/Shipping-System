@@ -2,12 +2,12 @@
   <b-container class="Product">
     <b-row>
       <b-col cols="12">
-        <h3>จัดการสินค้า</h3>
+        <h3>จัดการข้อมูลลูกค้า</h3>
       </b-col>
     </b-row>
     <b-row>
       <b-col cols="12" class="text-left">
-        <h4>เพิ่มข้อมูลสินค้า</h4>
+        <h4>เพิ่มข้อมูลลูกค้า</h4>
       </b-col>
     </b-row>
     <b-form @submit.prevent="onSubmit">
