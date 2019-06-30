@@ -155,6 +155,8 @@ export default {
         timer: 2000
       });
       this.cart = [];
+      this.form = [];
+      this.customer = null;
       event.target.reset();
     },
     addCart(payload, key, data, index) {
