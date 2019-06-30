@@ -12,8 +12,9 @@
     </b-row>
     <b-form @submit.prevent="onSubmit">
       <b-row>
-
-        <b-col cols="12"><br></b-col>
+        <b-col cols="12">
+          <br>
+        </b-col>
         <b-col cols="4">
           <b-form-group id="nickname" label="ชื่อเล่น" label-for="nickname">
             <b-form-input
@@ -49,8 +50,9 @@
           </b-form-group>
         </b-col>
 
-
-        <b-col cols="12"><br></b-col>
+        <b-col cols="12">
+          <br>
+        </b-col>
         <b-col cols="12">
           <b-form-group id="address" label="ที่อยู่" label-for="address">
             <b-form-textarea
@@ -63,7 +65,9 @@
           </b-form-group>
         </b-col>
 
-        <b-col cols="12"><br></b-col>
+        <b-col cols="12">
+          <br>
+        </b-col>
         <b-col cols="6">
           <b-button type="submit" variant="primary">เพิ่มสินค้า</b-button>
         </b-col>
@@ -71,7 +75,9 @@
           <b-button type="reset" variant="danger">ยกเลิก</b-button>
         </b-col>
       </b-row>
-      <b-col cols="12"><br></b-col>
+      <b-col cols="12">
+        <br>
+      </b-col>
 
       <b-col cols="12">
         <h3>รายชื่อลูกค้า</h3>
@@ -91,13 +97,9 @@
             <td>{{val.data.fullname}}</td>
             <td>{{val.data.tel}}</td>
             <td>{{val.data.address}}</td>
-
           </tr>
-
         </tbody>
       </table>
-
-
     </b-form>
   </b-container>
 </template>
@@ -115,22 +117,23 @@ export default {
   },
   methods: {
     onSubmit() {
+      this.showData = [];
       console.log(this.form);
       productFirestore.add({
         nickname: this.form.nickname,
         fullname: this.form.fullname,
         tel: this.form.tel,
         address: this.form.address
-
       });
     }
   },
   mounted() {
     productFirestore.onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
-        this.showData.push({ 
-          data: doc.data(), 
-          id: doc.id });
+        this.showData.push({
+          data: doc.data(),
+          id: doc.id
+        });
       });
       console.log(this.showData);
     });

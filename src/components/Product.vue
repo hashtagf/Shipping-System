@@ -26,7 +26,9 @@
             </b-input-group>
           </b-form-group>
         </b-col>
-        <b-col cols="12"><br></b-col>
+        <b-col cols="12">
+          <br>
+        </b-col>
 
         <b-col cols="3">
           <b-form-group id="price" label="ราคาขาย" label-for="price">
@@ -68,7 +70,9 @@
           ></multiselect>
         </b-col>
 
-        <b-col cols="12"><br></b-col>
+        <b-col cols="12">
+          <br>
+        </b-col>
 
         <b-col cols="4">
           <b-form-group id="export" label="ร้านส่งออก" label-for="export">
@@ -99,8 +103,9 @@
             ></b-form-input>
           </b-form-group>
         </b-col>
-        <b-col cols="12"><br></b-col>
-
+        <b-col cols="12">
+          <br>
+        </b-col>
 
         <b-col cols="6">
           <b-button type="submit" variant="primary">เพิ่มสินค้า</b-button>
@@ -108,9 +113,15 @@
         <b-col cols="6">
           <b-button type="reset" variant="danger">ยกเลิก</b-button>
         </b-col>
-        <b-col cols="12"><br></b-col>
-        <b-col cols="12"><br></b-col>
-        <b-col cols="12"><br></b-col>
+        <b-col cols="12">
+          <br>
+        </b-col>
+        <b-col cols="12">
+          <br>
+        </b-col>
+        <b-col cols="12">
+          <br>
+        </b-col>
       </b-row>
 
       <b-col cols="12">
@@ -134,23 +145,19 @@
             <td>{{val.data.cost}}</td>
             <td>{{val.data.price}}</td>
             <td>
-              <label v-for="prop in val.data.properties"
-                    :key="prop.name"
-                    :value="prop.name">
-                {{prop.name}} &nbsp;&nbsp; 
-              </label>
+              <label
+                v-for="prop in val.data.properties"
+                :key="prop.name"
+                :value="prop.name"
+              >{{prop.name}} &nbsp;&nbsp;</label>
             </td>
             <td>{{val.data.export}}</td>
             <td>{{val.data.import}}</td>
             <td>{{val.data.sign}}</td>
           </tr>
-
         </tbody>
       </table>
-
-
     </b-form>
-   
   </b-container>
 </template>
 <script>
@@ -173,11 +180,11 @@ export default {
       options: [{ name: "ดำ", code: "black" }, { name: "ขาว", code: "white" }],
       product: []
     };
-
   },
   methods: {
     onSubmit() {
       //console.log(this.form);
+      this.showData = [];
       productFirestore.add({
         name: this.form.name,
         price: this.form.price,
@@ -201,11 +208,12 @@ export default {
   mounted() {
     productFirestore.onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
-        this.showData.push({ 
-          data: doc.data(), 
-          id: doc.id });
+        this.showData.push({
+          data: doc.data(),
+          id: doc.id
+        });
       });
-      
+
       console.log(this.showData);
     });
   }
