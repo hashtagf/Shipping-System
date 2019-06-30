@@ -147,7 +147,10 @@ export default {
   methods: {
     onSubmit() {
       //console.log(this.form);
-      billingFirestore.add({ billiing: this.cart });
+      billingFirestore.add({
+        billiing: this.cart,
+        timestamp: Date.now()
+      });
       this.$swal({
         title: "สำเร็จ",
         text: "เพิ่มลงตระกร้าสินค้าแล้ว",
