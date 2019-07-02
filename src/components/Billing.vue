@@ -1,27 +1,21 @@
 <template>
   <b-container class="Billing">
-    <b-row>
+    <b-row class="mb-5">
       <b-col cols="12">
         <h3>จัดการบิล</h3>
       </b-col>
     </b-row>
-    <b-row>
-      <b-col cols="12" class="text-left">
-        <h4>ออกบิล</h4>
-      </b-col>
-    </b-row>
-
     <b-form @submit.prevent="onSubmit">
       <b-row>
         <b-col cols="12">
-          <b-form-group id="customer" label="ลูกค้า" label-for="customer">
+          <b-form-group id="customer" label label-for="customer">
             <b-form-select v-model="customer" :options="optionCustomer" required>
               <option :value="null" slot="first">เลือกลูกค้า</option>
             </b-form-select>
           </b-form-group>
         </b-col>
-        <b-col cols="12" class="my-auto" style="height:500px;">
-          <b-row style="height: 450px" class="table-responsive mb-2">
+        <b-col cols="12" class="my-auto" style="height:550px;">
+          <b-row style="height: 500px" class="table-responsive mb-2">
             <b-col cols="12">
               <table class="table">
                 <thead>
@@ -43,11 +37,11 @@
               </table>
             </b-col>
           </b-row>
-          <b-button variant="primary" v-b-modal.addProduct block style="bottom: 0;">เพิ่มสินค้า</b-button>
+          <b-button variant="info" v-b-modal.addProduct block style="bottom: 0;">เพิ่มสินค้า</b-button>
         </b-col>
         <b-modal id="addProduct" title="เพิ่มสินค้า" size="xl">
           <b-row>
-            <b-col cols="12" class="table-responsive">
+            <b-col cols="12" class="table-responsive" style="height:700px;">
               <table class="table">
                 <thead>
                   <th>ชือสินค้า</th>
@@ -61,7 +55,7 @@
                     <td>{{val.data.name}}</td>
                     <td>
                       <b-form-select v-model="properties[index]" required>
-                        <option :value="null" selected slot="first">เลือกคุณสมบัติ</option>
+                        <option :value="undefined" selected slot="first">เลือกคุณสมบัติ</option>
                         <option
                           v-for="prop in val.data.properties"
                           :key="prop.name"
@@ -88,7 +82,7 @@
                       <b-button
                         variant="primary"
                         @click="addCart(val.id, val.data, index)"
-                      >เพิ่มสินค้า</b-button>
+                      >เลือกสินค้า</b-button>
                     </td>
                   </tr>
                 </tbody>
@@ -96,9 +90,21 @@
             </b-col>
           </b-row>
         </b-modal>
-
-        <b-col cols="6">
-          <b-form-group id="rateTHBprice" label="ค่าเงินไทยฝั่งขาย" label-for="rateTHBprice">
+        <b-col cols="4">
+          <b-form-group id="shipping" label="ค่าขนส่งในจีน" label-for="shipping">
+            <b-form-input
+              id="shipping"
+              v-model="form.shipping"
+              type="number"
+              step="0.01"
+              min="0"
+              required
+              placeholder="ค่าขนส่งในจีน"
+            ></b-form-input>
+          </b-form-group>
+        </b-col>
+        <b-col cols="4">
+          <b-form-group id="rateTHBprice" label="ค่าเงินไทยฝั่งลูกค้า" label-for="rateTHBprice">
             <b-form-input
               id="rateTHBprice"
               v-model="form.rateTHBprice"
@@ -110,7 +116,7 @@
             ></b-form-input>
           </b-form-group>
         </b-col>
-        <b-col cols="6">
+        <b-col cols="4">
           <b-form-group id="rateTHBcost" label="ค่าเงินไทยฝั่งต้นทุน" label-for="rateTHBcost">
             <b-form-input
               id="rateTHBcost"
@@ -124,10 +130,10 @@
           </b-form-group>
         </b-col>
         <b-col cols="6">
-          <b-button type="submit" variant="primary">เพิ่มบิล</b-button>
+          <b-button type="submit" variant="primary" block>เพิ่มบิล</b-button>
         </b-col>
         <b-col cols="6">
-          <b-button type="reset" variant="danger">ยกเลิก</b-button>
+          <b-button type="reset" variant="danger" block>ยกเลิก</b-button>
         </b-col>
       </b-row>
     </b-form>
@@ -169,6 +175,7 @@ export default {
         billing: this.cart,
         timestamp: Date.now(),
         customer: this.customer,
+        shipping: this.form.shipping,
         rateTHBprice: this.form.rateTHBprice,
         rateTHBcost: this.form.rateTHBcost,
         total: this.total
