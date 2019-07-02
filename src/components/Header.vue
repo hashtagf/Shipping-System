@@ -6,7 +6,7 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item to="/">บิลลูกค้า</b-nav-item>
-          <b-nav-item to="/Billing">จัดการบิล</b-nav-item>
+          <b-nav-item to="/Billing">เปิดบิล</b-nav-item>
           <b-nav-item-dropdown text="จัดการข้อมูล" left>
             <b-dropdown-item to="/Product">สินค้า</b-dropdown-item>
             <b-dropdown-item to="/Customer">ลูกค้า</b-dropdown-item>

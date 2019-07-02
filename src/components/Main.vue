@@ -1,7 +1,12 @@
 <template>
   <div class="Main justify-content-center row">
-    <div class="col-10 text-left my-3">
+    <div class="col-7 text-left my-3">
       <h3>บิลลูกค้า</h3>
+    </div>
+    <div class="col-3 justify-content my-3">
+      <router-link to="/Billing">
+        <vs-button color="primary" type="filled" icon="add_circle">เปิดบิล</vs-button>
+      </router-link>
     </div>
     <table class="table col-10 border table-hover table-bordered">
       <thead class="thead-light">
@@ -54,14 +59,14 @@
               :key="index"
             >{{product.product.price}}</div>
           </td>
-          <th>
+          <td>
             <div
               class="border-bottom"
               v-for="(product,index) in val.data.billing"
               :key="index"
             >{{product.product.price * product.count}}</div>
             <b class="text-primary">{{val.data.total.price}}</b>
-          </th>
+          </td>
           <td>
             <b-button type="submit" size="sm" variant="primary" class="my-auto">จัดการค่าขนส่ง</b-button>
           </td>
@@ -86,6 +91,10 @@ export default {
     CustomerName
   },
   mounted() {
+    this.$vs.loading({
+      type: "sound"
+    });
+
     billingFirestore.orderBy("timestamp", "desc").onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
         this.billing.push({
@@ -93,6 +102,7 @@ export default {
           data: doc.data()
         });
       });
+      this.$vs.loading.close();
     });
   }
 };

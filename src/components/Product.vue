@@ -27,7 +27,7 @@
           </b-form-group>
         </b-col>
         <b-col cols="12">
-          <br>
+          <br />
         </b-col>
 
         <b-col cols="3">
@@ -71,7 +71,7 @@
         </b-col>
 
         <b-col cols="12">
-          <br>
+          <br />
         </b-col>
 
         <b-col cols="4">
@@ -104,7 +104,7 @@
           </b-form-group>
         </b-col>
         <b-col cols="12">
-          <br>
+          <br />
         </b-col>
 
         <b-col cols="6">
@@ -114,13 +114,13 @@
           <b-button type="reset" variant="danger">ยกเลิก</b-button>
         </b-col>
         <b-col cols="12">
-          <br>
+          <br />
         </b-col>
         <b-col cols="12">
-          <br>
+          <br />
         </b-col>
         <b-col cols="12">
-          <br>
+          <br />
         </b-col>
       </b-row>
 
@@ -206,6 +206,10 @@ export default {
     }
   },
   mounted() {
+    this.$vs.loading({
+      type: "sound"
+    });
+
     productFirestore.onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
         this.showData.push({
@@ -213,7 +217,7 @@ export default {
           id: doc.id
         });
       });
-
+      this.$vs.loading.close();
       console.log(this.showData);
     });
   }

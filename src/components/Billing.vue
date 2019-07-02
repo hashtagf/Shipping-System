@@ -2,7 +2,7 @@
   <b-container class="Billing">
     <b-row class="mb-5">
       <b-col cols="12">
-        <h3>จัดการบิล</h3>
+        <h3>เปิดบิล</h3>
       </b-col>
     </b-row>
     <b-form @submit.prevent="onSubmit">

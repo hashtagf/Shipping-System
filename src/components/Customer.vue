@@ -130,6 +130,10 @@ export default {
     }
   },
   mounted() {
+    this.$vs.loading({
+      type: "sound"
+    });
+
     customerFirestore.onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
         this.showData.push({
@@ -137,6 +141,7 @@ export default {
           id: doc.id
         });
       });
+      this.$vs.loading.close();
       console.log(this.showData);
     });
   }

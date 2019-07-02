@@ -8,7 +8,11 @@ import VueSweetalert2 from "vue-sweetalert2";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import BootstrapVue from "bootstrap-vue";
+import "material-icons/iconfont/material-icons.css";
+import Vuesax from "vuesax";
 
+import "vuesax/dist/vuesax.css"; //Vuesax styles
+Vue.use(Vuesax);
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
 Vue.use(VueSweetalert2);
