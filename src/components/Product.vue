@@ -210,9 +210,10 @@ export default {
 
         console.log(val.id);
         //productFirestore.child(val.id).remove();
+        productFirestore.doc(val.id).delete();
 
-        productFirestore.remove({
-        });
+        // productFirestore.remove({
+        // });
         
         
   
