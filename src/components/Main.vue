@@ -19,6 +19,7 @@
           <th scope="col">จำนวน</th>
           <th scope="col">ราคา</th>
           <th scope="col">รวมราคา</th>
+          <th scope="col">รวมราคา (THB)</th>
           <th scope="col">จัดการบิล</th>
         </tr>
       </thead>
@@ -65,10 +66,23 @@
               v-for="(product,index) in val.data.billing"
               :key="index"
             >{{product.product.price * product.count}}</div>
-            <b class="text-primary">{{val.data.total.price}}</b>
+            <b
+              class="text-primary"
+            >{{new Intl.NumberFormat({ style: 'currency'}).format(val.data.total.price)}}</b>
           </td>
           <td>
-            <b-button type="submit" size="sm" variant="primary" class="my-auto">จัดการค่าขนส่ง</b-button>
+            <b
+              class="text-success"
+            >{{new Intl.NumberFormat({ style: 'currency'}).format(val.data.total.price * val.data.rateTHBprice)}}</b>
+          </td>
+          <td>
+            <b-button
+              type="submit"
+              size="sm"
+              variant="primary"
+              class="my-auto"
+              :to="'/Shipping/' + val.id"
+            >จัดการค่าขนส่ง</b-button>
           </td>
         </tr>
       </tbody>
@@ -90,6 +104,7 @@ export default {
   components: {
     CustomerName
   },
+  methods: {},
   mounted() {
     this.$vs.loading({
       type: "sound"
