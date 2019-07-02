@@ -87,7 +87,7 @@
                     <td>
                       <b-button
                         variant="primary"
-                        @click="addCart(form, val.id, val.data, index)"
+                        @click="addCart(val.id, val.data, index)"
                       >เพิ่มสินค้า</b-button>
                     </td>
                   </tr>
@@ -151,7 +151,12 @@ export default {
       optionProperties: [],
       cart: [],
       properties: [],
-      count: []
+      count: [],
+      total: {
+        count: 0,
+        price: 0,
+        cost: 0
+      }
     };
   },
   watch: {
@@ -165,7 +170,8 @@ export default {
         timestamp: Date.now(),
         customer: this.customer,
         rateTHBprice: this.form.rateTHBprice,
-        rateTHBcost: this.form.rateTHBcost
+        rateTHBcost: this.form.rateTHBcost,
+        total: this.total
       });
       this.$swal({
         title: "สำเร็จ",
@@ -178,13 +184,16 @@ export default {
       this.customer = null;
       event.target.reset();
     },
-    addCart(payload, key, data, index) {
+    addCart(key, data, index) {
       this.cart.push({
         count: this.count[index],
         properties: this.properties[index],
         id: key,
         product: data
       });
+      this.total.count += parseInt(this.count[index]);
+      this.total.price += parseFloat(data.price) * parseInt(this.count[index]);
+      this.total.cost += parseFloat(data.cost) * parseInt(this.count[index]);
       console.log(this.cart);
       this.count[index] = null;
       this.properties[index] = null;

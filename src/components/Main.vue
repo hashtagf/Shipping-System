@@ -22,31 +22,57 @@
           <td>{{val.data.timestamp | moment("DD/MM/Y")}}</td>
           <td>{{val.data.customer}}</td>
           <td>
-            <div v-for="(product,index) in val.data.billing" :key="index">{{product.product.name}}</div>
+            <div
+              class="border-bottom"
+              v-for="(product,index) in val.data.billing"
+              :key="index"
+            >{{product.product.name}}</div>
           </td>
           <td>
-            <div v-for="(product,index)  in val.data.billing" :key="index">{{product.properties}}</div>
+            <div
+              class="border-bottom"
+              v-for="(product,index)  in val.data.billing"
+              :key="index"
+            >{{product.properties}}</div>
+            <b class="text-primary">{{"รวม"}}</b>
           </td>
           <td>
-            <div v-for="(product,index)  in val.data.billing" :key="index">{{product.count}}</div>
+            <div
+              class="border-bottom"
+              v-for="(product,index)  in val.data.billing"
+              :key="index"
+            >{{product.count}}</div>
+            <b class="text-primary">{{val.data.total.count}}</b>
           </td>
           <td>
-            <div v-for="(product,index)  in val.data.billing" :key="index">{{product.product.price}}</div>
+            <div
+              class="border-bottom"
+              v-for="(product,index)  in val.data.billing"
+              :key="index"
+            >{{product.product.price}}</div>
           </td>
           <td>
-            <div v-for="(product,index)  in val.data.billing" :key="index">{{product.product.cost}}</div>
+            <div
+              class="border-bottom"
+              v-for="(product,index)  in val.data.billing"
+              :key="index"
+            >{{product.product.cost}}</div>
           </td>
           <th>
             <div
+              class="border-bottom"
               v-for="(product,index) in val.data.billing"
               :key="index"
             >{{product.product.price* product.count}}</div>
+            <b class="text-primary">{{val.data.total.price}}</b>
           </th>
           <th>
             <div
+              class="border-bottom"
               v-for="(product,index) in val.data.billing"
               :key="index"
             >{{product.product.cost* product.count}}</div>
+            <b class="text-primary">{{val.data.total.cost}}</b>
           </th>
           <td>
             <b-button type="submit" size="sm" variant="primary" class="my-auto">จัดการค่าขนส่ง</b-button>
