@@ -1,5 +1,8 @@
 <template>
   <div class="Main justify-content-center row">
+    <div class="col-10 text-left my-3">
+      <h3>บิลลูกค้า</h3>
+    </div>
     <table class="table col-10 border table-hover table-bordered">
       <thead class="thead-light">
         <tr>
@@ -20,7 +23,9 @@
         <tr v-for="(val, index) in billing" :key="val.id">
           <th scope="row">{{index+1}}</th>
           <td>{{val.data.timestamp | moment("DD/MM/Y")}}</td>
-          <td>{{val.data.customer}}</td>
+          <td>
+            <customer-name :idCustomer="val.data.customer" />
+          </td>
           <td>
             <div
               class="border-bottom"
@@ -85,6 +90,7 @@
 
 <script>
 import firebase from "firebase";
+import CustomerName from "../getdatabase/CustomerName.vue";
 var billingFirestore = firebase.firestore().collection("Billings");
 export default {
   name: "Billing",
@@ -92,6 +98,9 @@ export default {
     return {
       billing: []
     };
+  },
+  components: {
+    CustomerName
   },
   mounted() {
     billingFirestore.orderBy("timestamp", "desc").onSnapshot(querySnapshot => {
@@ -101,7 +110,6 @@ export default {
           data: doc.data()
         });
       });
-      console.log(this.billing);
     });
   }
 };

@@ -13,7 +13,7 @@
     <b-form @submit.prevent="onSubmit">
       <b-row>
         <b-col cols="12">
-          <br>
+          <br />
         </b-col>
         <b-col cols="4">
           <b-form-group id="nickname" label="ชื่อเล่น" label-for="nickname">
@@ -51,7 +51,7 @@
         </b-col>
 
         <b-col cols="12">
-          <br>
+          <br />
         </b-col>
         <b-col cols="12">
           <b-form-group id="address" label="ที่อยู่" label-for="address">
@@ -66,7 +66,7 @@
         </b-col>
 
         <b-col cols="12">
-          <br>
+          <br />
         </b-col>
         <b-col cols="6">
           <b-button type="submit" variant="primary">เพิ่มสินค้า</b-button>
@@ -76,7 +76,7 @@
         </b-col>
       </b-row>
       <b-col cols="12">
-        <br>
+        <br />
       </b-col>
 
       <b-col cols="12">
@@ -106,7 +106,8 @@
 
 <script>
 import firebase from "firebase";
-var productFirestore = firebase.firestore().collection("Customers");
+var customerFirestore = firebase.firestore().collection("Customers");
+
 export default {
   name: "Product",
   data() {
@@ -115,11 +116,12 @@ export default {
       form: {}
     };
   },
+
   methods: {
     onSubmit() {
       this.showData = [];
       console.log(this.form);
-      productFirestore.add({
+      customerFirestore.add({
         nickname: this.form.nickname,
         fullname: this.form.fullname,
         tel: this.form.tel,
@@ -128,7 +130,7 @@ export default {
     }
   },
   mounted() {
-    productFirestore.onSnapshot(querySnapshot => {
+    customerFirestore.onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
         this.showData.push({
           data: doc.data(),
