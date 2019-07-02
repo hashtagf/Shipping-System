@@ -154,6 +154,8 @@
             <td>{{val.data.export}}</td>
             <td>{{val.data.import}}</td>
             <td>{{val.data.sign}}</td>
+            <td><b-button variant="danger"  block @click="delProd(val.id)">ลบสินค้า</b-button> 
+            </td>
           </tr>
         </tbody>
       </table>
@@ -203,6 +205,12 @@ export default {
       };
       this.options.push(tag);
       this.form.properties.push(tag);
+    },
+    delProd(id){
+      console.log(this.product);
+      //productFirestore.child(this.product.key).remove();
+  
+
     }
   },
   mounted() {
