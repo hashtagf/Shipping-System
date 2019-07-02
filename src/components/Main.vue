@@ -1,6 +1,6 @@
 <template>
   <div class="Main justify-content-center row">
-    <table class="table col-10 border table-hover table-striped table-bordered">
+    <table class="table col-10 border table-hover table-bordered">
       <thead class="thead-light">
         <tr>
           <th scope="col">รายการ</th>
