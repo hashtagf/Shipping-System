@@ -72,7 +72,7 @@
                     <td>
                       ราคาขาย
                       <b>{{val.data.price}}</b> CNY
-                      <br>ราคาต้นทุน
+                      <br />ราคาต้นทุน
                       <b>{{val.data.cost}}</b> CNY
                     </td>
                     <td>
@@ -97,11 +97,24 @@
           </b-row>
         </b-modal>
 
-        <b-col cols="12">
-          <b-form-group id="rateTHB" label="ค่าเงินไทย" label-for="rateTHB">
+        <b-col cols="6">
+          <b-form-group id="rateTHBprice" label="ค่าเงินไทยฝั่งขาย" label-for="rateTHBprice">
             <b-form-input
-              id="rateTHB"
-              v-model="form.rateTHB"
+              id="rateTHBprice"
+              v-model="form.rateTHBprice"
+              type="number"
+              step="0.01"
+              min="0"
+              required
+              placeholder="ค่าเงินไทย"
+            ></b-form-input>
+          </b-form-group>
+        </b-col>
+        <b-col cols="6">
+          <b-form-group id="rateTHBcost" label="ค่าเงินไทยฝั่งต้นทุน" label-for="rateTHBcost">
+            <b-form-input
+              id="rateTHBcost"
+              v-model="form.rateTHBcost"
               type="number"
               step="0.01"
               min="0"
@@ -148,12 +161,15 @@ export default {
     onSubmit() {
       //console.log(this.form);
       billingFirestore.add({
-        billiing: this.cart,
-        timestamp: Date.now()
+        billing: this.cart,
+        timestamp: Date.now(),
+        customer: this.customer,
+        rateTHBprice: this.form.rateTHBprice,
+        rateTHBcost: this.form.rateTHBcost
       });
       this.$swal({
         title: "สำเร็จ",
-        text: "เพิ่มลงตระกร้าสินค้าแล้ว",
+        text: "เพิ่มบิลเรียบร้อย",
         type: "success",
         timer: 2000
       });
