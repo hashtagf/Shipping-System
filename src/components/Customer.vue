@@ -97,6 +97,8 @@
             <td>{{val.data.fullname}}</td>
             <td>{{val.data.tel}}</td>
             <td>{{val.data.address}}</td>
+            <td><b-button variant="danger"  block @click="delCustomer(val)">ลบ</b-button> 
+            </td>
           </tr>
         </tbody>
       </table>
@@ -127,6 +129,12 @@ export default {
         tel: this.form.tel,
         address: this.form.address
       });
+    },
+    delCustomer(val){
+      this.showData = [];
+      console.log(val.id);
+        //productFirestore.child(val.id).remove();
+      customerFirestore.doc(val.id).delete();
     }
   },
   mounted() {
