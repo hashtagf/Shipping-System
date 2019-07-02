@@ -48,7 +48,7 @@ export default new Router({
       }
     },
     {
-      path: "/Shipping",
+      path: "/Shipping/:id",
       name: "Shipping",
       components: {
         header: Header,
