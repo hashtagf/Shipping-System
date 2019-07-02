@@ -209,8 +209,12 @@ export default {
     delProd(val){
 
         console.log(val.id);
-        productFirestore.child(val.id).remove();
-        // toastr.success("Product deleted successfully");
+        //productFirestore.child(val.id).remove();
+
+        productFirestore.remove({
+        });
+        
+        
   
 
     }
