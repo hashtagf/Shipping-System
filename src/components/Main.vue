@@ -12,16 +12,14 @@
           <th scope="col">รายการสินค้า</th>
           <th scope="col">คุณสมบัติ</th>
           <th scope="col">จำนวน</th>
-          <th scope="col">ราคาขาย</th>
-          <th scope="col">ราคาต้นทุน</th>
-          <th scope="col">รวมราคาขาย</th>
-          <th scope="col">รวมราคาต้นทุน</th>
+          <th scope="col">ราคา</th>
+          <th scope="col">รวมราคา</th>
           <th scope="col">จัดการบิล</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(val, index) in billing" :key="val.id">
-          <th scope="row">{{index+1}}</th>
+          <th scope="row">{{index + 1}}</th>
           <td>{{val.data.timestamp | moment("DD/MM/Y")}}</td>
           <td>
             <customer-name :idCustomer="val.data.customer" />
@@ -56,28 +54,13 @@
               :key="index"
             >{{product.product.price}}</div>
           </td>
-          <td>
-            <div
-              class="border-bottom"
-              v-for="(product,index)  in val.data.billing"
-              :key="index"
-            >{{product.product.cost}}</div>
-          </td>
           <th>
             <div
               class="border-bottom"
               v-for="(product,index) in val.data.billing"
               :key="index"
-            >{{product.product.price* product.count}}</div>
+            >{{product.product.price * product.count}}</div>
             <b class="text-primary">{{val.data.total.price}}</b>
-          </th>
-          <th>
-            <div
-              class="border-bottom"
-              v-for="(product,index) in val.data.billing"
-              :key="index"
-            >{{product.product.cost* product.count}}</div>
-            <b class="text-primary">{{val.data.total.cost}}</b>
           </th>
           <td>
             <b-button type="submit" size="sm" variant="primary" class="my-auto">จัดการค่าขนส่ง</b-button>
