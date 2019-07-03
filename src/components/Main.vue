@@ -28,7 +28,7 @@
           <th scope="row">{{index + 1}}</th>
           <td>{{val.data.timestamp | moment("DD/MM/Y")}}</td>
           <td>
-            <customer-name :idCustomer="val.data.customer" />
+            <customer-name :idCustomer="val.data.customer.id" />
           </td>
           <td>
             <div
@@ -119,6 +119,7 @@ export default {
       });
       this.$vs.loading.close();
     });
+    console.log(this.billing);
   }
 };
 </script>
