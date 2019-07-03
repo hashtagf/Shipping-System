@@ -10,7 +10,11 @@
           <th scope="col">ต่ำกว่า 1 CBM</th>
           <th scope="col">มากกว่า 1 CBM</th>
         </thead>
+
         <tbody>
+          <tr>
+            <td colspan="6">ขนส่งทางรถ 5 - 7 วัน</td>
+          </tr>
           <tr v-for="(val ,index) in showData" :key="index">
             <td>{{index + 1}}</td>
             <td>{{val.data.name}}</td>
@@ -18,6 +22,18 @@
             <td>{{val.data.car[1]}}</td>
             <td>{{val.data.car[2]}}</td>
             <td>{{val.data.car[3]}}</td>
+          </tr>
+
+          <tr>
+            <td colspan="6">ขนส่งทางเรือ 25-35 วัน</td>
+          </tr>
+          <tr v-for="(val ,index) in showData" :key="index + 10">
+            <td>{{index + 1}}</td>
+            <td>{{val.data.name}}</td>
+            <td>{{val.data.ship[0]}}</td>
+            <td>{{val.data.ship[1]}}</td>
+            <td>{{val.data.ship[2]}}</td>
+            <td>{{val.data.ship[3]}}</td>
           </tr>
         </tbody>
       </table>
