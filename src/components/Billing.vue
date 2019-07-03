@@ -17,20 +17,28 @@
         <b-col cols="12" class="my-auto" style="height:550px;">
           <b-row style="height: 500px" class="table-responsive mb-2">
             <b-col cols="12">
-              <table class="table">
+              <table class="table table-hover table-bordered">
                 <thead>
-                  <th>รายการสินค้า</th>
-                  <th>จำนวน</th>
-                  <th>ราคา</th>
-                  <th>จัดการสินค้า</th>
+                  <th scope="col">#</th>
+                  <th scope="col">รายการสินค้า</th>
+                  <th scope="col">คุณสมบัติ</th>
+                  <th scope="col">จำนวน</th>
+                  <th scope="col">ราคา</th>
+                  <th scope="col">ราคารวม</th>
+                  <th scope="col">จัดการ</th>
                 </thead>
                 <tbody>
                   <tr v-for="(val , index) in cart" :key="index">
+                    <td>{{index+1}}</td>
                     <td>{{val.product.name}}</td>
+                    <td>{{val.properties}}</td>
                     <td>{{val.count}}</td>
-                    <td>{{val.count * val.product.price}}</td>
+                    <td>{{val.product.price}}</td>
                     <td>
-                      <b-button variant="danger" block @click="delCart(index)">ลบสินค้า</b-button>
+                      <strong>{{val.count * val.product.price}}</strong>
+                    </td>
+                    <td width="5%">
+                      <vs-button color="danger" type="filled" icon="delete" @click="delCart(index)"></vs-button>
                     </td>
                   </tr>
                 </tbody>
@@ -174,7 +182,7 @@ export default {
       billingFirestore.add({
         billing: this.cart,
         timestamp: Date.now(),
-        customer: this.customer,
+        customer: customerFirestore.doc(this.customer),
         shipping: this.form.shipping,
         rateTHBprice: this.form.rateTHBprice,
         rateTHBcost: this.form.rateTHBcost,
