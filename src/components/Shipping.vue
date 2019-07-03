@@ -22,15 +22,27 @@
           <b-form-input id="Allweight"  type="number" required placeholder="น้ำหนักรวม"></b-form-input>
         </b-form-group>
       </b-col>
-
-      <b-col cols="12">
-        <br />
-      </b-col>
-      <!-- <b-col cols="12">
-        <b-form-group id="address" label="ที่อยู่" label-for="address">
-          <b-form-textarea id="address" v-model="ฟ" type="text" required placeholder="ที่อยู่"></b-form-textarea>
+      <b-col cols="2">
+        <b-form-group id="amount" label="จำนวนกล่อง" label-for="amount">
+          <b-form-input id="amount"  type="number" required placeholder="จำนวนกล่อง"></b-form-input>
         </b-form-group>
-      </b-col> -->
+      </b-col>
+      <b-col cols="2">
+        <b-form-group id="" label="น้ำหนัก/กล่อง" label-for="" >
+        <b-form-input id="hi"  type="number" required placeholder="น้ำหนักกล่องที่ 1">{{test}}</b-form-input>
+        <b-form-input id=""  type="number" required placeholder="น้ำหนักกล่องที่ 2"></b-form-input>
+        <b-form-input id=""  type="number" required placeholder="น้ำหนักกล่องที่ 3"></b-form-input>
+        <b-form-input id=""  type="number" required placeholder="น้ำหนักกล่องที่ 4"></b-form-input>
+        <b-form-input id=""  type="number" required placeholder="น้ำหนักกล่องที่ 5"></b-form-input>
+        
+        </b-form-group>
+      </b-col>
+
+      <b-col cols="10">
+        <b-form-group id="aaa" label="AAA" label-for="address">
+          <b-form-input id=""  type="text" required placeholder=""></b-form-input> 
+        </b-form-group>
+      </b-col>
     </b-row>
 
     <!-- </div> -->
