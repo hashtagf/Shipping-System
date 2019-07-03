@@ -13,32 +13,24 @@
     </b-row>
     <b-row>
       <b-col cols="4">
-        <b-form-group id="customer" label="เลือกรายชื่อลูกค้า" label-for="customer">
-          <b-form-select v-model="customer" :options="optionCustomer" required>
-            <option :value="null" slot="first">รายชื่อลูกค้า</option>
-          </b-form-select>
-        </b-form-group>
-      </b-col>
-
-      <b-col cols="4">
-        <b-form-group id="fullname" label="ชื่อ-นามสกุล" label-for="fullname">
-          <b-form-input id="fullname" v-model="a" type="text" required placeholder="ชื่อ-นามสกุล"></b-form-input>
+        <b-form-group id="capacity" label="ปริมาตร" label-for="capacity">
+          <b-form-input id="capacity"  type="number" required placeholder="ปริมาตร"></b-form-input>
         </b-form-group>
       </b-col>
       <b-col cols="4">
-        <b-form-group id="tel" label="เบอร์โทรศัพท์" label-for="tel">
-          <b-form-input id="tel" v-model="ผ" type="tel" required placeholder="เบอร์โทรศัพท์"></b-form-input>
+        <b-form-group id="Allweight" label="น้ำหนักรวม" label-for="Allweight">
+          <b-form-input id="Allweight"  type="number" required placeholder="น้ำหนักรวม"></b-form-input>
         </b-form-group>
       </b-col>
 
       <b-col cols="12">
         <br />
       </b-col>
-      <b-col cols="12">
+      <!-- <b-col cols="12">
         <b-form-group id="address" label="ที่อยู่" label-for="address">
           <b-form-textarea id="address" v-model="ฟ" type="text" required placeholder="ที่อยู่"></b-form-textarea>
         </b-form-group>
-      </b-col>
+      </b-col> -->
     </b-row>
 
     <!-- </div> -->
