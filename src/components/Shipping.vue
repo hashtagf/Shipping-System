@@ -1,5 +1,6 @@
 <template>
   <b-container class="Shipping">
+    <b-form @submit.prevent="onSubmit">
     <!-- //<div class="Shipping justify-content-center row"> -->
     <b-row>
       <b-col cols="12">
@@ -70,6 +71,7 @@
     </b-row>
 
     <!-- </div> -->
+    </b-form>
   </b-container>
 </template>
 
@@ -94,11 +96,13 @@ export default {
   methods: {
     onSubmit() {
       console.log("hello submit");
-      billingFirestore.doc(this.$route.params.id).set({
-        capacity: "a",
-        Allweight: "b",
-        amount: "c",
-        box: "d"
+      billingFirestore.doc(this.$route.params.id).add({
+        shipping:{
+          capacity: "a",
+          weight: "b",
+          amount: "c",
+          box: "d"
+        }
       }).then(function() {
         console.log("Document successfully written!");
       })
