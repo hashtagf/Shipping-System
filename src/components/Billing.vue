@@ -179,7 +179,7 @@ export default {
   methods: {
     onSubmit() {
       //console.log(this.form);
-      billingFirestore.add({
+        billingFirestore.add({
         billing: this.cart,
         timestamp: Date.now(),
         customer: customerFirestore.doc(this.customer),
