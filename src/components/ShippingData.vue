@@ -44,7 +44,7 @@ export default {
     this.$vs.loading({
       type: "sound"
     });
-    shippingDataFirestore.orderBy("car").onSnapshot(querySnapshot => {
+    shippingDataFirestore.orderBy("priority").onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
         this.showData.push({
           id: doc.id,
