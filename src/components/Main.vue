@@ -27,9 +27,7 @@
         <tr v-for="(val, index) in billing" :key="val.id">
           <th scope="row">{{index + 1}}</th>
           <td>{{val.data.timestamp | moment("DD/MM/Y")}}</td>
-          <td>
-            <customer-name :idCustomer="val.data.customer.id" />
-          </td>
+          <td v-if="customer[index]">{{customer[index].nickname}}</td>
           <td>
             <div
               class="border-bottom"
@@ -98,7 +96,8 @@ export default {
   name: "Billing",
   data() {
     return {
-      billing: []
+      billing: [],
+      customer: []
     };
   },
   components: {
@@ -116,10 +115,16 @@ export default {
           id: doc.id,
           data: doc.data()
         });
+        doc
+          .data()
+          .customer.get()
+          .then(response => {
+            this.customer.push(response.data());
+          });
       });
       this.$vs.loading.close();
     });
-    console.log(this.billing);
+    console.log(this.customer);
   }
 };
 </script>
