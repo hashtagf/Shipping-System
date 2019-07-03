@@ -12,7 +12,7 @@
       <table class="table border table-hover table-bordered">
         <thead class="thead-light">
           <tr>
-            <th scope="col">รายการ</th>
+            <th scope="col">#</th>
             <th scope="col">วันที่</th>
             <th scope="col">ลูกค้า</th>
             <th scope="col">รายการสินค้า</th>
