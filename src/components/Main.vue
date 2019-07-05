@@ -93,73 +93,91 @@
       <b-modal id="billingDetail" title="ข้อมูลการขนส่ง" size="xl" >
           <b-row>
             <b-col cols="4">
-              <label for="">ชื่อ-นามสกุล : {{val.id}}</label>
-            </b-col>
-            <b-col cols="4">
               <label for="">วันที่ :</label>  
-            </b-col>
+            </b-col>       
             <b-col cols="4">
-              <label for="">ที่อยู่ : {{val.id}} </label>
+              <label for="">ชื่อ-นามสกุล : </label>
             </b-col>
-        <b-col cols="6">
-          ---------------------------
-        </b-col>         
+            <b-col cols="12"><br></b-col>
+
+            <b-col cols="12">
+              <label for="">ที่อยู่ : </label>
+            </b-col>
+            <b-col cols="12"><br></b-col>
+
+            <b-col cols="4">
+              <label for="">การส่งระหว่างประเทศ :</label> 
+            </b-col>     
+            <b-col cols="4"></b-col>
+            <b-col cols="4">
+              <label for="">ค่าขนส่งระหว่างประเทศ : </label>
+            </b-col>
+            <b-col cols="12"><br></b-col>
+            
+            <b-col cols="4">
+              <label for="">การส่งภายในประเทศ : </label>
+            </b-col>     
+            <b-col cols="4">
+              <label for="">ภูมิภาค : </label>
+            </b-col>     
+            <b-col cols="4">
+              <label for="">ค่าส่งภายในประเทศ : </label>
+            </b-col>  
+            <b-col cols="12"><br></b-col>
+
+            <b-col cols="3">
+              <label for="">ประเภทสินค้า :</label> 
+            </b-col> 
+            <b-col cols="3">
+              <label for="">ปริมาตรรวม :</label> 
+            </b-col>   
+            <b-col cols="3">
+              <label for="">น้ำหนักรวม :</label> 
+            </b-col> 
+            <b-col cols="3">
+              <label for="">อัตราต่อหน่วย/บาท :</label> 
+            </b-col> 
+            <b-col cols="12"><br></b-col>
+            <b-col cols="12"><br></b-col>
+
+            <!-- <b-col cols="12">
+              <label for="">...</label> 
+            </b-col> 
+            <b-col cols="12">
+              <label for="">..</label> 
+            </b-col> 
+            <b-col cols="12">
+              <label for="">...</label> 
+            </b-col>  -->
             <b-col cols="12" class="table-responsive" style="height:700px;">
               <table class="table">
                 <thead>
-                  <th>{{val.id}}</th>
-                  <th>2</th>
-                  <th><input type="text" disabled="disabled"></th>
-                  <th><button disabled="disabled"></button></th>
-                  <th>5</th>
+                  <th>รายการ</th>
+                  <th>คุณสมบัติ</th>
+                  <th>จำนวน</th>
+                  <th>ราคาต่อชิ้น</th>
+                  <th>จำนวนเงิน</th>
                 </thead>
                 <tbody>
                   <tr >
-                    <td>
-                      <b-form-group id="export"  label-for="export">
-                          <b-form-input
-                            id="export"
-                            type="text"
-                            disabled="disabled"
-                            placeholder="ร้านส่งออก"
-                          ></b-form-input>
-                        </b-form-group>
-                    </td>
-                    <td>
-                      <b-form-group id="export"  label-for="export">
-                          <b-form-input
-                            id="export"
-                            type="text"
-                            disabled="disabled"
-                            placeholder="ร้านส่งออก"
-                          ></b-form-input>
-                        </b-form-group>
-                    </td>
-                    <td>
-                      <b-form-group id="export"  label-for="export">
-                          <b-form-input
-                            id="export"
-                            type="text"
-                            disabled="disabled"
-                            placeholder="ร้านส่งออก"
-                          ></b-form-input>
-                        </b-form-group>
-                    </td>
-                    <td>
-                      <b-form-group id="export"  label-for="export">
-                          <b-form-input
-                            id="export"
-                            type="text"
-                            disabled="disabled"
-                            placeholder="ร้านส่งออก"
-                          ></b-form-input>
-                        </b-form-group>
-                    </td>
-                    <td>
-                      
-                    </td> 
+                    <td>เสื้อ</td>
+                    <td>ฟรุ้งฟริ้ง</td>
+                    <td>5000000</td>
+                    <td>20</td>
+                    <td>5000000*20</td> 
                   </tr>
                 </tbody>
+                <tfoot>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th>
+                    <label for="">รวมเงิน</label>
+                  </th>
+                  <th>
+                    <label for="">100000000 บาท</label>
+                  </th>
+                </tfoot>
               </table>
             </b-col>
           </b-row>
