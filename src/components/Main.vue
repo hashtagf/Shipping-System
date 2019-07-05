@@ -138,7 +138,11 @@
               <label for="">อัตราต่อหน่วย/บาท :</label> 
             </b-col> 
             <b-col cols="12"><br></b-col>
-            <b-col cols="12"><br></b-col>
+            <b-col cols="12">
+                <div class="col-11 text-center my-1">
+                  <h5>รายละเอียดสินค้า</h5>
+                </div>
+            </b-col>
 
             <!-- <b-col cols="12">
               <label for="">...</label> 
@@ -149,6 +153,7 @@
             <b-col cols="12">
               <label for="">...</label> 
             </b-col>  -->
+
             <b-col cols="12" class="table-responsive" style="height:700px;">
               <table class="table">
                 <thead>
