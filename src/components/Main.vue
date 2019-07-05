@@ -81,8 +81,79 @@
                 variant="primary"
                 class="my-auto"
                 :to="'/Shipping/' + val.id"
-              >จัดการค่าขนส่ง</b-button>
+              >จัดการค่าขนส่ง</b-button><br><br>
+               <b-button 
+                variant="primary"
+                size="sm" 
+                v-b-modal.billingDetail  
+                style="bottom: 0;">
+               ข้อมูลจัดส่ง</b-button>
             </td>
+            
+      <b-modal id="billingDetail" title="ข้อมูลการขนส่ง" size="xl" >
+          <b-row>
+            <b-col cols="12" class="table-responsive" style="height:700px;">
+              <table class="table">
+                <thead>
+                  <th>1</th>
+                  <th>2</th>
+                  <th><input type="text" disabled="disabled"></th>
+                  <th><button disabled="disabled"></button></th>
+                  <th>5</th>
+                </thead>
+                <tbody>
+                  <tr >
+                    <td>
+                      <b-form-group id="export"  label-for="export">
+                          <b-form-input
+                            id="export"
+                            type="text"
+                            disabled="disabled"
+                            placeholder="ร้านส่งออก"
+                          ></b-form-input>
+                        </b-form-group>
+                    </td>
+                    <td>
+                      <b-form-group id="export"  label-for="export">
+                          <b-form-input
+                            id="export"
+                            type="text"
+                            disabled="disabled"
+                            placeholder="ร้านส่งออก"
+                          ></b-form-input>
+                        </b-form-group>
+                    </td>
+                    <td>
+                      <b-form-group id="export"  label-for="export">
+                          <b-form-input
+                            id="export"
+                            type="text"
+                            disabled="disabled"
+                            placeholder="ร้านส่งออก"
+                          ></b-form-input>
+                        </b-form-group>
+                    </td>
+                    <td>
+                      <b-form-group id="export"  label-for="export">
+                          <b-form-input
+                            id="export"
+                            type="text"
+                            disabled="disabled"
+                            placeholder="ร้านส่งออก"
+                          ></b-form-input>
+                        </b-form-group>
+                    </td>
+                    <td>
+                      
+                    </td> 
+                  </tr>
+                </tbody>
+              </table>
+            </b-col>
+          </b-row>
+        </b-modal>
+
+
           </tr>
         </tbody>
       </table>
