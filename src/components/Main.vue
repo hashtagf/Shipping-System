@@ -92,10 +92,22 @@
             
       <b-modal id="billingDetail" title="ข้อมูลการขนส่ง" size="xl" >
           <b-row>
+            <b-col cols="4">
+              <label for="">ชื่อ-นามสกุล : {{val.id}}</label>
+            </b-col>
+            <b-col cols="4">
+              <label for="">วันที่ :</label>  
+            </b-col>
+            <b-col cols="4">
+              <label for="">ที่อยู่ : {{val.id}} </label>
+            </b-col>
+        <b-col cols="6">
+          ---------------------------
+        </b-col>         
             <b-col cols="12" class="table-responsive" style="height:700px;">
               <table class="table">
                 <thead>
-                  <th>1</th>
+                  <th>{{val.id}}</th>
                   <th>2</th>
                   <th><input type="text" disabled="disabled"></th>
                   <th><button disabled="disabled"></button></th>
