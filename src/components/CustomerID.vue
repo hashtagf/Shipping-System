@@ -47,31 +47,35 @@
       <b-col cols="12">
         <h3>รายการรหัสลูกค้า</h3>
       </b-col>
+        <b-col cols="2"></b-col>
+        <b-col cols="8">
+        <table class="table border table-hover table-bordered">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col" class="text-center">รหัสลูกค้า</th>
+                <th scope="col" class="text-center">#</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(val, index) in showData" :key="val.id">
+                <td>{{index+1}}</td>
+                <td>{{val.id}}</td>
 
-      <table class="table border table-hover table-bordered">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col" class="text-center">#</th>
-            <th scope="col" class="text-center">รหัสลูกค้า</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(val, index) in showData" :key="val.id">
-            <td>{{index+1}}</td>
-            <td>{{val.id}}</td>
-
-            <!-- <td>
-              <vs-button
-                v-b-modal.billingDetail
-                color="danger"
-                type="filled"
-                icon="delete"
-                @click="delCustomerID(val)"
-              ></vs-button>
-            </td> -->
-          </tr>
-        </tbody>
-      </table>
+                <td>
+                <vs-button
+                    v-b-modal.billingDetail
+                    color="danger"
+                    type="filled"
+                    icon="delete"
+                    @click="delCustomerID(val)"
+                ></vs-button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </b-col>
+        <b-col cols="2"></b-col>
     </b-row>
   </b-container>
 </template>
@@ -142,7 +146,7 @@ export default {
       }).then(result => {
         if (result.value) {
           this.showData = [];
-          customerFirestore.doc(val.id).delete();
+          customerIDFirestore.doc(val.id).delete();
           this.$swal({
             title: "สำเร็จ",
             text: "ลบออกข้อมูลสำเร็จ",
