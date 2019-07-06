@@ -21,6 +21,7 @@
             <th scope="col">ราคา</th>
             <th scope="col">รวมราคา</th>
             <th scope="col">รวมราคา (THB)</th>
+            <th scope="col">สถานะ</th>
             <th scope="col" width="10%">จัดการบิล</th>
           </tr>
         </thead>
@@ -75,6 +76,14 @@
               <b
                 class="text-success"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(val.total.price * val.rateTHBprice)}}</b>
+            </td>
+            <td>
+              <b-badge
+                variant="success"
+                v-if="val.status === 'รับสินค้าแล้ว'"
+                :to="'/TimeShipping/' + val.id"
+              >{{val.status}}</b-badge>
+              <b-badge variant="info" :to="'/TimeShipping/' + val.id" v-else>{{val.status}}</b-badge>
             </td>
             <td>
               <vs-button

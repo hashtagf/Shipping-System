@@ -22,6 +22,7 @@
             <th scope="col">รวมราคา</th>
             <th scope="col">รวมราคา (THB)</th>
             <th scope="col">ส่วนต่าง (THB)</th>
+            <th scope="col">สถานะ</th>
             <th scope="col">จัดการ</th>
           </tr>
         </thead>

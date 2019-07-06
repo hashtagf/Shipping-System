@@ -10,6 +10,7 @@
 <script>
 import firebase from "firebase";
 var customerFirestore = firebase.firestore().collection("Customers");
+
 export default {
   name: "CustomerName",
   props: {
