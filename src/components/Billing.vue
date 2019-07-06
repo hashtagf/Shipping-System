@@ -182,7 +182,7 @@ export default {
       billingFirestore.add({
         billing: this.cart,
         timestamp: Date.now(),
-        customer: customerFirestore.doc(this.customer),
+        customer: this.customer,
         shipping: this.form.shipping,
         rateTHBprice: this.form.rateTHBprice,
         rateTHBcost: this.form.rateTHBcost,

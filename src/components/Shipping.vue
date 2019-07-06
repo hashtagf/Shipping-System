@@ -435,13 +435,6 @@ export default {
     this.$vs.loading({
       type: "sound"
     });
-    shippingFirestore
-      .doc(this.$route.params.id)
-      .get()
-      .then(doc => {
-        this.showData = doc.data();
-        this.$vs.loading.close();
-      });
     shippingDataFirestore
       .orderBy("priority")
       .get()
@@ -458,7 +451,27 @@ export default {
           this.shippingDataTH.push(doc.data());
         });
       });
-    console.log(this.shippingDataTH);
+    shippingFirestore
+      .doc(this.$route.params.id)
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          this.boxes = doc.data().boxes;
+          this.value = doc.data().value;
+          this.amount = doc.data().amount;
+          this.capacity = doc.data().capacity;
+          this.weight = doc.data().weight;
+          this.showData = doc.data().showData;
+          this.shippingTH = doc.data().shippingTH;
+          this.shipping = doc.data().shipping;
+          this.rateunit = doc.data().rateunit;
+          this.totalShipping = doc.data().totalShipping;
+          this.totalInTH = doc.data().totalInTH;
+          this.productType = doc.data().productType;
+          this.area = doc.data().area;
+        }
+        this.$vs.loading.close();
+      });
   }
 };
 </script>
