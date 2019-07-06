@@ -29,7 +29,7 @@
             <th scope="row">{{index + 1}}</th>
             <td>{{val.timestamp | moment("DD/MM/Y")}}</td>
             <td>
-              <customer-name :idCustomer="val.customer"></customer-name>
+              <customer-name :idCustomer="val.customer" name="true"></customer-name>
             </td>
             <td>
               <div

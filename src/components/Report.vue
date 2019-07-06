@@ -29,7 +29,9 @@
           <tr v-for="(val, index) in billing" :key="val.id">
             <th scope="row">{{index + 1}}</th>
             <td>{{val.timestamp | moment("DD/MM/Y")}}</td>
-            <td v-if="customer[index]">{{customer[index].nickname}}</td>
+            <td>
+              <customer-name :idCustomer="val.customer" name="true"></customer-name>
+            </td>
             <td>
               <div
                 class="border-bottom"

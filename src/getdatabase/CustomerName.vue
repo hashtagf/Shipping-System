@@ -1,5 +1,10 @@
 <template>
-  <div class="CustomerName">{{showData.nickname}}</div>
+  <div class="CustomerName">
+    <span v-if="name">{{showData.nickname}}</span>
+    <span v-if="address">{{showData.address}}</span>
+    <span v-if="fullname">{{showData.fullname}}</span>
+    <span v-if="tel">{{showData.tel}}</span>
+  </div>
 </template>
 
 <script>
@@ -8,7 +13,11 @@ var customerFirestore = firebase.firestore().collection("Customers");
 export default {
   name: "CustomerName",
   props: {
-    idCustomer: String
+    idCustomer: String,
+    name: false,
+    address: false,
+    fullname: false,
+    tel: false
   },
   data() {
     return {
@@ -21,7 +30,6 @@ export default {
       .get()
       .then(doc => {
         this.showData = doc.data();
-        console.log(this.showData);
       });
   }
 };
