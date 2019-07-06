@@ -13,9 +13,9 @@
 
     <b-form @submit.prevent="onSubmit">
       <b-row>
-        <b-col cols="12">
+        <b-col cols="6">
           <b-form-group id="name" label="ชื่อสินค้า" label-for="name">
-            <b-input-group prepend="ชื่อสินค้า" class>
+            <!-- <b-input-group prepend="ชื่อสินค้า" class> -->
               <b-form-input
                 id="name"
                 v-model="form.name"
@@ -23,7 +23,7 @@
                 required
                 placeholder="ชือสินค้า"
               ></b-form-input>
-            </b-input-group>
+            <!-- </b-input-group> -->
           </b-form-group>
         </b-col>
         <b-col cols="12">
@@ -225,6 +225,12 @@ export default {
         export: this.form.export,
         sign: this.form.sign,
         import: this.form.import
+      });
+      this.$swal({
+        title: "สำเร็จ",
+        text: "เพิ่มรายการสินค้าเรียบร้อย",
+        type: "success",
+        timer: 2000
       });
       event.target.reset();
     },
