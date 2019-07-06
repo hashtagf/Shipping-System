@@ -21,25 +21,25 @@
             <th scope="col">ราคา</th>
             <th scope="col">รวมราคา</th>
             <th scope="col">รวมราคา (THB)</th>
-            <th scope="col">จัดการบิล</th>
+            <th scope="col" width="10%">จัดการบิล</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(val, index) in billing" :key="val.id">
             <th scope="row">{{index + 1}}</th>
-            <td>{{val.data.timestamp | moment("DD/MM/Y")}}</td>
+            <td>{{val.timestamp | moment("DD/MM/Y")}}</td>
             <td v-if="customer[index]">{{customer[index].nickname}}</td>
             <td>
               <div
                 class="border-bottom"
-                v-for="(product,index) in val.data.billing"
+                v-for="(product,index) in val.billing"
                 :key="index"
               >{{product.product.name}}</div>
             </td>
             <td>
               <div
                 class="border-bottom"
-                v-for="(product,index)  in val.data.billing"
+                v-for="(product,index)  in val.billing"
                 :key="index"
               >{{product.properties}}</div>
               <b class="text-primary">{{"รวม"}}</b>
@@ -47,32 +47,32 @@
             <td>
               <div
                 class="border-bottom"
-                v-for="(product,index)  in val.data.billing"
+                v-for="(product,index)  in val.billing"
                 :key="index"
               >{{product.count}}</div>
-              <b class="text-primary">{{val.data.total.count}}</b>
+              <b class="text-primary">{{val.total.count}}</b>
             </td>
             <td>
               <div
                 class="border-bottom"
-                v-for="(product,index)  in val.data.billing"
+                v-for="(product,index)  in val.billing"
                 :key="index"
               >{{product.product.price}}</div>
             </td>
             <td>
               <div
                 class="border-bottom"
-                v-for="(product,index) in val.data.billing"
+                v-for="(product,index) in val.billing"
                 :key="index"
               >{{product.product.price * product.count}}</div>
               <b
                 class="text-primary"
-              >{{new Intl.NumberFormat({ style: 'currency'}).format(val.data.total.price)}}</b>
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(val.total.price)}}</b>
             </td>
             <td>
               <b
                 class="text-success"
-              >{{new Intl.NumberFormat({ style: 'currency'}).format(val.data.total.price * val.data.rateTHBprice)}}</b>
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(val.total.price * val.rateTHBprice)}}</b>
             </td>
             <td>
               <vs-button
@@ -201,6 +201,9 @@
 
 <script>
 import firebase from "firebase";
+import { FireSQL } from "firesql";
+import "firesql/rx";
+const fireSQL = new FireSQL(firebase.firestore());
 import CustomerName from "../getdatabase/CustomerName.vue";
 var billingFirestore = firebase.firestore().collection("Billings");
 export default {
@@ -219,22 +222,20 @@ export default {
     this.$vs.loading({
       type: "sound"
     });
-
-    billingFirestore.orderBy("timestamp", "desc").onSnapshot(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        this.billing.push({
-          id: doc.id,
-          data: doc.data()
-        });
-        doc
-          .data()
-          .customer.get()
-          .then(response => {
-            this.customer.push(response.data());
-            this.$vs.loading.close();
-          });
+    fireSQL
+      .rxQuery("SELECT * FROM Billings", {
+        includeId: "id"
+      })
+      .subscribe(documents => {
+        this.$vs.loading.close();
+        this.billing = documents;
       });
-    });
+    fireSQL
+      .rxQuery("SELECT * FROM Customers", { includeId: "id" })
+      .subscribe(documents => {
+        this.$vs.loading.close();
+        this.customer = documents;
+      });
   }
 };
 </script>

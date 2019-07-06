@@ -87,10 +87,7 @@
                       ></b-form-input>
                     </td>
                     <td>
-                      <b-button
-                        variant="primary"
-                        @click="addCart(val.id, val.data, index)"
-                      >เลือกสินค้า</b-button>
+                      <b-button variant="primary" @click="addCart(val.data, index)">เลือกสินค้า</b-button>
                     </td>
                   </tr>
                 </tbody>
@@ -153,6 +150,9 @@ import firebase from "firebase";
 var billingFirestore = firebase.firestore().collection("Billings");
 var productFirestore = firebase.firestore().collection("Products");
 var customerFirestore = firebase.firestore().collection("Customers");
+import { FireSQL } from "firesql";
+import "firesql/rx";
+const fireSQL = new FireSQL(firebase.firestore());
 export default {
   name: "Billing",
   data() {
@@ -179,7 +179,7 @@ export default {
   methods: {
     onSubmit() {
       //console.log(this.form);
-        billingFirestore.add({
+      billingFirestore.add({
         billing: this.cart,
         timestamp: Date.now(),
         customer: customerFirestore.doc(this.customer),
@@ -199,11 +199,10 @@ export default {
       this.customer = null;
       event.target.reset();
     },
-    addCart(key, data, index) {
+    addCart(data, index) {
       this.cart.push({
         count: this.count[index],
         properties: this.properties[index],
-        id: key,
         product: data
       });
       this.total.count += parseInt(this.count[index]);
