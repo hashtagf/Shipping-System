@@ -1,7 +1,7 @@
 <template>
   <div class="Main justify-content-center row">
     <div class="col-7 text-left my-3">
-      <h3>บิลลูกค้า</h3>
+      <h3>รายงานสรุปการขาย</h3>
     </div>
     <div class="col-3 justify-content my-3">
       <router-link to="/Billing">
@@ -21,7 +21,8 @@
             <th scope="col">ราคา</th>
             <th scope="col">รวมราคา</th>
             <th scope="col">รวมราคา (THB)</th>
-            <th scope="col">จัดการบิล</th>
+            <th scope="col">ส่วนต่าง (THB)</th>
+            <th scope="col">จัดการ</th>
           </tr>
         </thead>
         <tbody>
@@ -57,24 +58,29 @@
                 class="border-bottom"
                 v-for="(product,index)  in val.data.billing"
                 :key="index"
-              >{{product.product.price}}</div>
+              >{{product.product.cost}}</div>
             </td>
             <td>
               <div
                 class="border-bottom"
                 v-for="(product,index) in val.data.billing"
                 :key="index"
-              >{{product.product.price * product.count}}</div>
+              >{{product.product.cost * product.count}}</div>
               <b
                 class="text-primary"
-              >{{new Intl.NumberFormat({ style: 'currency'}).format(val.data.total.price)}}</b>
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(val.data.total.cost)}}</b>
             </td>
             <td>
               <b
                 class="text-success"
-              >{{new Intl.NumberFormat({ style: 'currency'}).format(val.data.total.price * val.data.rateTHBprice)}}</b>
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(val.data.total.cost * val.data.rateTHBcost)}}</b>
             </td>
             <td>
+              <b
+                class="text-info"
+              >{{new Intl.NumberFormat({ style: 'currency'}).format((val.data.total.price * val.data.rateTHBprice)-(val.data.total.cost * val.data.rateTHBcost))}}</b>
+            </td>
+            <td class="text-center">
               <vs-button
                 color="warning"
                 :to="'/Shipping/' + val.id"

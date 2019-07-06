@@ -113,22 +113,17 @@
         <b-col cols="6">
           <b-button type="reset" variant="danger">ยกเลิก</b-button>
         </b-col>
-        <b-col cols="12">
-          <br />
-        </b-col>
-        <b-col cols="12">
-          <br />
-        </b-col>
-        <b-col cols="12">
-          <br />
-        </b-col>
       </b-row>
-
-      <b-col cols="12">
+    </b-form>
+    <b-row class="mt-5">
+      <b-col cols="7">
         <h3>รายการสินค้า</h3>
       </b-col>
-      <table class="table">
-        <thead>
+      <b-col cols="5">
+        <b-form-input id="search" v-model="search" type="text" required placeholder="ค้นหา"></b-form-input>
+      </b-col>
+      <table class="table border table-hover table-bordered">
+        <thead class="thead-light">
           <tr>
             <th scope="col">ชื่อสินค้า</th>
             <th scope="col">ราคาต้นทุน</th>
@@ -137,36 +132,47 @@
             <th scope="col">ร้านส่งออก</th>
             <th scope="col">เซ็นรับ</th>
             <th scope="col">เข้าโกดังไทย</th>
+            <th scope="col" class="text-center">ลบ</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(val) in showData" :key="val.id">
-            <td>{{val.data.name}}</td>
-            <td>{{val.data.cost}}</td>
-            <td>{{val.data.price}}</td>
+            <td>{{val.name}}</td>
+            <td>{{val.cost}}</td>
+            <td>{{val.price}}</td>
             <td>
               <label
-                v-for="prop in val.data.properties"
+                v-for="prop in val.properties"
                 :key="prop.name"
                 :value="prop.name"
               >{{prop.name}} &nbsp;&nbsp;</label>
             </td>
-            <td>{{val.data.export}}</td>
-            <td>{{val.data.import}}</td>
-            <td>{{val.data.sign}}</td>
-            <td><b-button variant="danger"  block @click="delProd(val)">ลบ</b-button> 
+            <td>{{val.export}}</td>
+            <td>{{val.import}}</td>
+            <td>{{val.sign}}</td>
+            <td>
+              <vs-button
+                v-b-modal.billingDetail
+                color="danger"
+                type="filled"
+                icon="delete"
+                @click="delProduct(val)"
+              ></vs-button>
             </td>
           </tr>
         </tbody>
       </table>
-    </b-form>
+    </b-row>
   </b-container>
 </template>
 <script>
 import Multiselect from "vue-multiselect";
 //Vue.component('multiselect', Multiselect);
 import firebase from "firebase";
-var productFirestore = firebase.firestore().collection("Products");
+import { FireSQL } from "firesql";
+import "firesql/rx";
+const fireSQL = new FireSQL(firebase.firestore());
+const productFirestore = firebase.firestore().collection("Products");
 export default {
   name: "Product",
   components: {
@@ -180,8 +186,32 @@ export default {
       },
       value: [],
       options: [{ name: "ดำ", code: "black" }, { name: "ขาว", code: "white" }],
-      product: []
+      product: [],
+      search: null
     };
+  },
+  watch: {
+    search() {
+      if (this.search.length > 0) {
+        fireSQL
+          .rxQuery(
+            "SELECT * FROM Products WHERE name LIKE '" + this.search + "%'",
+            { includeId: "id" }
+          )
+          .subscribe(documents => {
+            this.showData = documents;
+          });
+        console.log(this.showData);
+      } else {
+        fireSQL
+          .rxQuery("SELECT * FROM Products", { includeId: "id" })
+          .subscribe(documents => {
+            this.$vs.loading.close();
+            this.showData = documents;
+            console.log(this.showData);
+          });
+      }
+    }
   },
   methods: {
     onSubmit() {
@@ -206,29 +236,39 @@ export default {
       this.options.push(tag);
       this.form.properties.push(tag);
     },
-    delProd(val){
-      this.showData = [];
-      console.log(val.id);
-        //productFirestore.child(val.id).remove();
-      productFirestore.doc(val.id).delete();
-
+    delProduct(val) {
+      this.$swal({
+        title: "ต้องการลบข้อมูลสินค้า ?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "ลบออกข้อมูล!"
+      }).then(result => {
+        if (result.value) {
+          this.showData = [];
+          productFirestore.doc(val.id).delete();
+          this.$swal({
+            title: "สำเร็จ",
+            text: "ลบออกข้อมูลสำเร็จ",
+            type: "success",
+            timer: 2000
+          });
+        }
+      });
     }
   },
   mounted() {
     this.$vs.loading({
       type: "sound"
     });
-
-    productFirestore.onSnapshot(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        this.showData.push({
-          data: doc.data(),
-          id: doc.id
-        });
+    fireSQL
+      .rxQuery("SELECT * FROM Products", { includeId: "id" })
+      .subscribe(documents => {
+        this.$vs.loading.close();
+        this.showData = documents;
+        console.log(this.showData);
       });
-      this.$vs.loading.close();
-      console.log(this.showData);
-    });
   }
 };
 </script>

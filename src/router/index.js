@@ -8,6 +8,7 @@ const Customer = () => import("../components/Customer.vue");
 const Billing = () => import("../components/Billing.vue");
 const Shipping = () => import("../components/Shipping.vue");
 const ShippingData = () => import("../components/ShippingData.vue");
+const Report = () => import("../components/Report.vue");
 Vue.use(Router);
 
 export default new Router({
@@ -57,13 +58,21 @@ export default new Router({
         footer: Footer
       }
     },
-    ,
     {
       path: "/ShippingData",
       name: "ShippingData",
       components: {
         header: Header,
         default: ShippingData,
+        footer: Footer
+      }
+    },
+    {
+      path: "/Report",
+      name: "Report",
+      components: {
+        header: Header,
+        default: Report,
         footer: Footer
       }
     }

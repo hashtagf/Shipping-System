@@ -69,56 +69,92 @@
           <br />
         </b-col>
         <b-col cols="6">
-          <b-button type="submit" variant="primary">เพิ่มสินค้า</b-button>
+          <b-button type="submit" variant="primary" block>เพิ่มข้อมูลลูกค้า</b-button>
         </b-col>
         <b-col cols="6">
-          <b-button type="reset" variant="danger">ยกเลิก</b-button>
+          <b-button type="reset" variant="danger" block>ยกเลิก</b-button>
         </b-col>
       </b-row>
-      <b-col cols="12">
-        <br />
-      </b-col>
-
-      <b-col cols="12">
+    </b-form>
+    <b-row class="mt-5">
+      <b-col cols="7">
         <h3>รายชื่อลูกค้า</h3>
       </b-col>
-      <table class="table">
-        <thead>
+      <b-col cols="5">
+        <b-form-input id="search" v-model="search" type="text" required placeholder="ค้นหา"></b-form-input>
+      </b-col>
+      <table class="table border table-hover table-bordered">
+        <thead class="thead-light">
           <tr>
-            <th scope="col">ชื่อเล่น</th>
-            <th scope="col">ชื่อ-นามสกุล</th>
-            <th scope="col">โทรศัพท์</th>
-            <th scope="col">คุณสมบัติ</th>
+            <th scope="col" class="text-center">ชื่อเล่น</th>
+            <th scope="col" class="text-center">ชื่อ-นามสกุล</th>
+            <th scope="col" class="text-center">โทรศัพท์</th>
+            <th scope="col" class="text-center" width="40%">ที่อยู่</th>
+            <th scope="col" class="text-center" width="5%">ลบ</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(val) in showData" :key="val.id">
-            <td>{{val.data.nickname}}</td>
-            <td>{{val.data.fullname}}</td>
-            <td>{{val.data.tel}}</td>
-            <td>{{val.data.address}}</td>
-            <td><b-button variant="danger"  block @click="delCustomer(val)">ลบ</b-button> 
+            <td>{{val.nickname}}</td>
+            <td>{{val.fullname}}</td>
+            <td>{{val.tel}}</td>
+            <td>{{val.address}}</td>
+            <td>
+              <vs-button
+                v-b-modal.billingDetail
+                color="danger"
+                type="filled"
+                icon="delete"
+                @click="delCustomer(val)"
+              ></vs-button>
             </td>
           </tr>
         </tbody>
       </table>
-    </b-form>
+    </b-row>
   </b-container>
 </template>
 
 <script>
 import firebase from "firebase";
-var customerFirestore = firebase.firestore().collection("Customers");
-
+import { FireSQL } from "firesql";
+import "firesql/rx";
+const fireSQL = new FireSQL(firebase.firestore());
+const customerFirestore = firebase.firestore().collection("Customers");
 export default {
   name: "Product",
   data() {
     return {
       showData: [],
-      form: {}
+      form: {},
+      search: null
     };
   },
-
+  watch: {
+    search() {
+      if (this.search.length > 0) {
+        fireSQL
+          .rxQuery(
+            "SELECT * FROM Customers WHERE nickname LIKE '" +
+              this.search +
+              "%'",
+            { includeId: "id" }
+          )
+          .subscribe(documents => {
+            this.showData = documents;
+          });
+        console.log(this.showData);
+      } else {
+        fireSQL
+          .rxQuery("SELECT * FROM Customers", { includeId: "id" })
+          .subscribe(documents => {
+            this.$vs.loading.close();
+            this.showData = documents;
+            console.log(this.showData);
+          });
+      }
+    }
+  },
   methods: {
     onSubmit() {
       this.showData = [];
@@ -130,28 +166,41 @@ export default {
         address: this.form.address
       });
     },
-    delCustomer(val){
-      this.showData = [];
+    delCustomer(val) {
       console.log(val.id);
-        //productFirestore.child(val.id).remove();
-      customerFirestore.doc(val.id).delete();
+      this.$swal({
+        title: "ต้องการลบข้อมูลลูกค้าคนนี้ ?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "ลบออกข้อมูล!"
+      }).then(result => {
+        if (result.value) {
+          this.showData = [];
+          customerFirestore.doc(val.id).delete();
+          this.$swal({
+            title: "สำเร็จ",
+            text: "ลบออกข้อมูลสำเร็จ",
+            type: "success",
+            timer: 2000
+          });
+        }
+      });
+      //productFirestore.child(val.id).remove();
     }
   },
   mounted() {
     this.$vs.loading({
       type: "sound"
     });
-
-    customerFirestore.onSnapshot(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        this.showData.push({
-          data: doc.data(),
-          id: doc.id
-        });
+    fireSQL
+      .rxQuery("SELECT * FROM Customers", { includeId: "id" })
+      .subscribe(documents => {
+        this.$vs.loading.close();
+        this.showData = documents;
+        console.log(this.showData);
       });
-      this.$vs.loading.close();
-      console.log(this.showData);
-    });
   }
 };
 </script>
