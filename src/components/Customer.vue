@@ -185,6 +185,12 @@ export default {
         address: this.form.address,
         customerID: this.form.customerID
       });
+      this.$swal({
+        title: "สำเร็จ",
+        text: "เพิ่มรายชื่อลูกค้าเรียบร้อย",
+        type: "success",
+        timer: 2000
+      });
     },
     delCustomer(val) {
       console.log(val.id);
