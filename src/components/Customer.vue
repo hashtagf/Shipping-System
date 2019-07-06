@@ -15,6 +15,34 @@
         <b-col cols="12">
           <br />
         </b-col>
+
+        <b-col cols="4">
+          <b-form-group id="customerID" label="รหัสลูกค้า" label-for="customerID">
+            <b-form-input
+              id="customerID"
+              v-model="form.customerID"
+              type="text"
+              required
+              placeholder="รหัสลูกค้า"
+            ></b-form-input>
+          </b-form-group>
+        </b-col>
+
+        <b-col cols="4">
+          <b-form-group id="tel" label="เบอร์โทรศัพท์" label-for="tel">
+            <b-form-input
+              id="tel"
+              v-model="form.tel"
+              type="tel"
+              required
+              placeholder="เบอร์โทรศัพท์"
+            ></b-form-input>
+          </b-form-group>
+        </b-col>
+        <b-col cols="12">
+          <br />
+        </b-col>
+
         <b-col cols="4">
           <b-form-group id="nickname" label="ชื่อเล่น" label-for="nickname">
             <b-form-input
@@ -27,7 +55,7 @@
           </b-form-group>
         </b-col>
 
-        <b-col cols="4">
+        <b-col cols="5">
           <b-form-group id="fullname" label="ชื่อ-นามสกุล" label-for="fullname">
             <b-form-input
               id="fullname"
@@ -35,17 +63,6 @@
               type="text"
               required
               placeholder="ชื่อ-นามสกุล"
-            ></b-form-input>
-          </b-form-group>
-        </b-col>
-        <b-col cols="4">
-          <b-form-group id="tel" label="เบอร์โทรศัพท์" label-for="tel">
-            <b-form-input
-              id="tel"
-              v-model="form.tel"
-              type="tel"
-              required
-              placeholder="เบอร์โทรศัพท์"
             ></b-form-input>
           </b-form-group>
         </b-col>
@@ -86,6 +103,7 @@
       <table class="table border table-hover table-bordered">
         <thead class="thead-light">
           <tr>
+            <th scope="col" class="text-center">รหัสลูกค้า</th>
             <th scope="col" class="text-center">ชื่อเล่น</th>
             <th scope="col" class="text-center">ชื่อ-นามสกุล</th>
             <th scope="col" class="text-center">โทรศัพท์</th>
@@ -95,6 +113,7 @@
         </thead>
         <tbody>
           <tr v-for="(val) in showData" :key="val.id">
+            <td>{{val.customerID}}</td>
             <td>{{val.nickname}}</td>
             <td>{{val.fullname}}</td>
             <td>{{val.tel}}</td>
@@ -163,7 +182,8 @@ export default {
         nickname: this.form.nickname,
         fullname: this.form.fullname,
         tel: this.form.tel,
-        address: this.form.address
+        address: this.form.address,
+        customerID: this.form.customerID
       });
     },
     delCustomer(val) {
