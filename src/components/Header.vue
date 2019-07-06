@@ -11,6 +11,7 @@
           <b-nav-item-dropdown text="จัดการข้อมูล" left>
             <b-dropdown-item to="/Product">สินค้า</b-dropdown-item>
             <b-dropdown-item to="/Customer">ลูกค้า</b-dropdown-item>
+            <b-dropdown-item to="/CustomerID">รหัสลูกค้า</b-dropdown-item>
             <b-dropdown-item to="/ShippingData">ค่าขนส่ง</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item to="/Report">รายงานสรุป</b-nav-item>

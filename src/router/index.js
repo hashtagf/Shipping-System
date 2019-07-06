@@ -10,6 +10,7 @@ const Shipping = () => import("../components/Shipping.vue");
 const ShippingData = () => import("../components/ShippingData.vue");
 const Report = () => import("../components/Report.vue");
 const TimeShipping = () => import("../components/TimeShipping.vue");
+const CustomerID = () => import("../components/CustomerID.vue");
 Vue.use(Router);
 
 export default new Router({
@@ -83,6 +84,15 @@ export default new Router({
       components: {
         header: Header,
         default: TimeShipping,
+        footer: Footer
+      }
+    },
+    {
+      path: "/CustomerID",
+      name: "CustomerID",
+      components: {
+        header: Header,
+        default: CustomerID,
         footer: Footer
       }
     }
