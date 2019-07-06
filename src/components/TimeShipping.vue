@@ -91,6 +91,14 @@
         </table>
       </b-col>
     </b-row>
+    <b-row>
+      <b-col cols="6">
+        <b-button type="submit" variant="primary" block @click="updateStatus()">อัพเดทการขนส่ง</b-button>
+      </b-col>
+      <b-col cols="6">
+        <b-button type="reset" variant="danger" block>ยกเลิก</b-button>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
@@ -113,18 +121,17 @@ export default {
   components: {
     DatePicker
   },
-  watch: {
-    showData() {
-      console.log(this.showData);
+  watch: {},
+  methods: {
+    updateStatus() {
       billingFirestore.doc(this.$route.params.id).update({
         timeShipping: this.showData
       });
-    }
-  },
-  methods: {
-    updateStatus(status) {
-      billingFirestore.doc(this.$route.params.id).update({
-        status: status
+      this.$swal({
+        title: "สำเร็จ",
+        text: "อัพเดทเรียบร้อย",
+        type: "success",
+        timer: 2000
       });
     }
   },
