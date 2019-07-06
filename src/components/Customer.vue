@@ -17,18 +17,30 @@
         </b-col>
 
         <b-col cols="4">
-          <b-form-group id="customerID" label="รหัสลูกค้า" label-for="customerID">
+          <b-form-group id="nickname" label="ชื่อเล่น" label-for="nickname">
             <b-form-input
-              id="customerID"
-              v-model="form.customerID"
+              id="nickname"
+              v-model="form.nickname"
               type="text"
               required
-              placeholder="รหัสลูกค้า"
+              placeholder="ชื่อเล่น"
             ></b-form-input>
           </b-form-group>
         </b-col>
 
         <b-col cols="4">
+          <b-form-group id="fullname" label="ชื่อ-นามสกุล" label-for="fullname">
+            <b-form-input
+              id="fullname"
+              v-model="form.fullname"
+              type="text"
+              required
+              placeholder="ชื่อ-นามสกุล"
+            ></b-form-input>
+          </b-form-group>
+        </b-col>
+
+       <b-col cols="4">
           <b-form-group id="tel" label="เบอร์โทรศัพท์" label-for="tel">
             <b-form-input
               id="tel"
@@ -41,30 +53,6 @@
         </b-col>
         <b-col cols="12">
           <br />
-        </b-col>
-
-        <b-col cols="4">
-          <b-form-group id="nickname" label="ชื่อเล่น" label-for="nickname">
-            <b-form-input
-              id="nickname"
-              v-model="form.nickname"
-              type="text"
-              required
-              placeholder="ชื่อเล่น"
-            ></b-form-input>
-          </b-form-group>
-        </b-col>
-
-        <b-col cols="5">
-          <b-form-group id="fullname" label="ชื่อ-นามสกุล" label-for="fullname">
-            <b-form-input
-              id="fullname"
-              v-model="form.fullname"
-              type="text"
-              required
-              placeholder="ชื่อ-นามสกุล"
-            ></b-form-input>
-          </b-form-group>
         </b-col>
 
         <b-col cols="12">
@@ -183,7 +171,7 @@ export default {
         fullname: this.form.fullname,
         tel: this.form.tel,
         address: this.form.address,
-        customerID: this.form.customerID
+
       });
       this.$swal({
         title: "สำเร็จ",
