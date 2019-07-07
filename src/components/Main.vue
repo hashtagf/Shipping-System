@@ -93,118 +93,112 @@
                 icon="settings"
                 class="mr-2"
               ></vs-button>
-              <vs-button v-b-modal.billingDetail color="primary" type="filled" icon="zoom_in"></vs-button>
+              <vs-button v-b-modal.billingDetail color="primary" type="filled" icon="zoom_in" @click="billingDetail(index ,val)"></vs-button>
             </td>
-          </tr>
+         </tr>
         </tbody>
       </table>
-      <b-modal id="billingDetail" title="ข้อมูลการขนส่ง" size="xl">
-        <b-row>
-          <b-col cols="4">
-            <label for>วันที่ :</label>
-          </b-col>
-          <b-col cols="4">
-            <label for>ชื่อ-นามสกุล :</label>
-          </b-col>
-          <b-col cols="12">
-            <br />
-          </b-col>
+             <b-modal id="billingDetail" title="ข้อมูลการขนส่ง" size="xl">
+              <b-row>
+                <b-col cols="4">
+                  <label for>วันที่ : </label>
+                </b-col>
+                <b-col cols="4">
+                  <label for>ชื่อ-นามสกุล : </label>
+                </b-col>
+                <b-col cols="12">
+                  <br />
+                </b-col>
 
-          <b-col cols="12">
-            <label for>ที่อยู่ :</label>
-          </b-col>
-          <b-col cols="12">
-            <br />
-          </b-col>
+                <b-col cols="12">
+                  <label for>ที่อยู่ :</label>
+                </b-col>
+                <b-col cols="12">
+                  <br />
+                </b-col>
 
-          <b-col cols="4">
-            <label for>การส่งระหว่างประเทศ :</label>
-          </b-col>
-          <b-col cols="4"></b-col>
-          <b-col cols="4">
-            <label for>ค่าขนส่งระหว่างประเทศ :</label>
-          </b-col>
-          <b-col cols="12">
-            <br />
-          </b-col>
+                <b-col cols="4">
+                  <label for>การส่งระหว่างประเทศ :</label>
+                </b-col>
+                <b-col cols="4"></b-col>
+                <b-col cols="4">
+                  <label for>ค่าขนส่งระหว่างประเทศ :</label>
+                </b-col>
+                <b-col cols="12">
+                  <br />
+                </b-col>
 
-          <b-col cols="4">
-            <label for>การส่งภายในประเทศ :</label>
-          </b-col>
-          <b-col cols="4">
-            <label for>ภูมิภาค :</label>
-          </b-col>
-          <b-col cols="4">
-            <label for>ค่าส่งภายในประเทศ :</label>
-          </b-col>
-          <b-col cols="12">
-            <br />
-          </b-col>
+                <b-col cols="4">
+                  <label for>การส่งภายในประเทศ :</label>
+                </b-col>
+                <b-col cols="4">
+                  <label for>ภูมิภาค :</label>
+                </b-col>
+                <b-col cols="4">
+                  <label for>ค่าส่งภายในประเทศ :</label>
+                </b-col>
+                <b-col cols="12">
+                  <br />
+                </b-col>
 
-          <b-col cols="3">
-            <label for>ประเภทสินค้า :</label>
-          </b-col>
-          <b-col cols="3">
-            <label for>ปริมาตรรวม :</label>
-          </b-col>
-          <b-col cols="3">
-            <label for>น้ำหนักรวม :</label>
-          </b-col>
-          <b-col cols="3">
-            <label for>อัตราต่อหน่วย/บาท :</label>
-          </b-col>
-          <b-col cols="12">
-            <br />
-          </b-col>
-          <b-col cols="12">
-            <div class="col-11 text-center my-1">
-              <h5>รายละเอียดสินค้า</h5>
-            </div>
-          </b-col>
+                <b-col cols="3">
+                  <label for>ประเภทสินค้า :</label>
+                </b-col>
+                <b-col cols="3">
+                  <label for>ปริมาตรรวม :</label>
+                </b-col>
+                <b-col cols="3">
+                  <label for>น้ำหนักรวม :</label>
+                </b-col>
+                <b-col cols="3">
+                  <label for>อัตราต่อหน่วย/บาท :</label>
+                </b-col>
+                <b-col cols="12">
+                  <br />
+                </b-col>
+                <b-col cols="12">
+                  <div class="col-11 text-center my-1">
+                    <h5>รายละเอียดสินค้า</h5>
+                  </div>
+                </b-col>
 
-          <!-- <b-col cols="12">
-              <label for="">...</label> 
-            </b-col> 
-            <b-col cols="12">
-              <label for="">..</label> 
-            </b-col> 
-            <b-col cols="12">
-              <label for="">...</label> 
-          </b-col>-->
-
-          <b-col cols="12" class="table-responsive" style="height:700px;">
-            <table class="table">
-              <thead>
-                <th>รายการ</th>
-                <th>คุณสมบัติ</th>
-                <th>จำนวน</th>
-                <th>ราคาต่อชิ้น</th>
-                <th>จำนวนเงิน</th>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>เสื้อ</td>
-                  <td>ฟรุ้งฟริ้ง</td>
-                  <td>5000000</td>
-                  <td>20</td>
-                  <td>5000000*20</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>
-                  <label for>รวมเงิน</label>
-                </th>
-                <th>
-                  <label for>100000000 บาท</label>
-                </th>
-              </tfoot>
-            </table>
-          </b-col>
-        </b-row>
-      </b-modal>
+                <b-col cols="12" class="table-responsive" style="height:700px;">
+                  <table class="table">
+                    <thead>
+                      <th>รายการ</th>
+                      <th>คุณสมบัติ</th>
+                      <th>จำนวน</th>
+                      <th>ราคาต่อชิ้น</th>
+                      <th>จำนวนเงิน</th>
+                    </thead>
+                    <tbody v-for="(val) in billingReport" :key="val.id">
+                      <tr v-for="(prod) in val.product" :key="prod.id">     
+                        <td >
+                          {{prod.product.name}}
+                          </td>
+                        <td >
+                          {{prod.properties}}
+                        </td>
+                        <td>{{prod.count}}</td>
+                        <td>{{prod.product.price}}</td>
+                        <td>{{prod.count * prod.product.price}}</td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th>
+                        <label for>รวมเงิน</label>
+                      </th>
+                      <th>
+                        <label for>100000000 บาท</label>
+                      </th>
+                    </tfoot>
+                  </table>
+                </b-col>
+              </b-row>
+            </b-modal>
     </div>
   </div>
 </template>
@@ -220,14 +214,34 @@ export default {
   name: "Billing",
   data() {
     return {
+    
       billing: [],
-      customer: []
+      customer: [],
+      billingReport: []
     };
   },
   components: {
     CustomerName
   },
-  methods: {},
+  methods: {
+    
+    billingDetail(index ,val) {
+      this.billingReport= [];
+      console.log(index);
+      console.log(val);
+      console.log(val.billing);
+
+
+      this.billingReport.push({
+        index: index,
+        time: val.timestamp,
+        name: val.customer,
+        product: val.billing
+      });
+
+      // console.log(this.billingReport);
+    }
+  },
   mounted() {
     this.$vs.loading({
       type: "sound"
