@@ -16,13 +16,13 @@
         <b-col cols="6">
           <b-form-group id="name" label="ชื่อสินค้า" label-for="name">
             <!-- <b-input-group prepend="ชื่อสินค้า" class> -->
-              <b-form-input
-                id="name"
-                v-model="form.name"
-                type="text"
-                required
-                placeholder="ชือสินค้า"
-              ></b-form-input>
+            <b-form-input
+              id="name"
+              v-model="form.name"
+              type="text"
+              required
+              placeholder="ชือสินค้า"
+            ></b-form-input>
             <!-- </b-input-group> -->
           </b-form-group>
         </b-col>
@@ -75,31 +75,37 @@
         </b-col>
 
         <b-col cols="4">
-          <b-form-group id="export" label="ร้านส่งออก" label-for="export">
+          <b-form-group id="export" label="สถิติร้านส่งออก(จำนวนวัน)" label-for="export">
             <b-form-input
               id="export"
               v-model="form.export"
-              type="text"
+              type="number"
               required
-              placeholder="ร้านส่งออก"
+              placeholder="จำนวนวัน"
             ></b-form-input>
           </b-form-group>
         </b-col>
 
         <b-col cols="4">
-          <b-form-group id="sign" label="เซ็นรับ" label-for="sign">
-            <b-form-input id="sign" v-model="form.sign" type="text" required placeholder="เซ็นรับ"></b-form-input>
+          <b-form-group id="sign" label="สถิติเซ็นรับ(จำนวนวัน)" label-for="sign">
+            <b-form-input
+              id="sign"
+              v-model="form.sign"
+              type="number"
+              required
+              placeholder="จำนวนวัน"
+            ></b-form-input>
           </b-form-group>
         </b-col>
 
         <b-col cols="4">
-          <b-form-group id="import" label="เข้าโกดังไทย" label-for="import">
+          <b-form-group id="import" label="สถิติเข้าโกดังไทย(จำนวนวัน)" label-for="import">
             <b-form-input
               id="import"
               v-model="form.import"
-              type="text"
+              type="number"
               required
-              placeholder="เข้าโกดังไทย"
+              placeholder="จำนวนวัน"
             ></b-form-input>
           </b-form-group>
         </b-col>
@@ -147,9 +153,9 @@
                 :value="prop.name"
               >{{prop.name}} &nbsp;&nbsp;</label>
             </td>
-            <td>{{val.export}}</td>
-            <td>{{val.import}}</td>
-            <td>{{val.sign}}</td>
+            <td>{{val.export}} วัน</td>
+            <td>{{val.import}} วัน</td>
+            <td>{{val.sign}} วัน</td>
             <td>
               <vs-button
                 v-b-modal.billingDetail
@@ -182,7 +188,8 @@ export default {
     return {
       showData: [],
       form: {
-        properties: []
+        properties: [],
+        import: 5
       },
       value: [],
       options: [{ name: "ดำ", code: "black" }, { name: "ขาว", code: "white" }],

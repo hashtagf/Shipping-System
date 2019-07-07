@@ -31,13 +31,10 @@
       </b-col>
       <b-col cols="4">
         <b-form-group id="statusPrice" label="สถานะค่าส่ง" label-for="statusPrice">
-          <b-form-input
-            id="statusPrice"
-            v-model="showData.statusPrice"
-            type="text"
-            required
-            placeholder="สถานะค่าส่ง"
-          ></b-form-input>
+          <b-badge variant="success" v-if="showData.statusPrice">{{showData.statusPrice}}</b-badge>
+          <b-badge variant="info" v-else @click="updateStatusPrice()">
+            <a href="#" class="text-white">{{"รอการชำระค่าขนส่ง"}}</a>
+          </b-badge>
         </b-form-group>
       </b-col>
     </b-row>
@@ -96,7 +93,7 @@
         <b-button type="submit" variant="primary" block @click="updateStatus()">อัพเดทการขนส่ง</b-button>
       </b-col>
       <b-col cols="6">
-        <b-button type="reset" variant="danger" block>ยกเลิก</b-button>
+        <b-button variant="danger" to="/" block>ย้อนกลับ</b-button>
       </b-col>
     </b-row>
   </b-container>
@@ -124,14 +121,64 @@ export default {
   watch: {},
   methods: {
     updateStatus() {
+      let status = "รอการจัดส่ง";
+      console.log(this.showData);
+      if (this.showData.exportStore) {
+        status = "ร้านส่งออก";
+        this.showData.exportStore = parseInt(
+          momentjs(this.showData.exportStore).format("x")
+        );
+      }
+      if (this.showData.signature) {
+        status = "เซ็นรับ";
+        this.showData.signature = parseInt(
+          momentjs(this.showData.signature).format("x")
+        );
+      }
+      if (this.showData.signin) {
+        status = "เข้าระบบ";
+        this.showData.signin = parseInt(
+          momentjs(this.showData.signin).format("x")
+        );
+      }
+      if (this.showData.exportCN) {
+        status = "ส่งออกจากจีน";
+        this.showData.exportCN = parseInt(
+          momentjs(this.showData.exportCN).format("x")
+        );
+      }
+      if (this.showData.toTH) {
+        status = "เข้าโกดังไทย";
+        this.showData.toTH = parseInt(momentjs(this.showData.toTH).format("x"));
+      }
+      if (this.showData.toCustomer) {
+        status = "ส่งให้ลูกค้า";
+        this.showData.toCustomer = parseInt(
+          momentjs(this.showData.toCustomer).format("x")
+        );
+      }
+      if (this.showData.success) {
+        status = "รับสินค้าแล้ว";
+        this.showData.success = parseInt(
+          momentjs(this.showData.success).format("x")
+        );
+      }
       billingFirestore.doc(this.$route.params.id).update({
-        timeShipping: this.showData
+        timeShipping: this.showData,
+        status: status
       });
       this.$swal({
         title: "สำเร็จ",
         text: "อัพเดทเรียบร้อย",
         type: "success",
         timer: 2000
+      });
+    },
+    updateStatusPrice() {
+      console.log(this.showData);
+      this.showData.statusPrice = "ชำระแล้ว";
+      billingFirestore.doc(this.$route.params.id).update({
+        timeShipping: this.showData
       });
     }
   },
@@ -148,16 +195,13 @@ export default {
         });
       });
     });
-    billingFirestore
-      .doc(this.$route.params.id)
-      .get()
-      .then(doc => {
-        if (doc.data().timeShipping) this.showData = doc.data().timeShipping;
-        else {
-          this.showData.timestamp = doc.data().timestamp;
-        }
-        this.$vs.loading.close();
-      });
+    billingFirestore.doc(this.$route.params.id).onSnapshot(doc => {
+      if (doc.data().timeShipping) this.showData = doc.data().timeShipping;
+      else {
+        this.showData.timestamp = doc.data().timestamp;
+      }
+      this.$vs.loading.close();
+    });
     console.log(this.showData);
   }
 };
