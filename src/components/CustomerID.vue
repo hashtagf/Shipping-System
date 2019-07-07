@@ -54,7 +54,7 @@
             <tr>
                 <th scope="col" class="text-center">#</th>
                 <th scope="col" class="text-center">รหัสลูกค้า</th>
-                <th scope="col" class="text-center">#</th>
+                <th scope="col" class="text-center"> </th>
             </tr>
             </thead>
             <tbody>

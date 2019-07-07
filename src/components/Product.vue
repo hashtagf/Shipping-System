@@ -138,6 +138,7 @@
             <th scope="col">ร้านส่งออก</th>
             <th scope="col">เซ็นรับ</th>
             <th scope="col">เข้าโกดังไทย</th>
+            <th scope="col" class="text-center">แก้ไข</th>
             <th scope="col" class="text-center">ลบ</th>
           </tr>
         </thead>
@@ -158,7 +159,17 @@
             <td>{{val.sign}} วัน</td>
             <td>
               <vs-button
-                v-b-modal.billingDetail
+                
+                color="dark"
+                type="filled"
+                icon="edit"
+                @click="editProduct(val)"
+              ></vs-button>  
+             
+            </td>
+            <td>
+              <vs-button
+                
                 color="danger"
                 type="filled"
                 icon="delete"
@@ -168,6 +179,7 @@
           </tr>
         </tbody>
       </table>
+  
     </b-row>
   </b-container>
 </template>
@@ -194,7 +206,8 @@ export default {
       value: [],
       options: [{ name: "ดำ", code: "black" }, { name: "ขาว", code: "white" }],
       product: [],
-      search: null
+      search: null,
+      edit: []
     };
   },
   watch: {
@@ -269,6 +282,9 @@ export default {
           });
         }
       });
+    },
+    editProduct(val){
+      console.log("hi");
     }
   },
   mounted() {
