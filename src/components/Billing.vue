@@ -186,7 +186,8 @@ export default {
         shipping: this.form.shipping,
         rateTHBprice: this.form.rateTHBprice,
         rateTHBcost: this.form.rateTHBcost,
-        total: this.total
+        total: this.total,
+        status: "รอการจัดส่ง"
       });
       this.$swal({
         title: "สำเร็จ",
