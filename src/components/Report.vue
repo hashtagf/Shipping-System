@@ -105,7 +105,11 @@
         </tbody>
       </table>
 <b-modal id="billingDetail" title="ข้อมูลการขนส่ง" size="xl">
+  <div id="printMe">
               <b-row>
+                <b-col cols="12">
+                  <br />
+                </b-col>
                 <b-col cols="4">
                   <label  v-for="(val) in customerIndex" :key="val.id">ชื่อเล่น : {{val.nickname}}</label>  
                 </b-col> 
@@ -174,8 +178,10 @@
                       </th>
                     </tfoot>
                   </table>
+                  <vs-button  color="primary" type="filled" icon="print" @click="print()">Print</vs-button>
                 </b-col>
               </b-row>
+              </div>
             </b-modal>
     </div>
   </div>
@@ -197,7 +203,8 @@ export default {
       billing: [],
       customer: [],
       billingReport: [],
-      customerIndex: []
+      customerIndex: [],
+      output: null
     };
   },
   components: {
@@ -232,8 +239,13 @@ export default {
       
       this.customerFullname = customer.fullname;
 
+    },
+    print() {
+      // Pass the element id here
+      this.$htmlToPaper('printMe', () => {
+        console.log('Printing done or got cancelled!');
+      });
     }
-
   },
   mounted() {
     this.$vs.loading({
