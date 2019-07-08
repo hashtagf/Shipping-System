@@ -101,7 +101,7 @@
              <b-modal id="billingDetail" title="ข้อมูลการขนส่ง" size="xl">
               <b-row>
                 <b-col cols="4">
-                  <label v-for="(val) in customerIndex" :key="val.id">ชื่อเล่น : {{val.nickname}}</label>  
+                  <label  v-for="(val) in customerIndex" :key="val.id">ชื่อเล่น : {{val.nickname}}</label>  
                 </b-col> 
 
                 <b-col cols="4">
@@ -161,10 +161,10 @@
                       <th></th>
                       <th></th>
                       <th>
-                        <label for>รวมเงิน</label>
+                        <label ><h5>รวมเงิน</h5></label>
                       </th>
                       <th>
-                        <label for>{{TotalPrice}} บาท</label>
+                        <label ><h5>{{TotalPrice}} บาท</h5></label>
                       </th>
                     </tfoot>
                   </table>
