@@ -100,25 +100,17 @@
       </table>
              <b-modal id="billingDetail" title="ข้อมูลการขนส่ง" size="xl">
               <b-row>
-                <b-col>
-                  <label for>ชื่อเล่น : </label>
-                  <div v-for="(val) in billing" :key="val.id">
-                    <customer-name :idCustomer="val.customer" name="true" v-model="customer"></customer-name>
-                  </div>
-                </b-col>
+                <b-col cols="4">
+                  <label v-for="(val) in customerIndex" :key="val.id">ชื่อเล่น : {{val.nickname}}</label>  
+                </b-col> 
 
-                <b-col>
-                  <label for>ชื่อ-นามสกุล : </label>
-                  <div v-for="(val) in billing" :key="val.id">
-                    <customer-name :idCustomer="val.customer" fullname="true" v-model="customer"></customer-name>
-                  </div>
+                <b-col cols="4">
+                  <label v-for="(val) in customerIndex" :key="val.id">ชื่อ-นามสกุล : {{val.fullname}}</label>  
+
                 </b-col>
 
                 <b-col cols="4">
-                  <label for>เบอร์โทร : </label>
-                  <div v-for="(val) in billing" :key="val.id">
-                    <customer-name :idCustomer="val.customer" tel="true" v-model="customer"></customer-name>
-                  </div>   
+                  <label v-for="(val) in customerIndex" :key="val.id">เบอร์โทร : {{val.tel}}</label>  
                 </b-col>
 
                 <b-col cols="12">
@@ -126,11 +118,9 @@
                 </b-col>
 
                 <b-col cols="12">
-                  <label for>ที่อยู่ :</label>
-                  <div v-for="(val) in billing" :key="val.id">
-                    <customer-name :idCustomer="val.customer" address="true" v-model="customer"></customer-name>
-                  </div>    
+                  <label v-for="(val) in customerIndex" :key="val.id">ที่อยู่ : {{val.address}}</label>   
                 </b-col>
+                
                 <b-col cols="12">
                   <br />
                 </b-col>
@@ -201,7 +191,8 @@ export default {
       billing: [],
       customer: [],
       billingReport: [],
-      customerIndex:[]
+      customerIndex: []
+     
     };
   },
   components: {
@@ -211,8 +202,23 @@ export default {
     
     billingDetail(index ,val, customer) {
       this.billingReport= [];
-      // console.log(val);
-      console.log(customer);
+      this.customerIndex= [];
+      //val.customer current ID customer 
+      for(var cust in customer){
+        if(val.customer == customer[cust].id){
+          this.customerFullname = customer[cust].nickname;
+          this.customerIndex.push({
+            nickname: customer[cust].nickname,
+            fullname: customer[cust].fullname,
+            tel: customer[cust].tel,
+            address: customer[cust].address
+
+          });
+
+        }
+
+      }
+      console.log(this.customerIndex);
 
       this.billingReport.push({
         index: index,
@@ -223,10 +229,7 @@ export default {
       });
       this.TotalPrice = val.total.price * val.rateTHBprice;
       this.customerFullname = customer.fullname;
-      
-      console.log(this.customerFullname);
 
-    
     }
   },
   mounted() {
