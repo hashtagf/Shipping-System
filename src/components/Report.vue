@@ -99,118 +99,84 @@
                 icon="settings"
                 class="mr-2"
               ></vs-button>
-              <vs-button v-b-modal.billingDetail color="primary" type="filled" icon="zoom_in"></vs-button>
+              <vs-button v-b-modal.billingDetail color="primary" type="filled" icon="zoom_in" @click="billingDetail(index ,val,customer)"></vs-button>
             </td>
           </tr>
         </tbody>
       </table>
-      <b-modal id="billingDetail" title="ข้อมูลการขนส่ง" size="xl">
-        <b-row>
-          <b-col cols="4">
-            <label for>วันที่ :</label>
-          </b-col>
-          <b-col cols="4">
-            <label for>ชื่อ-นามสกุล :</label>
-          </b-col>
-          <b-col cols="12">
-            <br />
-          </b-col>
+<b-modal id="billingDetail" title="ข้อมูลการขนส่ง" size="xl">
+              <b-row>
+                <b-col cols="4">
+                  <label  v-for="(val) in customerIndex" :key="val.id">ชื่อเล่น : {{val.nickname}}</label>  
+                </b-col> 
 
-          <b-col cols="12">
-            <label for>ที่อยู่ :</label>
-          </b-col>
-          <b-col cols="12">
-            <br />
-          </b-col>
+                <b-col cols="4">
+                  <label v-for="(val) in customerIndex" :key="val.id">ชื่อ-นามสกุล : {{val.fullname}}</label>  
 
-          <b-col cols="4">
-            <label for>การส่งระหว่างประเทศ :</label>
-          </b-col>
-          <b-col cols="4"></b-col>
-          <b-col cols="4">
-            <label for>ค่าขนส่งระหว่างประเทศ :</label>
-          </b-col>
-          <b-col cols="12">
-            <br />
-          </b-col>
+                </b-col>
 
-          <b-col cols="4">
-            <label for>การส่งภายในประเทศ :</label>
-          </b-col>
-          <b-col cols="4">
-            <label for>ภูมิภาค :</label>
-          </b-col>
-          <b-col cols="4">
-            <label for>ค่าส่งภายในประเทศ :</label>
-          </b-col>
-          <b-col cols="12">
-            <br />
-          </b-col>
+                <b-col cols="4">
+                  <label v-for="(val) in customerIndex" :key="val.id">เบอร์โทร : {{val.tel}}</label>  
+                </b-col>
 
-          <b-col cols="3">
-            <label for>ประเภทสินค้า :</label>
-          </b-col>
-          <b-col cols="3">
-            <label for>ปริมาตรรวม :</label>
-          </b-col>
-          <b-col cols="3">
-            <label for>น้ำหนักรวม :</label>
-          </b-col>
-          <b-col cols="3">
-            <label for>อัตราต่อหน่วย/บาท :</label>
-          </b-col>
-          <b-col cols="12">
-            <br />
-          </b-col>
-          <b-col cols="12">
-            <div class="col-11 text-center my-1">
-              <h5>รายละเอียดสินค้า</h5>
-            </div>
-          </b-col>
+                <b-col cols="12">
+                  <br />
+                </b-col>
 
-          <!-- <b-col cols="12">
-              <label for="">...</label> 
-            </b-col> 
-            <b-col cols="12">
-              <label for="">..</label> 
-            </b-col> 
-            <b-col cols="12">
-              <label for="">...</label> 
-          </b-col>-->
+                <b-col cols="12">
+                  <label v-for="(val) in customerIndex" :key="val.id">ที่อยู่ : {{val.address}}</label>   
+                </b-col>
+                
+                <b-col cols="12">
+                  <br />
+                </b-col>
 
-          <b-col cols="12" class="table-responsive" style="height:700px;">
-            <table class="table">
-              <thead>
-                <th>รายการ</th>
-                <th>คุณสมบัติ</th>
-                <th>จำนวน</th>
-                <th>ราคาต่อชิ้น</th>
-                <th>จำนวนเงิน</th>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>เสื้อ</td>
-                  <td>ฟรุ้งฟริ้ง</td>
-                  <td>5000000</td>
-                  <td>20</td>
-                  <td>5000000*20</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>
-                  <label for>รวมเงิน</label>
-                </th>
-                <th>
-                  <label for>100000000 บาท</label>
-                </th>
-              </tfoot>
-            </table>
-          </b-col>
-        </b-row>
-      </b-modal>
+                <b-col cols="12">
+                  <br />
+                </b-col>
+                <b-col cols="12">
+                  <div class="col-11 text-center my-1">
+                    <h5>รายละเอียดสินค้า</h5>
+                  </div>
+                </b-col>
+
+                <b-col cols="12" class="table-responsive" style="height:700px;">
+                  <table class="table">
+                    <thead>
+                      <th>รายการ</th>
+                      <th>คุณสมบัติ</th>
+                      <th>จำนวน</th>
+                      <th>ราคาต่อชิ้น</th>
+                      <th>จำนวนเงิน</th>
+                    </thead>
+                    <tbody v-for="(val) in billingReport" :key="val.id">
+                      <tr v-for="(prod) in val.product" :key="prod.id">     
+                        <td >
+                          {{prod.product.name}}
+                          </td>
+                        <td >
+                          {{prod.properties}}
+                        </td>
+                        <td>{{prod.count}}</td>
+                        <td>{{prod.product.price}}</td>
+                        <td>{{prod.count * prod.product.price}}</td>
+                      </tr>
+                    </tbody>
+                    <tfoot v-for="(val) in billingReport" :key="val.id">
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th>
+                        <label ><h5>รวมเงิน(หักส่วนต่าง)</h5></label>
+                      </th>
+                      <th>
+                        <label ><h5>{{TotalPrice}} บาท</h5></label>
+                      </th>
+                    </tfoot>
+                  </table>
+                </b-col>
+              </b-row>
+            </b-modal>
     </div>
   </div>
 </template>
@@ -226,14 +192,49 @@ export default {
   name: "Billing",
   data() {
     return {
+      TotalPrice :  0,
+      customerFullname:"",
       billing: [],
-      customer: []
+      customer: [],
+      billingReport: [],
+      customerIndex: []
     };
   },
   components: {
     CustomerName
   },
-  methods: {},
+  methods: {
+ billingDetail(index ,val, customer) {
+      this.billingReport= [];
+      this.customerIndex= [];
+      //val.customer current ID customer 
+      for(var cust in customer){
+        if(val.customer == customer[cust].id){
+          this.customerFullname = customer[cust].nickname;
+          this.customerIndex.push({
+            nickname: customer[cust].nickname,
+            fullname: customer[cust].fullname,
+            tel: customer[cust].tel,
+            address: customer[cust].address
+          });
+        }
+      }
+      console.log(this.customerIndex);
+
+      this.billingReport.push({
+        index: index,
+        time: val.timestamp,
+        name: val.customer,
+        product: val.billing,
+        customer: customer
+      });
+      this.TotalPrice = (val.total.price * val.rateTHBprice) - (val.total.cost * val.rateTHBcost);
+      
+      this.customerFullname = customer.fullname;
+
+    }
+
+  },
   mounted() {
     this.$vs.loading({
       type: "sound"
