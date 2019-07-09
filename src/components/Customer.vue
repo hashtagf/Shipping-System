@@ -96,18 +96,80 @@
             <th scope="col" class="text-center">ชื่อ-นามสกุล</th>
             <th scope="col" class="text-center">โทรศัพท์</th>
             <th scope="col" class="text-center" width="40%">ที่อยู่</th>
+            <th scope="col" class="text-center" >แก้ไข</th>
             <th scope="col" class="text-center" width="5%">ลบ</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(val) in showData" :key="val.id">
-            <td>{{val.customerID}}</td>
-            <td>{{val.nickname}}</td>
-            <td>{{val.fullname}}</td>
-            <td>{{val.tel}}</td>
-            <td>{{val.address}}</td>
             <td>
-              
+              {{val.customerID}}
+
+            </td>
+            <td>
+              <div v-if="val!=editText">{{val.nickname}}</div>
+              <b-form-input v-else
+                id="nickname"
+                v-model="form.editNickname"
+                type="text"
+                required
+                placeholder="ชื่อเล่น"
+              ></b-form-input>
+            </td>
+            <td>
+              <div v-if="val!=editText">{{val.fullname}}</div>
+              <b-form-input v-else
+                id="fullname"
+                v-model="form.editFullname"
+                type="text"
+                required
+                placeholder="ชื่อ-นามสกุล"
+              ></b-form-input>
+            </td>
+            <td>
+              <div v-if="val!=editText">{{val.tel}}</div>
+              <b-form-input v-else
+                id="tel"
+                v-model="form.editTel"
+                type="tel"
+                required
+                placeholder="เบอร์โทรศัพท์"
+              ></b-form-input>
+            </td>
+            <td>
+              <div v-if="val!=editText">{{val.address}}</div>
+              <b-form-input v-else
+                id="address"
+                v-model="form.editAddress"
+                type="text"
+                required
+                placeholder="ที่อยู่"
+              ></b-form-input>
+            </td>
+            <td>
+              <vs-button v-if="val!=editText"
+                color="primary"
+                type="filled"
+                icon="edit"
+                @click="editShow(val)"
+              ></vs-button> 
+              <div v-else>
+              <vs-button  
+                color="danger"
+                type="filled"
+                icon="cancel"
+                @click="editHide(val)"
+              ></vs-button>  
+              <vs-button  
+                color="primary"
+                type="filled"
+                icon="check"
+                @click="editUpdate(val)"
+              ></vs-button>  
+              </div>
+            </td>
+            <td>
+    
               <vs-button
                 v-b-modal.billingDetail
                 color="danger"
@@ -115,6 +177,7 @@
                 icon="delete"
                 @click="delCustomer(val)"
               ></vs-button>
+
             </td>
           </tr>
         </tbody>
@@ -135,7 +198,8 @@ export default {
     return {
       showData: [],
       form: {},
-      search: null
+      search: null,
+      editText: null
     };
   },
   watch: {
@@ -203,6 +267,48 @@ export default {
         }
       });
       //productFirestore.child(val.id).remove();
+    },
+    editHide(val){
+      console.log("hide edit input");
+     this.editText = null;
+ 
+
+    },
+    editShow(val){
+      console.log("show edit input");
+      console.log(val);
+      this.editText = val;
+      this.form.editNickname = val.nickname;
+      this.form.editFullname = val.fullname;
+      this.form.editTel = val.tel;
+      this.form.editAddress = val.address;
+
+    },
+    editUpdate(val){
+      this.$swal({
+        title: "ต้องการอัพเดตข้อมูลสินค้า ?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "อัพเดตข้อมูล!"
+      }).then(result => {
+     customerFirestore.doc(val.id).update({
+        nickname: this.form.editNickname,
+        fullname: this.form.editFullname,
+        tel: this.form.editTel,
+        address: this.form.editAddress,
+
+      });
+          this.$swal({
+            title: "สำเร็จ",
+            text: "อัพเดตข้อมูลสำเร็จ",
+            type: "success",
+            timer: 2000
+          });
+      })
+
+
     }
   },
   mounted() {

@@ -381,17 +381,6 @@ export default {
       this.form.editImport = val.import;
     },
     editUpdate(val){
-    
-      // productFirestore.doc(val.id).update({
-      //   name: this.form.editName,
-      //   cost: this.form.editCost,
-      //   price: this.form.editPrice,
-      //   properties: this.form.editProperties,
-      //   export: this.form.editExport,
-      //   sign: this.form.editSign,
-      //   import: this.form.editImport
-      // });
-
       this.$swal({
         title: "ต้องการอัพเดตข้อมูลสินค้า ?",
         type: "warning",
