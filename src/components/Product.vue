@@ -55,7 +55,7 @@
         </b-col>
 
         <b-col cols="6">
-          <label class="typo__label">คุณสมบัติ</label>
+          <label class="typo__label" >คุณสมบัติ</label>
           <multiselect
             class
             v-model="form.properties"
@@ -183,7 +183,7 @@
               >{{prop.name}} &nbsp;&nbsp;</label></div>
               <multiselect v-else
                
-                  v-model="form.editProperties"
+                  v-model="form.properties"
                   tag-placeholder="Press enter to select"
                   placeholder="เพิ่มรายการ"
                   label="name"
@@ -342,6 +342,14 @@ export default {
       this.options.push(tag);
       this.form.properties.push(tag);
     },
+    addEditTag(newTag) {
+      const tag = {
+        name: newTag,
+        code: Date.now()
+      };
+      this.option.push(tag);
+      this.form.editProperties.push(tag);
+    },
     delProduct(val) {
       this.$swal({
         title: "ต้องการลบข้อมูลสินค้า ?",
@@ -365,8 +373,7 @@ export default {
     },
     editHide(val){
       console.log("hide edit input");
-     this.editText = null;
- 
+      this.editText = null;
 
     },
     editShow(val){
@@ -375,7 +382,7 @@ export default {
       this.form.editName = val.name;
       this.form.editPrice = val.price;
       this.form.editCost = val.cost;
-      this.form.editProperties = val.properties;
+      this.form.properties = val.properties;
       this.form.editExport = val.export;
       this.form.editSign = val.sign;
       this.form.editImport = val.import;
@@ -393,7 +400,7 @@ export default {
         name: this.form.editName,
         cost: this.form.editCost,
         price: this.form.editPrice,
-        properties: this.form.editProperties,
+        properties: this.form.properties,
         export: this.form.editExport,
         sign: this.form.editSign,
         import: this.form.editImport

@@ -172,11 +172,10 @@
                       </th>
                     </tfoot>
                   </table>
-
-                  <vs-button  color="primary" type="filled" icon="print" @click="print()">Print</vs-button>
                 </b-col>          
               </b-row>
               </div>
+              <vs-button  color="primary" type="filled" icon="print" @click="print()">Print</vs-button>
             </b-modal>
 
 
