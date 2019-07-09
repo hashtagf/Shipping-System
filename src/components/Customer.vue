@@ -107,6 +107,7 @@
             <td>{{val.tel}}</td>
             <td>{{val.address}}</td>
             <td>
+              
               <vs-button
                 v-b-modal.billingDetail
                 color="danger"

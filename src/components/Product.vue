@@ -144,32 +144,111 @@
         </thead>
         <tbody>
           <tr v-for="(val) in showData" :key="val.id">
-            <td>{{val.name}}</td>
-            <td>{{val.cost}}</td>
-            <td>{{val.price}}</td>
             <td>
-              <label
+              <div v-if="val!=editText">{{val.name}}</div>
+              <b-form-input v-else
+                id="name"
+                v-model="form.editName"
+                type="text"
+                required
+                placeholder="ชือสินค้า"
+              ></b-form-input>
+            </td>
+            <td>
+              <div v-if="val!=editText">{{val.cost}}</div>
+              <b-form-input v-else
+                id="cost"
+                v-model="form.editCost"
+                type="number"
+                required
+                placeholder="ราคาต้นทุน"
+              ></b-form-input>        
+            </td>
+            <td>
+              <div v-if="val!=editText">{{val.price}}</div>
+              <b-form-input v-else
+                id="price"
+                v-model="form.editPrice"
+                type="number"
+                required
+                placeholder="ราคาขาย"
+              ></b-form-input>
+            </td>
+            <td>
+              <div v-if="val!=editText">
+              <label 
                 v-for="prop in val.properties"
                 :key="prop.name"
                 :value="prop.name"
-              >{{prop.name}} &nbsp;&nbsp;</label>
+              >{{prop.name}} &nbsp;&nbsp;</label></div>
+              <multiselect v-else
+               
+                  v-model="form.editProperties"
+                  tag-placeholder="Press enter to select"
+                  placeholder="เพิ่มรายการ"
+                  label="name"
+                  track-by="code"
+                  :options="options"
+                  :multiple="true"
+                  :taggable="true"
+                  @tag="addTag"
+                ></multiselect>
             </td>
-            <td>{{val.export}} วัน</td>
-            <td>{{val.import}} วัน</td>
-            <td>{{val.sign}} วัน</td>
             <td>
-              <vs-button
-                
-                color="dark"
+              <div v-if="val!=editText">{{val.export}} วัน </div>
+              <b-form-input v-else
+                id="export"
+                v-model="form.editExport"
+                type="number"
+                required
+                placeholder="จำนวนวัน"
+              ></b-form-input>
+            </td>
+            <td>
+              <div v-if="val!=editText">{{val.import}} วัน</div>
+              <b-form-input v-else
+                id="sign"
+                v-model="form.editImport"
+                type="number"
+                required
+                placeholder="จำนวนวัน"
+              ></b-form-input>
+
+            </td>
+            <td>
+              <div v-if="val!=editText">{{val.sign}} วัน </div>
+              <b-form-input v-else
+                id="import"
+                v-model="form.editSign"
+                type="number"
+                required
+                placeholder="จำนวนวัน"
+              ></b-form-input>
+            </td>
+            <td>
+              <vs-button v-if="val!=editText"
+                color="primary"
                 type="filled"
                 icon="edit"
-                @click="editProduct(val)"
+                @click="editShow(val)"
+              ></vs-button> 
+              <div v-else>
+              <vs-button  
+                color="danger"
+                type="filled"
+                icon="cancel"
+                @click="editHide(val)"
               ></vs-button>  
-             
+              <vs-button  
+                color="primary"
+                type="filled"
+                icon="check"
+                @click="editUpdate(val)"
+              ></vs-button>  
+              </div> 
             </td>
             <td>
               <vs-button
-                
                 color="danger"
                 type="filled"
                 icon="delete"
@@ -179,7 +258,8 @@
           </tr>
         </tbody>
       </table>
-  
+
+
     </b-row>
   </b-container>
 </template>
@@ -207,7 +287,7 @@ export default {
       options: [{ name: "ดำ", code: "black" }, { name: "ขาว", code: "white" }],
       product: [],
       search: null,
-      edit: []
+      editText: null
     };
   },
   watch: {
@@ -283,8 +363,61 @@ export default {
         }
       });
     },
-    editProduct(val){
-      console.log("hi");
+    editHide(val){
+      console.log("hide edit input");
+     this.editText = null;
+ 
+
+    },
+    editShow(val){
+      console.log("show edit input");
+      this.editText = val;
+      this.form.editName = val.name;
+      this.form.editPrice = val.price;
+      this.form.editCost = val.cost;
+      this.form.editProperties = val.properties;
+      this.form.editExport = val.export;
+      this.form.editSign = val.sign;
+      this.form.editImport = val.import;
+    },
+    editUpdate(val){
+    
+      // productFirestore.doc(val.id).update({
+      //   name: this.form.editName,
+      //   cost: this.form.editCost,
+      //   price: this.form.editPrice,
+      //   properties: this.form.editProperties,
+      //   export: this.form.editExport,
+      //   sign: this.form.editSign,
+      //   import: this.form.editImport
+      // });
+
+      this.$swal({
+        title: "ต้องการอัพเดตข้อมูลสินค้า ?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "อัพเดตข้อมูล!"
+      }).then(result => {
+     productFirestore.doc(val.id).update({
+        name: this.form.editName,
+        cost: this.form.editCost,
+        price: this.form.editPrice,
+        properties: this.form.editProperties,
+        export: this.form.editExport,
+        sign: this.form.editSign,
+        import: this.form.editImport
+      });
+          this.$swal({
+            title: "สำเร็จ",
+            text: "อัพเดตข้อมูลสำเร็จ",
+            type: "success",
+            timer: 2000
+          });
+      })
+
+
     }
   },
   mounted() {
