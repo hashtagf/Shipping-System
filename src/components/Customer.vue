@@ -276,7 +276,7 @@ export default {
     },
     editShow(val){
       console.log("show edit input");
-      console.log(val);
+      // console.log(val);
       this.editText = val;
       this.form.editNickname = val.nickname;
       this.form.editFullname = val.fullname;
