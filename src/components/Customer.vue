@@ -91,7 +91,7 @@
       <table class="table border table-hover table-bordered">
         <thead class="thead-light">
           <tr>
-            <th scope="col" class="text-center">รหัสลูกค้า</th>
+            
             <th scope="col" class="text-center">ชื่อเล่น</th>
             <th scope="col" class="text-center">ชื่อ-นามสกุล</th>
             <th scope="col" class="text-center">โทรศัพท์</th>
@@ -102,10 +102,7 @@
         </thead>
         <tbody>
           <tr v-for="(val) in showData" :key="val.id">
-            <td>
-              {{val.customerID}}
 
-            </td>
             <td>
               <div v-if="val!=editText">{{val.nickname}}</div>
               <b-form-input v-else
@@ -306,6 +303,7 @@ export default {
             type: "success",
             timer: 2000
           });
+          this.editText = null;
       })
 
 

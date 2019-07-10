@@ -411,8 +411,10 @@ export default {
             type: "success",
             timer: 2000
           });
+          this.editText = null;
       })
-
+      
+      
 
     }
   },
