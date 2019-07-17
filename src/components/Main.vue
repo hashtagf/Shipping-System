@@ -105,7 +105,7 @@
                 color="success"
                 type="filled"
                 icon="local_shipping"
-                @click="billingDetail(index ,val,customer)"
+                @click="billingShippingSelect(val.id)"
               ></vs-button>
             </td>
           </tr>
@@ -192,9 +192,76 @@
         </div>
       </b-modal>
       <b-modal id="billingShipping" title="ข้อมูลการขนส่ง" size="xl">
-        <b-row id="printShipping">
-          <b-col cols="12"></b-col>
-        </b-row>
+        <div id="printShipping">
+          <b-row v-if="billingShipping">
+            <b-col cols="12 h5">รหัสบิลลูกค้า : {{billingShipping.id}}</b-col>
+            <b-col cols="6" v-if="billingShipping.shipping === 'CAR'">
+              การขนส่งระหว่างประเทศ :
+              <b>ขนส่งทางรถ</b>
+            </b-col>
+            <b-col cols="6" v-if="billingShipping.shipping === 'SHIP'">
+              การขนส่งระหว่างประเทศ :
+              <b>ขนส่งทางเรือ</b>
+            </b-col>
+            <b-col cols="6">
+              ประเภทสินค้า :
+              <b>{{shippingData[billingShipping.productType].name}}</b>
+            </b-col>
+            <b-col cols="6">
+              การขนส่งภายในประเทศ :
+              <b>{{billingShipping.shippingTH}}</b>
+            </b-col>
+            <b-col cols="6" v-if="billingShipping.area === 0">
+              ภูมิภาค :
+              <b>ภาคกลาง ตะวันออก ตะวันตก</b>
+            </b-col>
+            <b-col cols="6" v-if="billingShipping.area === 1">
+              ภูมิภาค :
+              <b>ภาคเหนือ อีสาน ใต้</b>
+            </b-col>
+            <b-col cols="6">
+              ปริมาตร :
+              <b>{{billingShipping.capacity}}</b> ลูกบาศก์เมตร
+            </b-col>
+            <b-col cols="6">
+              น้ำหนัก :
+              <b>{{billingShipping.weight}}</b> กิโลกรัม
+            </b-col>
+            <b-col cols="6">
+              อัตราต่อหน่วย :
+              <b>{{billingShipping.rateunit}}</b> บาท
+            </b-col>
+            <b-col cols="6"></b-col>
+            <b-col cols="6">
+              ค่าขนส่งระหว่างประเทศ :
+              <b class="text-warning">{{billingShipping.totalShipping}}</b> บาท
+            </b-col>
+            <b-col cols="6">
+              ค่าขนส่งภายในประเทศ :
+              <b class="text-warning">{{billingShipping.totalInTH}}</b> บาท
+            </b-col>
+            <b-col cols="12 my-3 h5">
+              ราคารวม :
+              <b
+                class="text-info"
+              >{{billingShipping.totalInTH + billingShipping.totalShipping}}</b> บาท
+            </b-col>
+            <b-col cols="12">
+              <table class="table table-bordered">
+                <tr>
+                  <th>กล่อง</th>
+                  <th>น้ำหนัก</th>
+                  <th>ปริมาตร</th>
+                </tr>
+                <tr v-for="(val, index) in billingShipping.boxes" :key="val">
+                  <td>{{index + 1}}</td>
+                  <td>{{val}}</td>
+                  <td>{{billingShipping.value[index]}}</td>
+                </tr>
+              </table>
+            </b-col>
+          </b-row>
+        </div>
         <b-row>
           <vs-button color="primary" type="filled" icon="print" @click="printShipping()">Print</vs-button>
         </b-row>
@@ -209,7 +276,11 @@ import { FireSQL } from "firesql";
 import "firesql/rx";
 const fireSQL = new FireSQL(firebase.firestore());
 import CustomerName from "../getdatabase/CustomerName.vue";
+var shippingFirestore = firebase.firestore().collection("Shippings");
 var billingFirestore = firebase.firestore().collection("Billings");
+var shippingDataFirestore = firebase.firestore().collection("ShippingData");
+var shippingDataTHFirestore = firebase.firestore().collection("ShippingDataTH");
+
 export default {
   name: "Billing",
   data() {
@@ -220,7 +291,9 @@ export default {
       customer: [],
       billingReport: [],
       customerIndex: [],
-      output: null
+      output: null,
+      shippingData: [],
+      billingShipping: null
     };
   },
   components: {
@@ -259,12 +332,42 @@ export default {
       this.$htmlToPaper("printMe", () => {
         console.log("Printing done or got cancelled!");
       });
+    },
+    printShipping() {
+      // Pass the element id here
+      this.$htmlToPaper("printShipping", () => {
+        console.log("Printing done or got cancelled!");
+      });
+    },
+    billingShippingSelect(id) {
+      this.$vs.loading({
+        type: "sound"
+      });
+
+      shippingFirestore
+        .doc(id)
+        .get()
+        .then(doc => {
+          if (doc.exists) {
+            this.billingShipping = doc.data();
+            this.billingShipping.id = doc.id;
+          }
+          this.$vs.loading.close();
+        });
     }
   },
   mounted() {
     this.$vs.loading({
       type: "sound"
     });
+    shippingDataFirestore
+      .orderBy("priority")
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          this.shippingData.push(doc.data());
+        });
+      });
     fireSQL
       .rxQuery("SELECT * FROM Billings ORDER BY timestamp DESC", {
         includeId: "id"

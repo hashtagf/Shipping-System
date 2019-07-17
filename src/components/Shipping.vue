@@ -39,9 +39,9 @@
           <b-form-group id="shippingType" label="การขนส่งภายในประเทศ" label-for="shippingType">
             <b-form-select v-model="shippingTH" required>
               <option :value="null" slot="first">เลือกประเภทการขนส่งภายในประเทศ</option>
-              <option value="CAR">ทางรถกระบะ</option>
-              <option value="KERRY">KERRY EXPRESS</option>
-              <option value="NIM">NIM EXPRESS</option>
+              <option value="ทางรถกระบะ">ทางรถกระบะ</option>
+              <option value="KERRY EXPRESS">KERRY EXPRESS</option>
+              <option value="NIM EXPRESS">NIM EXPRESS</option>
             </b-form-select>
           </b-form-group>
         </b-col>
@@ -275,9 +275,9 @@ export default {
     },
     calculate() {
       // IN_THAI
-      if (this.shippingTH === "CAR") {
+      if (this.shippingTH === "ทางรถกระบะ") {
         this.totalInTH = 2800;
-      } else if (this.shippingTH === "KERRY") {
+      } else if (this.shippingTH === "KERRY EXPRESS") {
         if (this.weight <= 2) {
           this.totalInTH =
             this.shippingDataTH[0].shipping[this.area + 2] * this.weight;
