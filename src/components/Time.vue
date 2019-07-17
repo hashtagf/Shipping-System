@@ -137,7 +137,7 @@
               </p>
             </td>
             <td>
-              <p v-if="val.timeShipping">
+              <span v-if="val.timeShipping">
                 <span v-if="val.timeShipping.toTH">
                   {{val.timeShipping.toTH | moment("DD-MM-YY")}}
                   <p>
@@ -149,22 +149,18 @@
                   <p>
                     <b-badge variant="secondary">{{"รอดำเนินการ"}}</b-badge>
                   </p>
-                  <span v-if="val.timeShipping.exportCN">
-                    {{val.timeShipping.exportCN | moment("add",val.billing[0].product.import + " days","DD-MM-YY")}}
-                    <p>
-                      <b-badge variant="warning">{{"วันที่คาดการณ์"}}</b-badge>
-                    </p>
-                  </span>
                 </span>
-              </p>
-              <span v-else>
-                <p>
-                  <b-badge variant="secondary">{{"รอดำเนินการ"}}</b-badge>
-                </p>
               </span>
+              <p v-else>
+                <b-badge variant="secondary">{{"รอดำเนินการ"}}</b-badge>
+              </p>
+              {{val.timeShipping.exportCN | moment("add",parseInt(val.billing[0].product.import) + " days","DD-MM-YY")}}
+              <p>
+                <b-badge variant="warning">{{"วันที่คาดการณ์"}}</b-badge>
+              </p>
             </td>
             <td>
-              <p v-if="val.timeShipping">
+              <span v-if="val.timeShipping">
                 <span v-if="val.timeShipping.toCustomer">
                   {{val.timeShipping.toCustomer | moment("DD-MM-YY")}}
                   <p>
@@ -177,9 +173,13 @@
                     <b-badge variant="secondary">{{"รอดำเนินการ"}}</b-badge>
                   </p>
                 </span>
-              </p>
+              </span>
               <p v-else>
                 <b-badge variant="secondary">{{"รอดำเนินการ"}}</b-badge>
+              </p>
+              {{val.timeShipping.toTH | moment("add",parseInt(1) + " days","DD-MM-YY")}}
+              <p>
+                <b-badge variant="warning">{{"วันที่คาดการณ์"}}</b-badge>
               </p>
             </td>
             <td>

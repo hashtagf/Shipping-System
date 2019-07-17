@@ -93,94 +93,112 @@
                 icon="settings"
                 class="mr-2"
               ></vs-button>
-              <vs-button v-b-modal.billingDetail color="primary" type="filled" icon="zoom_in" @click="billingDetail(index ,val,customer)"></vs-button>
+              <vs-button
+                v-b-modal.billingDetail
+                color="primary"
+                type="filled"
+                icon="local_printshop"
+                @click="billingDetail(index ,val,customer)"
+              ></vs-button>
+              <vs-button
+                v-b-modal.billingShipping
+                color="success"
+                type="filled"
+                icon="local_shipping"
+                @click="billingDetail(index ,val,customer)"
+              ></vs-button>
             </td>
-         </tr>
+          </tr>
         </tbody>
       </table>
-             <b-modal id="billingDetail" title="ข้อมูลการขนส่ง" size="xl">
-               <div id="printMe">
-              <b-row>
-                <b-col cols="12">
-                  <br />
-                </b-col>
-                <b-col cols="4">
-                  <label  v-for="(val) in customerIndex" :key="val.id">ชื่อเล่น : {{val.nickname}}</label>  
-                </b-col> 
+      <b-modal id="billingDetail" title="ข้อมูลบิลลูกค้า" size="xl">
+        <div id="printMe">
+          <b-row>
+            <b-col cols="12">
+              <br />
+            </b-col>
+            <b-col cols="4">
+              <label v-for="(val) in customerIndex" :key="val.id">ชื่อเล่น : {{val.nickname}}</label>
+            </b-col>
 
-                <b-col cols="4">
-                  <label v-for="(val) in customerIndex" :key="val.id">ชื่อ-นามสกุล : {{val.fullname}}</label>  
+            <b-col cols="4">
+              <label v-for="(val) in customerIndex" :key="val.id">ชื่อ-นามสกุล : {{val.fullname}}</label>
+            </b-col>
 
-                </b-col>
+            <b-col cols="4">
+              <label v-for="(val) in customerIndex" :key="val.id">เบอร์โทร : {{val.tel}}</label>
+            </b-col>
 
-                <b-col cols="4">
-                  <label v-for="(val) in customerIndex" :key="val.id">เบอร์โทร : {{val.tel}}</label>  
-                </b-col>
+            <b-col cols="12">
+              <br />
+            </b-col>
 
-                <b-col cols="12">
-                  <br />
-                </b-col>
+            <b-col cols="12">
+              <label v-for="(val) in customerIndex" :key="val.id">ที่อยู่ : {{val.address}}</label>
+            </b-col>
 
-                <b-col cols="12">
-                  <label v-for="(val) in customerIndex" :key="val.id">ที่อยู่ : {{val.address}}</label>   
-                </b-col>
-                
-                <b-col cols="12">
-                  <br />
-                </b-col>
+            <b-col cols="12">
+              <br />
+            </b-col>
 
-                <b-col cols="12">
-                  <br />
-                </b-col>
-                <b-col cols="12">
-                  <div class="col-11 text-center my-1">
-                    <h5>รายละเอียดสินค้า</h5>
-                  </div>
-                </b-col>
-
-                <b-col cols="12" class="table-responsive" style="height:450px;">
-                  <table class="table">
-                    <thead>
-                      <th>รายการ</th>
-                      <th>คุณสมบัติ</th>
-                      <th>จำนวน</th>
-                      <th>ราคาต่อชิ้น</th>
-                      <th>จำนวนเงิน</th>
-                    </thead>
-                    <tbody v-for="(val) in billingReport" :key="val.id">
-                      <tr v-for="(prod) in val.product" :key="prod.id">     
-                        <td >
-                          {{prod.product.name}}
-                          </td>
-                        <td >
-                          {{prod.properties}}
-                        </td>
-                        <td>{{prod.count}}</td>
-                        <td>{{prod.product.price}}</td>
-                        <td>{{prod.count * prod.product.price}}</td>
-                      </tr>
-                    </tbody>
-                    <tfoot v-for="(val) in billingReport" :key="val.id">
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th>
-                        <label ><h5>รวมเงิน</h5></label>
-                      </th>
-                      <th>
-                        <label ><h5>{{TotalPrice}} บาท</h5></label>
-                      </th>
-                    </tfoot>
-                  </table>
-                </b-col>          
-              </b-row>
+            <b-col cols="12">
+              <br />
+            </b-col>
+            <b-col cols="12">
+              <div class="col-11 text-center my-1">
+                <h5>รายละเอียดสินค้า</h5>
               </div>
-              <vs-button  color="primary" type="filled" icon="print" @click="print()">Print</vs-button>
-            </b-modal>
+            </b-col>
 
-
-
-
+            <b-col cols="12" class="table-responsive" style="height:450px;">
+              <table class="table">
+                <thead>
+                  <th>รายการ</th>
+                  <th>คุณสมบัติ</th>
+                  <th>จำนวน</th>
+                  <th>ราคาต่อชิ้น(บาท)</th>
+                  <th>จำนวนเงิน(บาท)</th>
+                </thead>
+                <tbody v-for="(val) in billingReport" :key="val.id">
+                  <tr v-for="(prod) in val.product" :key="prod.id">
+                    <td>{{prod.product.name}}</td>
+                    <td>{{prod.properties}}</td>
+                    <td>{{prod.count}}</td>
+                    <td>{{prod.product.price}}</td>
+                    <td>{{prod.count * prod.product.price}}</td>
+                  </tr>
+                </tbody>
+                <tfoot v-for="(val) in billingReport" :key="val.id">
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th>
+                    <label>
+                      <h5>รวมเงิน</h5>
+                    </label>
+                  </th>
+                  <th>
+                    <label>
+                      <h5>{{TotalPrice}} บาท</h5>
+                    </label>
+                  </th>
+                </tfoot>
+              </table>
+            </b-col>
+          </b-row>
+        </div>
+        <div class="col-12 justify-content-end">
+          <vs-button color="primary" type="filled" icon="print" @click="print()">Print</vs-button>
+        </div>
+      </b-modal>
+      <b-modal id="billingShipping" title="ข้อมูลการขนส่ง" size="xl">
+        <b-row id="printShipping">
+          <b-col cols="12"></b-col>
+        </b-row>
+        <b-row>
+          <vs-button color="primary" type="filled" icon="print" @click="printShipping()">Print</vs-button>
+        </b-row>
+      </b-modal>
     </div>
   </div>
 </template>
@@ -196,38 +214,33 @@ export default {
   name: "Billing",
   data() {
     return {
-      TotalPrice :  0,
-      customerFullname:"",
+      TotalPrice: 0,
+      customerFullname: "",
       billing: [],
       customer: [],
       billingReport: [],
       customerIndex: [],
       output: null
-     
     };
   },
   components: {
     CustomerName
   },
   methods: {
-    
-    billingDetail(index ,val, customer) {
-      this.billingReport= [];
-      this.customerIndex= [];
-      //val.customer current ID customer 
-      for(var cust in customer){
-        if(val.customer == customer[cust].id){
+    billingDetail(index, val, customer) {
+      this.billingReport = [];
+      this.customerIndex = [];
+      //val.customer current ID customer
+      for (var cust in customer) {
+        if (val.customer == customer[cust].id) {
           this.customerFullname = customer[cust].nickname;
           this.customerIndex.push({
             nickname: customer[cust].nickname,
             fullname: customer[cust].fullname,
             tel: customer[cust].tel,
             address: customer[cust].address
-
           });
-
         }
-
       }
       console.log(this.customerIndex);
 
@@ -240,12 +253,11 @@ export default {
       });
       this.TotalPrice = val.total.price * val.rateTHBprice;
       this.customerFullname = customer.fullname;
-
     },
     print() {
       // Pass the element id here
-      this.$htmlToPaper('printMe', () => {
-        console.log('Printing done or got cancelled!');
+      this.$htmlToPaper("printMe", () => {
+        console.log("Printing done or got cancelled!");
       });
     }
   },
@@ -267,7 +279,6 @@ export default {
         this.$vs.loading.close();
         this.customer = documents;
       });
-
   }
 };
 </script>
