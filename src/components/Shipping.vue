@@ -55,10 +55,15 @@
             </b-form-select>
           </b-form-group>
 
-          <b-form-group id="totalInTh" label="จำนวนเงิน(การขนส่งภายในประเทศ)" label-for="totalInTh" v-else >
+          <b-form-group
+            id="totalInTh"
+            label="จำนวนเงิน(การขนส่งภายในประเทศ)"
+            label-for="totalInTh"
+            v-else
+          >
             <b-form-input
               id="totalInTh"
-              v-model="totalInTh"
+              v-model="totalInTH"
               type="number"
               step="0.01"
               min="0"
@@ -258,8 +263,7 @@ export default {
           totalShipping: this.totalShipping,
           totalInTH: this.totalInTH,
           productType: this.productType,
-          area: this.area,
-          totalInTh: this.totalInTh
+          area: this.area
         })
         .then(() => {
           this.$swal({
@@ -485,7 +489,6 @@ export default {
           this.productType = doc.data().productType;
           this.area = doc.data().area;
           this.totalInTh = doc.data().totalInTh;
-          
         }
         this.$vs.loading.close();
       });

@@ -244,7 +244,7 @@
               ราคารวม :
               <b
                 class="text-info"
-              >{{billingShipping.totalInTH + billingShipping.totalShipping}}</b> บาท
+              >{{parseFloat(billingShipping.totalInTH) + billingShipping.totalShipping}}</b> บาท
             </b-col>
             <b-col cols="12">
               <table class="table table-bordered">
