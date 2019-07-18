@@ -42,18 +42,32 @@
               <option value="ทางรถกระบะ">ทางรถกระบะ</option>
               <option value="KERRY EXPRESS">KERRY EXPRESS</option>
               <option value="NIM EXPRESS">NIM EXPRESS</option>
+              <option value="etcCost">อื่นๆ</option>
             </b-form-select>
           </b-form-group>
         </b-col>
         <b-col cols="3">
-          <b-form-group id="area" label="ภูมิภาค" label-for="area">
+          <b-form-group id="area" label="ภูมิภาค" label-for="area" v-if="shippingTH!='etcCost'">
             <b-form-select v-model="area" required>
               <option :value="null" slot="first">เลือกภูมิภาค</option>
               <option :value="0">ภาคกลาง ตะวันออก ตะวันตก</option>
               <option :value="1">ภาคเหนือ อีสาน ใต้</option>
             </b-form-select>
           </b-form-group>
+
+          <b-form-group id="etcCost" label="จำนวนเงิน(การขนส่งภายในประเทศ)" label-for="etcCost" v-else >
+            <b-form-input
+              id="etcCost"
+              v-model="etcCost"
+              type="number"
+              step="0.01"
+              min="0"
+              required
+              placeholder="ค่าเงินไทย"
+            ></b-form-input>
+          </b-form-group>
         </b-col>
+
         <b-col cols="4">
           <b-form-group id="capacity" label="ปริมาตร" label-for="capacity">
             <b-form-input
@@ -244,7 +258,8 @@ export default {
           totalShipping: this.totalShipping,
           totalInTH: this.totalInTH,
           productType: this.productType,
-          area: this.area
+          area: this.area,
+          etcCost: this.etcCost
         })
         .then(() => {
           this.$swal({
@@ -469,6 +484,8 @@ export default {
           this.totalInTH = doc.data().totalInTH;
           this.productType = doc.data().productType;
           this.area = doc.data().area;
+           this.etcCost = doc.data().etcCost;
+          
         }
         this.$vs.loading.close();
       });
