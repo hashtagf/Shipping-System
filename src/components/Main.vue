@@ -150,8 +150,8 @@
               </div>
             </b-col>
 
-            <b-col cols="12" class="table-responsive" style="height:450px;">
-              <table class="table">
+            <b-col cols="12" class="table-responsive" >
+              <table class="table table-bordered">
                 <thead>
                   <th>รายการ</th>
                   <th>คุณสมบัติ</th>
@@ -168,22 +168,34 @@
                     <td>{{prod.count * prod.product.price}}</td>
                   </tr>
                 </tbody>
-                <tfoot v-for="(val) in billingReport" :key="val.id">
+                <!-- <tfoot v-for="(val) in billingReport" :key="val.id">
                   <th></th>
                   <th></th>
                   <th></th>
                   <th>
                     <label>
-                      <h5>รวมเงิน</h5>
+                      <h5 class="text-success">รวมเงิน</h5>
                     </label>
                   </th>
                   <th>
                     <label>
-                      <h5>{{TotalPrice}} บาท</h5>
+                      <h5 class="text-success">{{TotalPrice}} บาท</h5>
                     </label>
                   </th>
-                </tfoot>
-              </table>
+                </tfoot> -->
+              </table>        
+            </b-col>
+            <b-col cols="3">   
+            </b-col>
+            <b-col cols="3">   
+            </b-col>
+            <b-col cols="3">   
+            </b-col>
+            <b-col cols="3">
+              
+             <h5 class="text-success">
+              <b-badge pill variant="warning"> ยอดเงินรวม : {{TotalPrice}} บาท</b-badge>
+              </h5>
             </b-col>
           </b-row>
         </div>
