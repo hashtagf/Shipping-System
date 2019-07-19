@@ -103,7 +103,56 @@
             </td>
           </tr>
         </tbody>
+      </table><br><br><br>
+
+
+<div class="Main justify-content-center row">
+    <div class="col-7 text-center my-3">
+      <h3>สรุปยอดกำไร</h3>
+    </div>
+    <div class="col-10 table-responsive">
+      <table class="table border table-hover table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col" width="2.5%">#</th>
+            <th scope="col">วันที่</th>
+            <th scope="col">ลูกค้า</th>
+            <th scope="col">ราคารวม(จากบิล)</th>
+             <th scope="col">ส่วนต่าง(จากบิล)</th>
+     
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(val , index) in billing" :key="val.id">
+            <th scope="row">{{index + 1}}</th>
+            <td>{{val.timestamp | moment("DD/MM/Y")}}</td>
+            <td><customer-name :idCustomer="val.customer" name="true"></customer-name></td>
+            <td>
+              <b
+                class="text-success "
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(val.total.cost * val.rateTHBcost)}}</b></td>
+            <td>
+              <b
+                class="text-info  "
+              >{{new Intl.NumberFormat({ style: 'currency'}).format((val.total.price * val.rateTHBprice) - (val.total.cost * val.rateTHBcost))}}</b></td>
+          </tr>
+        </tbody>
+        <tfoot class="thead-light">
+          <tr >
+            <td scope="row"></td>
+            <td></td>
+            <th class="h5">ยอดรวม</th>
+            <th></th>
+            <th></th>
+          </tr> 
+        </tfoot>
       </table>
+    </div>
+  </div>
+
+
+
+
 <b-modal id="billingDetail" title="ข้อมูลการขนส่ง" size="xl">
   <div id="printMe">
               <b-row>
