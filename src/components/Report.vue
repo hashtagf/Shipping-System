@@ -99,139 +99,148 @@
                 icon="settings"
                 class="mr-2"
               ></vs-button>
-              <vs-button v-b-modal.billingDetail color="primary" type="filled" icon="zoom_in" @click="billingDetail(index ,val,customer)"></vs-button>
+              <vs-button
+                v-b-modal.billingDetail
+                color="primary"
+                type="filled"
+                icon="zoom_in"
+                @click="billingDetail(index ,val,customer)"
+              ></vs-button>
             </td>
           </tr>
         </tbody>
-      </table><br><br><br>
-
-
-<div class="Main justify-content-center row">
-    <div class="col-7 text-center my-3">
-      <h3>สรุปยอดกำไร</h3>
-    </div>
-    <div class="col-10 table-responsive">
-      <table class="table border table-hover table-bordered">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col" width="2.5%">#</th>
-            <th scope="col">วันที่</th>
-            <th scope="col">ลูกค้า</th>
-            <th scope="col">ราคารวม(จากบิล)</th>
-             <th scope="col">ส่วนต่าง(จากบิล)</th>
-     
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(val , index) in billing" :key="val.id">
-            <th scope="row">{{index + 1}}</th>
-            <td>{{val.timestamp | moment("DD/MM/Y")}}</td>
-            <td><customer-name :idCustomer="val.customer" name="true"></customer-name></td>
-            <td>
-              <b
-                class="text-success "
-              >{{new Intl.NumberFormat({ style: 'currency'}).format(val.total.cost * val.rateTHBcost)}}</b></td>
-            <td>
-              <b
-                class="text-info  "
-              >{{new Intl.NumberFormat({ style: 'currency'}).format((val.total.price * val.rateTHBprice) - (val.total.cost * val.rateTHBcost))}}</b></td>
-          </tr>
-        </tbody>
-        <tfoot class="thead-light">
-          <tr >
-            <td scope="row"></td>
-            <td></td>
-            <th class="h5">ยอดรวม</th>
-            <th></th>
-            <th></th>
-          </tr> 
-        </tfoot>
       </table>
-    </div>
-  </div>
+      <br />
+      <br />
+      <br />
 
+      <div class="Main justify-content-center row">
+        <div class="col-7 text-center my-3">
+          <h3>สรุปยอดกำไร</h3>
+        </div>
+        <div class="col-10 table-responsive">
+          <table class="table border table-hover table-bordered">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col" width="2.5%">#</th>
+                <th scope="col">วันที่</th>
+                <th scope="col">ลูกค้า</th>
+                <th scope="col">ราคารวม(จากบิล)</th>
+                <th scope="col">ส่วนต่าง(จากบิล)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(val , index) in billing" :key="val.id">
+                <th scope="row">{{index + 1}}</th>
+                <td>{{val.timestamp | moment("DD/MM/Y")}}</td>
+                <td>
+                  <customer-name :idCustomer="val.customer" name="true"></customer-name>
+                </td>
+                <td>
+                  <b
+                    class="text-success"
+                  >{{new Intl.NumberFormat({ style: 'currency'}).format(val.total.cost * val.rateTHBcost)}}</b>
+                </td>
+                <td>
+                  <b
+                    class="text-info"
+                  >{{new Intl.NumberFormat({ style: 'currency'}).format((val.total.price * val.rateTHBprice) - (val.total.cost * val.rateTHBcost))}}</b>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot class="thead-light">
+              <tr class>
+                <td class="h5" colspan="3">ยอดรวม</td>
+                <td class="h5 text-success">
+                  <b>{{new Intl.NumberFormat({ style: 'currency'}).format(total)}}</b>
+                </td>
+                <td class="h5 text-info">
+                  <b>{{new Intl.NumberFormat({ style: 'currency'}).format(profit)}}</b>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
 
+      <b-modal id="billingDetail" title="ข้อมูลการขนส่ง" size="xl">
+        <div id="printMe">
+          <b-row>
+            <b-col cols="12">
+              <br />
+            </b-col>
+            <b-col cols="4">
+              <label v-for="(val) in customerIndex" :key="val.id">ชื่อเล่น : {{val.nickname}}</label>
+            </b-col>
 
+            <b-col cols="4">
+              <label v-for="(val) in customerIndex" :key="val.id">ชื่อ-นามสกุล : {{val.fullname}}</label>
+            </b-col>
 
-<b-modal id="billingDetail" title="ข้อมูลการขนส่ง" size="xl">
-  <div id="printMe">
-              <b-row>
-                <b-col cols="12">
-                  <br />
-                </b-col>
-                <b-col cols="4">
-                  <label  v-for="(val) in customerIndex" :key="val.id">ชื่อเล่น : {{val.nickname}}</label>  
-                </b-col> 
+            <b-col cols="4">
+              <label v-for="(val) in customerIndex" :key="val.id">เบอร์โทร : {{val.tel}}</label>
+            </b-col>
 
-                <b-col cols="4">
-                  <label v-for="(val) in customerIndex" :key="val.id">ชื่อ-นามสกุล : {{val.fullname}}</label>  
+            <b-col cols="12">
+              <br />
+            </b-col>
 
-                </b-col>
+            <b-col cols="12">
+              <label v-for="(val) in customerIndex" :key="val.id">ที่อยู่ : {{val.address}}</label>
+            </b-col>
 
-                <b-col cols="4">
-                  <label v-for="(val) in customerIndex" :key="val.id">เบอร์โทร : {{val.tel}}</label>  
-                </b-col>
+            <b-col cols="12">
+              <br />
+            </b-col>
 
-                <b-col cols="12">
-                  <br />
-                </b-col>
-
-                <b-col cols="12">
-                  <label v-for="(val) in customerIndex" :key="val.id">ที่อยู่ : {{val.address}}</label>   
-                </b-col>
-                
-                <b-col cols="12">
-                  <br />
-                </b-col>
-
-                <b-col cols="12">
-                  <br />
-                </b-col>
-                <b-col cols="12">
-                  <div class="col-11 text-center my-1">
-                    <h5>รายละเอียดสินค้า</h5>
-                  </div>
-                </b-col>
-
-                <b-col cols="12" class="table-responsive" style="height:700px;">
-                  <table class="table">
-                    <thead>
-                      <th>รายการ</th>
-                      <th>คุณสมบัติ</th>
-                      <th>จำนวน</th>
-                      <th>ราคาต่อชิ้น</th>
-                      <th>จำนวนเงิน</th>
-                    </thead>
-                    <tbody v-for="(val) in billingReport" :key="val.id">
-                      <tr v-for="(prod) in val.product" :key="prod.id">     
-                        <td >
-                          {{prod.product.name}}
-                          </td>
-                        <td >
-                          {{prod.properties}}
-                        </td>
-                        <td>{{prod.count}}</td>
-                        <td>{{prod.product.price}}</td>
-                        <td>{{prod.count * prod.product.price}}</td>
-                      </tr>
-                    </tbody>
-                    <tfoot v-for="(val) in billingReport" :key="val.id">
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th>
-                        <label ><h5>รวมเงิน(หักส่วนต่าง)</h5></label>
-                      </th>
-                      <th>
-                        <label ><h5>{{TotalPrice}} บาท</h5></label>
-                      </th>
-                    </tfoot>
-                  </table>
-                  <vs-button  color="primary" type="filled" icon="print" @click="print()">Print</vs-button>
-                </b-col>
-              </b-row>
+            <b-col cols="12">
+              <br />
+            </b-col>
+            <b-col cols="12">
+              <div class="col-11 text-center my-1">
+                <h5>รายละเอียดสินค้า</h5>
               </div>
-            </b-modal>
+            </b-col>
+
+            <b-col cols="12" class="table-responsive" style="height:700px;">
+              <table class="table">
+                <thead>
+                  <th>รายการ</th>
+                  <th>คุณสมบัติ</th>
+                  <th>จำนวน</th>
+                  <th>ราคาต่อชิ้น</th>
+                  <th>จำนวนเงิน</th>
+                </thead>
+                <tbody v-for="(val) in billingReport" :key="val.id">
+                  <tr v-for="(prod) in val.product" :key="prod.id">
+                    <td>{{prod.product.name}}</td>
+                    <td>{{prod.properties}}</td>
+                    <td>{{prod.count}}</td>
+                    <td>{{prod.product.price}}</td>
+                    <td>{{prod.count * prod.product.price}}</td>
+                  </tr>
+                </tbody>
+                <tfoot v-for="(val) in billingReport" :key="val.id">
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th>
+                    <label>
+                      <h5>รวมเงิน(หักส่วนต่าง)</h5>
+                    </label>
+                  </th>
+                  <th>
+                    <label>
+                      <h5>{{TotalPrice}} บาท</h5>
+                    </label>
+                  </th>
+                </tfoot>
+              </table>
+              <vs-button color="primary" type="filled" icon="print" @click="print()">Print</vs-button>
+            </b-col>
+          </b-row>
+        </div>
+      </b-modal>
     </div>
   </div>
 </template>
@@ -247,25 +256,27 @@ export default {
   name: "Billing",
   data() {
     return {
-      TotalPrice :  0,
-      customerFullname:"",
+      TotalPrice: 0,
+      customerFullname: "",
       billing: [],
       customer: [],
       billingReport: [],
       customerIndex: [],
-      output: null
+      output: null,
+      profit: 0,
+      total: 0
     };
   },
   components: {
     CustomerName
   },
   methods: {
- billingDetail(index ,val, customer) {
-      this.billingReport= [];
-      this.customerIndex= [];
-      //val.customer current ID customer 
-      for(var cust in customer){
-        if(val.customer == customer[cust].id){
+    billingDetail(index, val, customer) {
+      this.billingReport = [];
+      this.customerIndex = [];
+      //val.customer current ID customer
+      for (var cust in customer) {
+        if (val.customer == customer[cust].id) {
           this.customerFullname = customer[cust].nickname;
           this.customerIndex.push({
             nickname: customer[cust].nickname,
@@ -284,15 +295,15 @@ export default {
         product: val.billing,
         customer: customer
       });
-      this.TotalPrice = (val.total.price * val.rateTHBprice) - (val.total.cost * val.rateTHBcost);
-      
-      this.customerFullname = customer.fullname;
+      this.TotalPrice =
+        val.total.price * val.rateTHBprice - val.total.cost * val.rateTHBcost;
 
+      this.customerFullname = customer.fullname;
     },
     print() {
       // Pass the element id here
-      this.$htmlToPaper('printMe', () => {
-        console.log('Printing done or got cancelled!');
+      this.$htmlToPaper("printMe", () => {
+        console.log("Printing done or got cancelled!");
       });
     }
   },
@@ -307,6 +318,12 @@ export default {
       .subscribe(documents => {
         this.$vs.loading.close();
         this.billing = documents;
+        this.billing.forEach(val => {
+          this.total += val.total.cost * val.rateTHBcost;
+          this.profit +=
+            val.total.price * val.rateTHBprice -
+            val.total.cost * val.rateTHBcost;
+        });
       });
     fireSQL
       .rxQuery("SELECT * FROM Customers", { includeId: "id" })

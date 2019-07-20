@@ -154,10 +154,12 @@
               <p v-else>
                 <b-badge variant="secondary">{{"รอดำเนินการ"}}</b-badge>
               </p>
-              {{val.timeShipping.exportCN | moment("add",parseInt(val.billing[0].product.import) + " days","DD-MM-YY")}}
-              <p>
-                <b-badge variant="warning">{{"วันที่คาดการณ์"}}</b-badge>
-              </p>
+              <span v-if="val.timeShipping">
+                {{val.timeShipping.exportCN | moment("add",parseInt(val.billing[0].product.import) + " days","DD-MM-YY")}}
+                <p v-if="val.timeShipping.exportCN">
+                  <b-badge variant="warning">{{"วันที่คาดการณ์"}}</b-badge>
+                </p>
+              </span>
             </td>
             <td>
               <span v-if="val.timeShipping">
@@ -177,10 +179,12 @@
               <p v-else>
                 <b-badge variant="secondary">{{"รอดำเนินการ"}}</b-badge>
               </p>
-              {{val.timeShipping.toTH | moment("add",parseInt(1) + " days","DD-MM-YY")}}
-              <p>
-                <b-badge variant="warning">{{"วันที่คาดการณ์"}}</b-badge>
-              </p>
+              <span v-if="val.timeShipping">
+                {{val.timeShipping.toTH | moment("add",parseInt(1) + " days","DD-MM-YY")}}
+                <p v-if="val.timeShipping.toTH">
+                  <b-badge variant="warning">{{"วันที่คาดการณ์"}}</b-badge>
+                </p>
+              </span>
             </td>
             <td>
               <p v-if="val.timeShipping">
