@@ -1,7 +1,7 @@
 <template>
   <div class="Main justify-content-center row">
     <div class="col-7 text-left my-3">
-      <h3>บิลลูกค้า</h3>
+      <h3>รายงานสรุป</h3>
     </div>
     <div class="col-3 justify-content my-3">
       <router-link to="/Billing">

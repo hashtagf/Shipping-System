@@ -150,7 +150,7 @@
               </div>
             </b-col>
 
-            <b-col cols="12" class="table-responsive" >
+            <b-col cols="12" class="table-responsive">
               <table class="table table-bordered">
                 <thead>
                   <th>รายการ</th>
@@ -182,19 +182,15 @@
                       <h5 class="text-success">{{TotalPrice}} บาท</h5>
                     </label>
                   </th>
-                </tfoot> -->
-              </table>        
+                </tfoot>-->
+              </table>
             </b-col>
-            <b-col cols="3">   
-            </b-col>
-            <b-col cols="3">   
-            </b-col>
-            <b-col cols="3">   
-            </b-col>
+            <b-col cols="3"></b-col>
+            <b-col cols="3"></b-col>
+            <b-col cols="3"></b-col>
             <b-col cols="3">
-              
-             <h5 class="text-success">
-              <b-badge pill variant="warning"> ยอดเงินรวม : {{TotalPrice}} บาท</b-badge>
+              <h5 class="text-success">
+                <b-badge pill variant="warning">ยอดเงินรวม : {{TotalPrice}} บาท</b-badge>
               </h5>
             </b-col>
           </b-row>
@@ -243,7 +239,7 @@
               อัตราต่อหน่วย :
               <b>{{billingShipping.rateunit}}</b> บาท
             </b-col>
-            <b-col cols="6"></b-col>
+
             <b-col cols="6">
               ค่าขนส่งระหว่างประเทศ :
               <b class="text-warning">{{billingShipping.totalShipping}}</b> บาท

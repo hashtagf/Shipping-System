@@ -42,12 +42,12 @@
               <option value="ทางรถกระบะ">ทางรถกระบะ</option>
               <option value="KERRY EXPRESS">KERRY EXPRESS</option>
               <option value="NIM EXPRESS">NIM EXPRESS</option>
-              <option value="totalInTh">อื่นๆ</option>
+              <option value="อื่นๆ">อื่นๆ</option>
             </b-form-select>
           </b-form-group>
         </b-col>
         <b-col cols="3">
-          <b-form-group id="area" label="ภูมิภาค" label-for="area" v-if="shippingTH!='totalInTh'">
+          <b-form-group id="area" label="ภูมิภาค" label-for="area" v-if="shippingTH !== 'อื่นๆ'">
             <b-form-select v-model="area" required>
               <option :value="null" slot="first">เลือกภูมิภาค</option>
               <option :value="0">ภาคกลาง ตะวันออก ตะวันตก</option>
@@ -56,13 +56,13 @@
           </b-form-group>
 
           <b-form-group
-            id="totalInTh"
+            id="totalInTH"
             label="จำนวนเงิน(การขนส่งภายในประเทศ)"
-            label-for="totalInTh"
+            label-for="totalInTH"
             v-else
           >
             <b-form-input
-              id="totalInTh"
+              id="totalInTH"
               v-model="totalInTH"
               type="number"
               step="0.01"
