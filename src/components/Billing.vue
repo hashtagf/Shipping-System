@@ -23,8 +23,8 @@
                   <th scope="col">รายการสินค้า</th>
                   <th scope="col">คุณสมบัติ</th>
                   <th scope="col">จำนวน</th>
-                  <th scope="col">ราคา</th>
-                  <th scope="col">ราคารวม</th>
+                  <th scope="col">ราคา(CNY)</th>
+                  <th scope="col">ราคารวม(CNY)</th>
                   <th scope="col">จัดการ</th>
                 </thead>
                 <tbody>
@@ -96,7 +96,7 @@
           </b-row>
         </b-modal>
         <b-col cols="4">
-          <b-form-group id="shipping" label="ค่าขนส่งในจีน" label-for="shipping">
+          <b-form-group id="shipping" label="ค่าขนส่งในจีน(CNY)" label-for="shipping">
             <b-form-input
               id="shipping"
               v-model="form.shipping"
@@ -104,12 +104,16 @@
               step="0.01"
               min="0"
               required
-              placeholder="ค่าขนส่งในจีน"
+              placeholder="ค่าขนส่งในจีน(CNY)"
             ></b-form-input>
           </b-form-group>
         </b-col>
         <b-col cols="4">
-          <b-form-group id="rateTHBprice" label="ค่าเงินไทยฝั่งลูกค้า" label-for="rateTHBprice">
+          <b-form-group
+            id="rateTHBprice"
+            label="ค่าเงินไทยฝั่งลูกค้า(THB)"
+            label-for="rateTHBprice"
+          >
             <b-form-input
               id="rateTHBprice"
               v-model="form.rateTHBprice"
@@ -122,7 +126,7 @@
           </b-form-group>
         </b-col>
         <b-col cols="4">
-          <b-form-group id="rateTHBcost" label="ค่าเงินไทยฝั่งต้นทุน" label-for="rateTHBcost">
+          <b-form-group id="rateTHBcost" label="ค่าเงินไทยฝั่งต้นทุน(THB)" label-for="rateTHBcost">
             <b-form-input
               id="rateTHBcost"
               v-model="form.rateTHBcost"

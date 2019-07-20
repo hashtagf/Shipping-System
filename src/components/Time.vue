@@ -17,7 +17,7 @@
             <th scope="col">Tranking Number</th>
             <th scope="col">รหัสลูกค้า</th>
             <th scope="col">ลูกค้า</th>
-            <th scope="col">วันที่สั่ง</th>
+            <th scope="col" style="table-layout: fixed;">วันที่สั่ง</th>
             <th scope="col">ร้านส่งออก</th>
             <th scope="col">เซ็นรับ</th>
             <th scope="col">เข้าระบบ</th>
@@ -51,7 +51,10 @@
             <td>
               <customer-name :idCustomer="val.customer" name="true"></customer-name>
             </td>
-            <td>{{val.timestamp | moment("DD-MM-YY" )}}</td>
+            <td>
+              <p>{{val.timestamp | moment("DD-MM-YY" )}}</p>
+              <b-badge variant="success">{{""}}</b-badge>
+            </td>
             <td>
               <span v-if="val.timeShipping">
                 <span v-if="val.timeShipping.exportStore">

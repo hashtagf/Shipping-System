@@ -98,18 +98,22 @@
           </b-form-group>
         </b-col>
         <b-col cols="4">
-          <b-form-group id="rateunit" label="อัตราต่อหน่วย(บาท)" label-for="rateunit">
+          <b-form-group id="rateunit" label="อัตราต่อหน่วย(THB)" label-for="rateunit">
             <b-form-input
               id="rateunit"
               type="number"
               v-model="rateunit"
               readonly
-              placeholder="อัตราต่อหน่วย(บาท)"
+              placeholder="อัตราต่อหน่วย(THB)"
             ></b-form-input>
           </b-form-group>
         </b-col>
         <b-col cols="4">
-          <b-form-group id="totalShipping" label="ค่าขนส่งระหว่างประเทศ" label-for="totalShipping">
+          <b-form-group
+            id="totalShipping"
+            label="ค่าขนส่งระหว่างประเทศ(THB)"
+            label-for="totalShipping"
+          >
             <b-form-input
               id="totalShipping"
               type="number"
@@ -120,7 +124,7 @@
           </b-form-group>
         </b-col>
         <b-col cols="4">
-          <b-form-group id="totalInTH" label="ค่าขนส่งภายในประเทศ" label-for="totalInTH">
+          <b-form-group id="totalInTH" label="ค่าขนส่งภายในประเทศ(THB)" label-for="totalInTH">
             <b-form-input
               id="totalInTH"
               type="number"
@@ -298,82 +302,58 @@ export default {
         this.totalInTH = 2800;
       } else if (this.shippingTH === "KERRY EXPRESS") {
         if (this.weight <= 2) {
-          this.totalInTH =
-            this.shippingDataTH[0].shipping[this.area + 2] * this.weight;
+          this.totalInTH = this.shippingDataTH[0].shipping[this.area + 2];
         } else if (this.weight <= 5) {
-          this.totalInTH =
-            this.shippingDataTH[1].shipping[this.area + 2] * this.weight;
+          this.totalInTH = this.shippingDataTH[1].shipping[this.area + 2];
         } else if (this.weight <= 10) {
-          this.totalInTH =
-            this.shippingDataTH[2].shipping[this.area + 2] * this.weight;
+          this.totalInTH = this.shippingDataTH[2].shipping[this.area + 2];
         } else if (this.weight <= 20) {
-          this.totalInTH =
-            this.shippingDataTH[3].shipping[this.area + 2] * this.weight;
+          this.totalInTH = this.shippingDataTH[3].shipping[this.area + 2];
         } else if (this.weight <= 30) {
-          this.totalInTH =
-            this.shippingDataTH[4].shipping[this.area + 2] * this.weight;
+          this.totalInTH = this.shippingDataTH[4].shipping[this.area + 2];
         } else if (this.weight <= 40) {
-          this.totalInTH =
-            this.shippingDataTH[5].shipping[this.area + 2] * this.weight;
+          this.totalInTH = this.shippingDataTH[5].shipping[this.area + 2];
         } else if (this.weight <= 50) {
-          this.totalInTH =
-            this.shippingDataTH[6].shipping[this.area + 2] * this.weight;
+          this.totalInTH = this.shippingDataTH[6].shipping[this.area + 2];
         } else if (this.weight <= 60) {
-          this.totalInTH =
-            this.shippingDataTH[7].shipping[this.area + 2] * this.weight;
+          this.totalInTH = this.shippingDataTH[7].shipping[this.area + 2];
         } else if (this.weight <= 70) {
-          this.totalInTH =
-            this.shippingDataTH[8].shipping[this.area + 2] * this.weight;
+          this.totalInTH = this.shippingDataTH[8].shipping[this.area + 2];
         } else if (this.weight <= 80) {
-          this.totalInTH =
-            this.shippingDataTH[9].shipping[this.area + 2] * this.weight;
+          this.totalInTH = this.shippingDataTH[9].shipping[this.area + 2];
         } else if (this.weight <= 90) {
-          this.totalInTH =
-            this.shippingDataTH[10].shipping[this.area + 2] * this.weight;
+          this.totalInTH = this.shippingDataTH[10].shipping[this.area + 2];
         } else if (this.weight <= 100) {
-          this.totalInTH =
-            this.shippingDataTH[11].shipping[this.area + 2] * this.weight;
+          this.totalInTH = this.shippingDataTH[11].shipping[this.area + 2];
         } else if (this.weight > 100) {
           this.totalInTH =
             this.shippingDataTH[12].shipping[this.area + 2] * this.weight;
         }
       } else {
         if (this.weight <= 2) {
-          this.totalInTH =
-            this.shippingDataTH[0].shipping[this.area] * this.weight;
+          this.totalInTH = this.shippingDataTH[0].shipping[this.area];
         } else if (this.weight <= 5) {
-          this.totalInTH =
-            this.shippingDataTH[1].shipping[this.area] * this.weight;
+          this.totalInTH = this.shippingDataTH[1].shipping[this.area];
         } else if (this.weight <= 10) {
-          this.totalInTH =
-            this.shippingDataTH[2].shipping[this.area] * this.weight;
+          this.totalInTH = this.shippingDataTH[2].shipping[this.area];
         } else if (this.weight <= 20) {
-          this.totalInTH =
-            this.shippingDataTH[3].shipping[this.area] * this.weight;
+          this.totalInTH = this.shippingDataTH[3].shipping[this.area];
         } else if (this.weight <= 30) {
-          this.totalInTH =
-            this.shippingDataTH[4].shipping[this.area] * this.weight;
+          this.totalInTH = this.shippingDataTH[4].shipping[this.area];
         } else if (this.weight <= 40) {
-          this.totalInTH =
-            this.shippingDataTH[5].shipping[this.area] * this.weight;
+          this.totalInTH = this.shippingDataTH[5].shipping[this.area];
         } else if (this.weight <= 50) {
-          this.totalInTH =
-            this.shippingDataTH[6].shipping[this.area] * this.weight;
+          this.totalInTH = this.shippingDataTH[6].shipping[this.area];
         } else if (this.weight <= 60) {
-          this.totalInTH =
-            this.shippingDataTH[7].shipping[this.area] * this.weight;
+          this.totalInTH = this.shippingDataTH[7].shipping[this.area];
         } else if (this.weight <= 70) {
-          this.totalInTH =
-            this.shippingDataTH[8].shipping[this.area] * this.weight;
+          this.totalInTH = this.shippingDataTH[8].shipping[this.area];
         } else if (this.weight <= 80) {
-          this.totalInTH =
-            this.shippingDataTH[9].shipping[this.area] * this.weight;
+          this.totalInTH = this.shippingDataTH[9].shipping[this.area];
         } else if (this.weight <= 90) {
-          this.totalInTH =
-            this.shippingDataTH[10].shipping[this.area] * this.weight;
+          this.totalInTH = this.shippingDataTH[10].shipping[this.area];
         } else if (this.weight <= 100) {
-          this.totalInTH =
-            this.shippingDataTH[11].shipping[this.area] * this.weight;
+          this.totalInTH = this.shippingDataTH[11].shipping[this.area];
         } else if (this.weight > 100) {
           this.totalInTH =
             this.shippingDataTH[12].shipping[this.area] * this.weight;

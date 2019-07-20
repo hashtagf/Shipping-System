@@ -18,8 +18,9 @@
             <th scope="col">รายการสินค้า</th>
             <th scope="col">คุณสมบัติ</th>
             <th scope="col">จำนวน</th>
-            <th scope="col">ราคา</th>
-            <th scope="col">รวมราคา</th>
+            <th scope="col">ราคา(CNY)</th>
+            <th scope="col">รวมราคา(CNY)</th>
+            <th scope="col">ค่าเงิน(THB)</th>
             <th scope="col">รวมราคา (THB)</th>
             <th scope="col">สถานะ</th>
             <th scope="col" width="10%">จัดการบิล</th>
@@ -73,6 +74,13 @@
               >{{new Intl.NumberFormat({ style: 'currency'}).format(val.total.price)}}</b>
             </td>
             <td>
+              <div
+                class="border-bottom"
+                v-for="(product,index)  in val.billing"
+                :key="index"
+              >{{val.rateTHBprice}}</div>
+            </td>
+            <td>
               <b
                 class="text-success"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(val.total.price * val.rateTHBprice)}}</b>
@@ -111,39 +119,49 @@
           </tr>
         </tbody>
       </table>
-      <b-modal id="billingDetail" title="ข้อมูลบิลลูกค้า" size="xl">
+      <b-modal id="billingDetail" title="ข้อมูลบิลลูกค้า" size="xl" v-if="billingReport">
         <div id="printMe">
           <b-row>
             <b-col cols="12">
               <br />
             </b-col>
             <b-col cols="4">
-              <label v-for="(val) in customerIndex" :key="val.id">ชื่อเล่น : {{val.nickname}}</label>
+              <label>
+                <span class="float-left mr-2">ชื่อเล่น :</span>
+                <customer-name class="float-left" :idCustomer="billingReport.customer" name="true"></customer-name>
+              </label>
             </b-col>
 
             <b-col cols="4">
-              <label v-for="(val) in customerIndex" :key="val.id">ชื่อ-นามสกุล : {{val.fullname}}</label>
+              <label>
+                <span class="float-left mr-2">ชื่อ-นามสกุล :</span>
+                <customer-name
+                  class="float-left"
+                  :idCustomer="billingReport.customer"
+                  fullname="true"
+                ></customer-name>
+              </label>
             </b-col>
 
             <b-col cols="4">
-              <label v-for="(val) in customerIndex" :key="val.id">เบอร์โทร : {{val.tel}}</label>
+              <label>
+                <span class="float-left mr-2">เบอร์โทร :</span>
+                <customer-name class="float-left" :idCustomer="billingReport.customer" tel="true"></customer-name>
+              </label>
             </b-col>
 
             <b-col cols="12">
-              <br />
+              <label>
+                <span class="float-left mr-2">ที่อยู่ :</span>
+
+                <customer-name
+                  class="float-left"
+                  :idCustomer="billingReport.customer"
+                  address="true"
+                ></customer-name>
+              </label>
             </b-col>
 
-            <b-col cols="12">
-              <label v-for="(val) in customerIndex" :key="val.id">ที่อยู่ : {{val.address}}</label>
-            </b-col>
-
-            <b-col cols="12">
-              <br />
-            </b-col>
-
-            <b-col cols="12">
-              <br />
-            </b-col>
             <b-col cols="12">
               <div class="col-11 text-center my-1">
                 <h5>รายละเอียดสินค้า</h5>
@@ -153,44 +171,41 @@
             <b-col cols="12" class="table-responsive">
               <table class="table table-bordered">
                 <thead>
+                  <th>#</th>
                   <th>รายการ</th>
                   <th>คุณสมบัติ</th>
                   <th>จำนวน</th>
-                  <th>ราคาต่อชิ้น(บาท)</th>
-                  <th>จำนวนเงิน(บาท)</th>
+                  <th>ราคาต่อชิ้น(CNY)</th>
+                  <th>จำนวนเงิน(CNY)</th>
                 </thead>
-                <tbody v-for="(val) in billingReport" :key="val.id">
-                  <tr v-for="(prod) in val.product" :key="prod.id">
+
+                <tbody>
+                  <tr v-for="(prod,index) in billingReport.billing" :key="index">
+                    <td>{{index + 1}}</td>
                     <td>{{prod.product.name}}</td>
                     <td>{{prod.properties}}</td>
                     <td>{{prod.count}}</td>
                     <td>{{prod.product.price}}</td>
-                    <td>{{prod.count * prod.product.price}}</td>
+                    <td>{{new Intl.NumberFormat({ style: 'currency'}).format(prod.count * prod.product.price)}}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="3">ยอดเงินรวม</td>
+                    <td>{{billingReport.total.count}}</td>
+                    <td></td>
+                    <td>{{new Intl.NumberFormat({ style: 'currency'}).format(billingReport.total.price)}}</td>
                   </tr>
                 </tbody>
-                <!-- <tfoot v-for="(val) in billingReport" :key="val.id">
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th>
-                    <label>
-                      <h5 class="text-success">รวมเงิน</h5>
-                    </label>
-                  </th>
-                  <th>
-                    <label>
-                      <h5 class="text-success">{{TotalPrice}} บาท</h5>
-                    </label>
-                  </th>
-                </tfoot>-->
               </table>
             </b-col>
             <b-col cols="3"></b-col>
             <b-col cols="3"></b-col>
-            <b-col cols="3"></b-col>
+            <b-col cols="3" class="h5">เรทค่าเงินไทย : {{billingReport.rateTHBprice}} บาท</b-col>
             <b-col cols="3">
-              <h5 class="text-success">
-                <b-badge pill variant="warning">ยอดเงินรวม : {{TotalPrice}} บาท</b-badge>
+              <h5>
+                ยอดเงินรวม :
+                <span
+                  class="text-success"
+                >{{new Intl.NumberFormat({ style: 'currency'}).format(TotalPrice)}}</span> บาท
               </h5>
             </b-col>
           </b-row>
@@ -242,17 +257,21 @@
 
             <b-col cols="6">
               ค่าขนส่งระหว่างประเทศ :
-              <b class="text-warning">{{billingShipping.totalShipping}}</b> บาท
+              <b
+                class="text-warning"
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(billingShipping.totalShipping)}}</b> บาท
             </b-col>
             <b-col cols="6">
               ค่าขนส่งภายในประเทศ :
-              <b class="text-warning">{{billingShipping.totalInTH}}</b> บาท
+              <b
+                class="text-warning"
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(billingShipping.totalInTH)}}</b> บาท
             </b-col>
             <b-col cols="12 my-3 h5">
               ราคารวม :
               <b
                 class="text-info"
-              >{{parseFloat(billingShipping.totalInTH) + billingShipping.totalShipping}}</b> บาท
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(parseFloat(billingShipping.totalInTH) + billingShipping.totalShipping)}}</b> บาท
             </b-col>
             <b-col cols="12">
               <table class="table table-bordered">
@@ -261,7 +280,7 @@
                   <th>น้ำหนัก</th>
                   <th>ปริมาตร</th>
                 </tr>
-                <tr v-for="(val, index) in billingShipping.boxes" :key="val">
+                <tr v-for="(val, index) in billingShipping.boxes" :key="index">
                   <td>{{index + 1}}</td>
                   <td>{{val}}</td>
                   <td>{{billingShipping.value[index]}}</td>
@@ -270,7 +289,7 @@
             </b-col>
           </b-row>
         </div>
-        <b-row>
+        <b-row class="flaot-right">
           <vs-button color="primary" type="filled" icon="print" @click="printShipping()">Print</vs-button>
         </b-row>
       </b-modal>
@@ -297,7 +316,7 @@ export default {
       customerFullname: "",
       billing: [],
       customer: [],
-      billingReport: [],
+      billingReport: null,
       customerIndex: [],
       output: null,
       shippingData: [],
@@ -309,29 +328,31 @@ export default {
   },
   methods: {
     billingDetail(index, val, customer) {
-      this.billingReport = [];
+      this.billingReport = this.billing[index];
+      console.log(this.billingReport);
       this.customerIndex = [];
       //val.customer current ID customer
-      for (var cust in customer) {
-        if (val.customer == customer[cust].id) {
-          this.customerFullname = customer[cust].nickname;
-          this.customerIndex.push({
-            nickname: customer[cust].nickname,
-            fullname: customer[cust].fullname,
-            tel: customer[cust].tel,
-            address: customer[cust].address
-          });
-        }
-      }
-      console.log(this.customerIndex);
+      // for (var cust in customer) {
+      //   if (val.customer == customer[cust].id) {
+      //     this.customerFullname = customer[cust].nickname;
+      //     this.customerIndex.push({
+      //       nickname: customer[cust].nickname,
+      //       fullname: customer[cust].fullname,
+      //       tel: customer[cust].tel,
+      //       address: customer[cust].address
+      //     });
+      //   }
+      // }
+      // console.log(this.customerIndex);
 
-      this.billingReport.push({
-        index: index,
-        time: val.timestamp,
-        name: val.customer,
-        product: val.billing,
-        customer: customer
-      });
+      // this.billingReport.push({
+      //   index: index,
+      //   time: val.timestamp,
+      //   name: val.customer,
+      //   product: val.billing,
+      //   customer: customer,
+      //   total: val.total
+      // });
       this.TotalPrice = val.total.price * val.rateTHBprice;
       this.customerFullname = customer.fullname;
     },
