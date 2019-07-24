@@ -20,7 +20,7 @@
             <th scope="col">Tranking Number</th>
             <th scope="col">รหัสลูกค้า</th>
             <th scope="col">ลูกค้า</th>
-            <th scope="col" style="table-layout: fixed;">วันที่สั่ง</th>
+            <th scope="col">วันที่สั่งสินค้า</th>
             <th scope="col">ร้านส่งออก</th>
             <th scope="col">เซ็นรับ</th>
             <th scope="col">เข้าระบบ</th>
