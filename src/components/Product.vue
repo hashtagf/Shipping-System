@@ -36,6 +36,7 @@
               id="price"
               v-model="form.price"
               type="number"
+              step="0.01"
               required
               placeholder="ราคาขาย"
             ></b-form-input>
@@ -48,6 +49,7 @@
               id="cost"
               v-model="form.cost"
               type="number"
+              step="0.01"
               required
               placeholder="ราคาทุน"
             ></b-form-input>
@@ -68,6 +70,33 @@
             :taggable="true"
             @tag="addTag"
           ></multiselect>
+        </b-col>
+
+        <b-col cols="12">
+          <br />
+        </b-col>
+
+        <b-col cols="6">
+          <b-form-group id="note" label="หมายเหตุ" label-for="note">
+            <b-form-input
+              id="note"
+              v-model="form.note"
+              type="text"
+              placeholder="หมายเหตุ"
+            ></b-form-input>
+          </b-form-group>
+        </b-col>
+
+        <b-col cols="6">
+          <b-form-group id="urlShop" label="เว็บร้านค้า" label-for="urlShop">
+            <b-form-input
+              id="urlShop"
+              v-model="form.urlShop"
+              type="url"
+              required
+              placeholder="url ร้านค้า"
+            ></b-form-input>
+          </b-form-group>
         </b-col>
 
         <b-col cols="12">
@@ -135,6 +164,8 @@
             <th scope="col">ราคาต้นทุน</th>
             <th scope="col">ราคาขาย</th>
             <th scope="col">คุณสมบัติ</th>
+            <th scope="col">หมายเหตุ</th>
+            <th scope="col">url ร้าน</th>
             <th scope="col">ร้านส่งออก</th>
             <th scope="col">เซ็นรับ</th>
             <th scope="col">เข้าโกดังไทย</th>
@@ -193,6 +224,16 @@
                   :taggable="true"
                   @tag="addTag"
                 ></multiselect>
+            </td>
+            <td>{{val.note}}</td>
+            <td>
+              
+              <form action="val.urlShop">
+                <vs-button  
+                  color="danger"
+                  type="filled"
+                >SHOP</vs-button>  
+              </form>
             </td>
             <td>
               <div v-if="val!=editText">{{val.export}} วัน </div>
@@ -324,7 +365,9 @@ export default {
         properties: this.form.properties,
         export: this.form.export,
         sign: this.form.sign,
-        import: this.form.import
+        import: this.form.import,
+        note: this.form.note,
+        urlShop: this.form.urlShop
       });
       this.$swal({
         title: "สำเร็จ",
