@@ -42,24 +42,17 @@
               <option value="ทางรถกระบะ">ทางรถกระบะ</option>
               <option value="KERRY EXPRESS">KERRY EXPRESS</option>
               <option value="NIM EXPRESS">NIM EXPRESS</option>
+              <option value="ไอที ทรานสปอร์ต">ไอที ทรานสปอร์ต</option>
               <option value="อื่นๆ">อื่นๆ</option>
             </b-form-select>
           </b-form-group>
         </b-col>
         <b-col cols="3">
-          <b-form-group id="area" label="ภูมิภาค" label-for="area" v-if="shippingTH !== 'อื่นๆ'">
-            <b-form-select v-model="area" required>
-              <option :value="null" slot="first">เลือกภูมิภาค</option>
-              <option :value="0">ภาคกลาง ตะวันออก ตะวันตก</option>
-              <option :value="1">ภาคเหนือ อีสาน ใต้</option>
-            </b-form-select>
-          </b-form-group>
-
           <b-form-group
             id="totalInTH"
             label="จำนวนเงิน(การขนส่งภายในประเทศ)"
             label-for="totalInTH"
-            v-else
+            v-if="shippingTH === 'อื่นๆ'"
           >
             <b-form-input
               id="totalInTH"
@@ -70,6 +63,31 @@
               required
               placeholder="ค่าเงินไทย"
             ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            id="totalInTH"
+            label="เกิบเงินปลายทาง"
+            label-for="totalInTH"
+            v-else-if="shippingTH === 'ไอที ทรานสปอร์ต'"
+          >
+            <b-form-input
+              id="totalInTH"
+              v-model="totalInTH"
+              type="number"
+              value="0"
+              step="0.01"
+              min="0"
+              required
+              placeholder
+              readonly
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group id="area" label="ภูมิภาค" label-for="area" v-else>
+            <b-form-select v-model="area" required>
+              <option :value="null" slot="first">เลือกภูมิภาค</option>
+              <option :value="0">ภาคกลาง ตะวันออก ตะวันตก</option>
+              <option :value="1">ภาคเหนือ อีสาน ใต้</option>
+            </b-form-select>
           </b-form-group>
         </b-col>
 
@@ -225,7 +243,8 @@ export default {
       productType: 0,
       area: 0,
       shippingData: [],
-      shippingDataTH: []
+      shippingDataTH: [],
+      charge: 50
     };
   },
   watch: {
@@ -267,7 +286,8 @@ export default {
           totalShipping: this.totalShipping,
           totalInTH: this.totalInTH,
           productType: this.productType,
-          area: this.area
+          area: this.area,
+          charge: 50
         })
         .then(() => {
           this.$swal({
@@ -329,7 +349,7 @@ export default {
           this.totalInTH =
             this.shippingDataTH[12].shipping[this.area + 2] * this.weight;
         }
-      } else {
+      } else if (this.shippingTH === "NIM EXPRESS") {
         if (this.weight <= 2) {
           this.totalInTH = this.shippingDataTH[0].shipping[this.area];
         } else if (this.weight <= 5) {
@@ -358,6 +378,8 @@ export default {
           this.totalInTH =
             this.shippingDataTH[12].shipping[this.area] * this.weight;
         }
+      } else if (this.shippingTH === "ไอที ทรานสปอร์ต") {
+        this.totalInTH = 0;
       }
 
       //OUT_THAI

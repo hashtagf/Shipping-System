@@ -19,6 +19,7 @@
             <th scope="col">คุณสมบัติ</th>
             <th scope="col">จำนวน</th>
             <th scope="col">ราคา(CNY)</th>
+            <th scope="col">ค่าขนส่งในจีน(CNY)</th>
             <th scope="col">รวมราคา(CNY)</th>
             <th scope="col">ค่าเงิน(THB)</th>
             <th scope="col">รวมราคา (THB)</th>
@@ -64,6 +65,9 @@
               >{{product.product.price}}</div>
             </td>
             <td>
+              <div class>{{val.shipping}}</div>
+            </td>
+            <td>
               <div
                 class="border-bottom"
                 v-for="(product,index) in val.billing"
@@ -71,7 +75,7 @@
               >{{product.product.price * product.count}}</div>
               <b
                 class="text-primary"
-              >{{new Intl.NumberFormat({ style: 'currency'}).format(val.total.price)}}</b>
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(parseFloat(val.total.price) + parseFloat(val.shipping))}}</b>
             </td>
             <td>
               <div
@@ -198,15 +202,22 @@
               </table>
             </b-col>
             <b-col cols="3"></b-col>
-            <b-col cols="3"></b-col>
-            <b-col cols="3" class="h5">เรทค่าเงินไทย : {{billingReport.rateTHBprice}} บาท</b-col>
             <b-col cols="3">
-              <h5>
+              ค่าขนส่งในจีน :
+              <b>{{new Intl.NumberFormat({ style: 'currency'}).format(billingReport.shipping)}}</b> หยวน
+            </b-col>
+            <b-col cols="3">
+              รวม :
+              <b>{{new Intl.NumberFormat({ style: 'currency'}).format(parseFloat(billingReport.total.price) + parseFloat(billingReport.shipping))}}</b> หยวน
+            </b-col>
+            <b-col cols="3">เรทค่าเงินไทย : {{billingReport.rateTHBprice}} บาท</b-col>
+            <b-col cols="12" class="text-right mt-4">
+              <h4>
                 ยอดเงินรวม :
-                <span
-                  class="text-success"
-                >{{new Intl.NumberFormat({ style: 'currency'}).format(TotalPrice)}}</span> บาท
-              </h5>
+                <span class="text-success">
+                  <b>{{new Intl.NumberFormat({ style: 'currency'}).format((parseFloat(billingReport.total.price) + parseFloat(billingReport.shipping)) * billingReport.rateTHBprice)}}</b>
+                </span> บาท
+              </h4>
             </b-col>
           </b-row>
         </div>
@@ -261,17 +272,29 @@
                 class="text-warning"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(billingShipping.totalShipping)}}</b> บาท
             </b-col>
-            <b-col cols="6">
+            <b-col cols="6" v-if="billingShipping.totalInTH === 0">
+              ค่าขนส่งภายในประเทศ :
+              <b
+                class="text-warning"
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(billingShipping.totalInTH)}}</b> บาท (เก็บเงินปลายทาง)
+            </b-col>
+            <b-col cols="6" v-else>
               ค่าขนส่งภายในประเทศ :
               <b
                 class="text-warning"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(billingShipping.totalInTH)}}</b> บาท
             </b-col>
+            <b-col cols="6">
+              ค่าบริการ :
+              <b
+                class="text-warning"
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(billingShipping.charge)}}</b> บาท
+            </b-col>
             <b-col cols="12 my-3 h5">
               ราคารวม :
               <b
                 class="text-info"
-              >{{new Intl.NumberFormat({ style: 'currency'}).format(parseFloat(billingShipping.totalInTH) + billingShipping.totalShipping)}}</b> บาท
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(parseFloat(billingShipping.totalInTH) + billingShipping.totalShipping + billingShipping.charge)}}</b> บาท
             </b-col>
             <b-col cols="12">
               <table class="table table-bordered">

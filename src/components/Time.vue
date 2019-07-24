@@ -1,13 +1,16 @@
 <template>
   <div class="Main justify-content-center row">
-    <div class="col-7 text-left my-3">
+    <div class="col-4 my-3">
       <h3>เวลาการขนส่ง</h3>
     </div>
-    <div class="col-3 justify-content my-3">
+    <div class="col-5 my-3">
       <!-- <router-link to="/Billing">
         <vs-button color="primary" type="filled" icon="add_circle">เปิดบิล</vs-button>
       </router-link>-->
+      <b-form-input id="search" v-model="search" type="text" required placeholder="Tranking Number"></b-form-input>
     </div>
+
+ 
     <div class="col-10 table-responsive">
       <table class="table border table-hover table-bordered">
         <thead class="thead-light">
@@ -239,11 +242,37 @@ export default {
   data() {
     return {
       billing: [],
-      customer: []
+      customer: [],
+      search: null
     };
   },
   components: {
     CustomerName
+  },
+  watch: {
+    search() {
+      if (this.search.length > 0) {
+        fireSQL
+          .rxQuery(
+            "SELECT * FROM Billings WHERE timeShipping.tracking  LIKE '" + this.search + "%'",
+            { includeId: "id" }
+          )
+          .subscribe(documents => {
+            this.billing = documents;
+          });
+        console.log(this.billing);
+        console.log("-------");
+      } else {
+        fireSQL
+          .rxQuery("SELECT * FROM Billings", { includeId: "id" })
+          .subscribe(documents => {
+            this.$vs.loading.close();
+            this.billing = documents;
+            console.log(this.billing);
+            console.log("+++++++");
+          });
+      }
+    }
   },
   methods: {},
   mounted() {

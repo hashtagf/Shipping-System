@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <div class="justify-content-center">
-      <router-view name="header"/>
+      <router-view name="header" />
       <fade-transition origin="center" mode="out-in" :duration="200">
-        <router-view/>
+        <router-view />
       </fade-transition>
-      <router-view name="footer"/>
+      <router-view name="footer" />
     </div>
   </div>
 </template>
@@ -33,8 +33,9 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css?family=Kanit&display=swap");
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: "Kanit", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
