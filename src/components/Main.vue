@@ -165,6 +165,17 @@
                 ></customer-name>
               </label>
             </b-col>
+            <b-col cols="12">
+              <label>
+                <span class="float-left mr-2">หมายเหตุ :</span>
+
+                <!-- <customer-name
+                  class="float-left"
+                  :idCustomer="billingReport.customer"
+                  address="true"
+                ></customer-name> -->
+              </label>
+            </b-col>            
 
             <b-col cols="12">
               <div class="col-11 text-center my-1">
@@ -290,8 +301,11 @@
                 class="text-warning"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(billingShipping.charge)}}</b> บาท
             </b-col>
+            <b-col cols="6">
+              กำหนดเข้าไทยโดยประมาณ :
+            </b-col>
             <b-col cols="12 my-3 h5">
-              ราคารวม :
+              รวมค่าขนส่ง :
               <b
                 class="text-info"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(parseFloat(billingShipping.totalInTH) + billingShipping.totalShipping + billingShipping.charge)}}</b> บาท
