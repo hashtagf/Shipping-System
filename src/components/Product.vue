@@ -225,15 +225,31 @@
                   @tag="addTag"
                 ></multiselect>
             </td>
-            <td>{{val.note}}</td>
             <td>
-              
-              <form action="val.urlShop">
+              <div v-if="val!=editText">{{val.note}}</div>
+              <b-form-input v-else
+                id="note"
+                v-model="form.editNote"
+                type="text"
+                placeholder="หมายเหตุ"
+              ></b-form-input>
+            </td>
+            <td>  
+              <!-- <a href="' + val.urlShop + '">Link text</a> -->     
+              <div v-if="val!=editText">{{val.urlShop}}</div>
+              <!-- <form action="val.urlShop">
                 <vs-button  
                   color="danger"
                   type="filled"
                 >SHOP</vs-button>  
-              </form>
+              </form> -->
+              <b-form-input v-else
+                id="urlShop"
+                v-model="form.editUrlShop"
+                type="url"
+                required
+                placeholder="url ร้านค้า"
+              ></b-form-input>
             </td>
             <td>
               <div v-if="val!=editText">{{val.export}} วัน </div>
@@ -358,6 +374,7 @@ export default {
     onSubmit() {
       //console.log(this.form);
       this.showData = [];
+      
       productFirestore.add({
         name: this.form.name,
         price: this.form.price,
@@ -429,6 +446,8 @@ export default {
       this.form.editExport = val.export;
       this.form.editSign = val.sign;
       this.form.editImport = val.import;
+      this.form.editUrlShop = val.urlShop;
+      this.form.editNote = val.note;
     },
     editUpdate(val){
       this.$swal({
@@ -471,6 +490,7 @@ export default {
         this.$vs.loading.close();
         this.showData = documents;
         console.log(this.showData);
+
       });
   }
 };
