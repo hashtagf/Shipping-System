@@ -15,6 +15,7 @@
             <th scope="col">#</th>
             <th scope="col">วันที่</th>
             <th scope="col">ลูกค้า</th>
+            <th scope="col">สถานะการชำระเงิน</th>
             <th scope="col">รายการสินค้า</th>
             <th scope="col">คุณสมบัติ</th>
             <th scope="col">จำนวน</th>
@@ -35,12 +36,22 @@
               <customer-name :idCustomer="val.customer" name="true" v-model="customer"></customer-name>
             </td>
             <td>
+              <h5><b-badge variant="primary" v-if="val.status_money == 'ชำระแล้ว'">
+                {{val.status_money}}
+              </b-badge>
+              <b-badge variant="danger" v-else-if="val.status_money == 'ยังไม่ได้ชำระ'">
+                {{val.status_money}}
+              </b-badge></h5>
+              
+            </td>
+            <td>
               <div
                 class="border-bottom"
                 v-for="(product,index) in val.billing"
                 :key="index"
               >{{product.product.name}}</div>
             </td>
+
             <td>
               <div
                 class="border-bottom"
@@ -54,8 +65,9 @@
                 class="border-bottom"
                 v-for="(product,index)  in val.billing"
                 :key="index"
-              >{{product.count}}</div>
-              <b class="text-primary">{{val.total.count}}</b>
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(product.count)}}</div>
+              
+              <b class="text-primary">{{new Intl.NumberFormat({ style: 'currency'}).format(val.total.count)}}</b>
             </td>
             <td>
               <div
@@ -90,12 +102,12 @@
               >{{new Intl.NumberFormat({ style: 'currency'}).format(val.total.price * val.rateTHBprice)}}</b>
             </td>
             <td>
-              <b-badge
+              <h5><b-badge
                 variant="success"
                 v-if="val.status === 'รับสินค้าแล้ว'"
                 :to="'/TimeShipping/' + val.id"
               >{{val.status}}</b-badge>
-              <b-badge variant="info" :to="'/TimeShipping/' + val.id" v-else>{{val.status}}</b-badge>
+              <b-badge variant="info" :to="'/TimeShipping/' + val.id" v-else>{{val.status}}</b-badge></h5>
             </td>
             <td>
               <vs-button
@@ -168,12 +180,12 @@
             <b-col cols="12">
               <label>
                 <span class="float-left mr-2">หมายเหตุ :</span>
-
                 <!-- <customer-name
                   class="float-left"
                   :idCustomer="billingReport.customer"
-                  address="true"
+                  noteBill="true"
                 ></customer-name> -->
+                {{billingReport.noteBill}}
               </label>
             </b-col>            
 
@@ -276,12 +288,15 @@
               อัตราต่อหน่วย :
               <b>{{billingShipping.rateunit}}</b> บาท
             </b-col>
-
+            <b-col cols="6">
+            </b-col>
             <b-col cols="6">
               ค่าขนส่งระหว่างประเทศ :
               <b
                 class="text-warning"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(billingShipping.totalShipping)}}</b> บาท
+            </b-col>
+            <b-col cols="6">
             </b-col>
             <b-col cols="6" v-if="billingShipping.totalInTH === 0">
               ค่าขนส่งภายในประเทศ :
@@ -295,6 +310,8 @@
                 class="text-warning"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(billingShipping.totalInTH)}}</b> บาท
             </b-col>
+
+
             <b-col cols="6">
               ค่าบริการ :
               <b
@@ -303,6 +320,31 @@
             </b-col>
             <b-col cols="6">
               กำหนดเข้าไทยโดยประมาณ :
+
+            <!-- <span v-if="val.timeShipping">
+                <span v-if="val.timeShipping.toTH">
+                  {{val.timeShipping.toTH | moment("DD-MM-YY")}}
+                  <p>
+                    <b-badge variant="success">{{"วันที่ได้จริง"}}</b-badge>
+                  </p>
+                </span>
+                <span v-else>
+                  -
+                  <p>
+                    <b-badge variant="secondary">{{"รอดำเนินการ"}}</b-badge>
+                  </p>
+                </span>
+              </span>
+              <p v-else>
+                <b-badge variant="secondary">{{"รอดำเนินการ"}}</b-badge>
+              </p>
+              <span v-if="val.timeShipping">
+                {{val.timeShipping.exportCN | moment("add",parseInt(val.billing[0].product.import) + " days","DD-MM-YY")}}
+                <p v-if="val.timeShipping.exportCN">
+                  <b-badge variant="warning">{{"วันที่คาดการณ์"}}</b-badge>
+                </p>
+              </span> -->
+
             </b-col>
             <b-col cols="12 my-3 h5">
               รวมค่าขนส่ง :
