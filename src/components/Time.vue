@@ -168,7 +168,13 @@
               </span>
             </td>
             <td>
-              <span v-if="val.timeShipping">
+              <p>
+                <b-badge variant="warning">{{"จัดส่งรอบวันพุธ"}}</b-badge>
+              </p>
+              <p>
+                <b-badge variant="warning">{{"จัดส่งรอบวันเสาร์"}}</b-badge>
+              </p>
+              <!-- <span v-if="val.timeShipping">
                 <span v-if="val.timeShipping.toCustomer">
                   {{val.timeShipping.toCustomer | moment("DD-MM-YY")}}
                   <p>
@@ -190,7 +196,7 @@
                 <p v-if="val.timeShipping.toTH">
                   <b-badge variant="warning">{{"วันที่คาดการณ์"}}</b-badge>
                 </p>
-              </span>
+              </span> -->
             </td>
             <td>
               <p v-if="val.timeShipping">
