@@ -50,6 +50,10 @@
                 v-for="(product,index) in val.billing"
                 :key="index"
               >{{product.product.name}}</div>
+
+              <!-- <div v-if="product.product.name == product.product.name">
+                รวม
+              </div> -->
             </td>
 
             <td>
@@ -139,6 +143,7 @@
         <div id="printMe">
           <b-row>
             <b-col cols="12">
+              <h4>Express Shipping</h4>
               <br />
             </b-col>
             <b-col cols="4">
@@ -251,7 +256,20 @@
       <b-modal id="billingShipping" title="ข้อมูลการขนส่ง" size="xl">
         <div id="printShipping">
           <b-row v-if="billingShipping">
+            <b-col cols="12">
+              <h4>Express Shipping</h4>
+              <br />
+            </b-col>
             <b-col cols="12 h5">รหัสบิลลูกค้า : {{billingShipping.id}}</b-col>
+            <b-col cols="12" v-if="billingReport">
+              <span class="float-left mr-2">ที่อยู่ :</span>
+               <customer-name
+                  class="float-left"
+                  :idCustomer="billingReport.customer"
+                  address="true"
+                ></customer-name>
+      
+            </b-col>
             <b-col cols="6" v-if="billingShipping.shipping === 'CAR'">
               การขนส่งระหว่างประเทศ :
               <b>ขนส่งทางรถ</b>
@@ -462,6 +480,7 @@ export default {
           }
           this.$vs.loading.close();
         });
+        
     }
   },
   mounted() {
