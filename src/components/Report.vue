@@ -127,6 +127,7 @@
                 <th scope="col">ลูกค้า</th>
                 <th scope="col">ราคารวม(จากบิล)</th>
                 <th scope="col">ส่วนต่าง(จากบิล)</th>
+                <th scope="col">กำไรจากค่าขนส่ง</th>
               </tr>
             </thead>
             <tbody>
@@ -146,6 +147,9 @@
                     class="text-info"
                   >{{new Intl.NumberFormat({ style: 'currency'}).format((val.total.price * val.rateTHBprice) - (val.total.cost * val.rateTHBcost))}}</b>
                 </td>
+                <td>
+                  ????
+                </td>
               </tr>
             </tbody>
             <tfoot class="thead-light">
@@ -156,6 +160,9 @@
                 </td>
                 <td class="h5 text-info">
                   <b>{{new Intl.NumberFormat({ style: 'currency'}).format(profit)}}</b>
+                </td>
+                <td class="h5">
+                  ????
                 </td>
               </tr>
             </tfoot>
