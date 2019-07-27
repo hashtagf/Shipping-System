@@ -133,7 +133,7 @@
                 color="success"
                 type="filled"
                 icon="local_shipping"
-                @click="billingShippingSelect(val.id)"
+                @click="billingShippingSelect(val.id,index ,val,customer)"
               ></vs-button>
             </td>
           </tr>
@@ -465,7 +465,7 @@ export default {
         console.log("Printing done or got cancelled!");
       });
     },
-    billingShippingSelect(id) {
+    billingShippingSelect(id,index, val, customer) {
       this.$vs.loading({
         type: "sound"
       });
@@ -480,7 +480,9 @@ export default {
           }
           this.$vs.loading.close();
         });
-        
+      this.billingReport = this.billing[index];
+      console.log(this.billingReport);
+      this.customerIndex = [];
     }
   },
   mounted() {
