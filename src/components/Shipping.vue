@@ -126,7 +126,7 @@
             ></b-form-input>
           </b-form-group>
         </b-col>
-        <b-col cols="4">
+        <b-col cols="3">
           <b-form-group
             id="totalShipping"
             label="ค่าขนส่งระหว่างประเทศ(THB)"
@@ -141,7 +141,7 @@
             ></b-form-input>
           </b-form-group>
         </b-col>
-        <b-col cols="4">
+        <b-col cols="3">
           <b-form-group id="totalInTH" label="ค่าขนส่งภายในประเทศ(THB)" label-for="totalInTH">
             <b-form-input
               id="totalInTH"
@@ -152,6 +152,28 @@
             ></b-form-input>
           </b-form-group>
         </b-col>
+        <b-col cols="3">
+          <b-form-group id="totalService" label="ค่าบริการ" label-for="totalService">
+            <b-form-input
+              id="totalService"
+              type="number"
+              readonly
+              placeholder="50"
+            ></b-form-input>
+          </b-form-group>
+        </b-col>
+        <b-col cols="3">
+          <b-form-group id="totalAllShip" label="รวมค่าขนส่ง" label-for="totalAllShip">
+            <b-form-input
+              id="totalAllShip"
+              type="number"
+              v-model="totalAllShip"
+              readonly
+              placeholder="รวมค่าขนส่ง"
+            ></b-form-input>
+          </b-form-group>
+        </b-col>
+        <b-col cols="4"></b-col>
         <b-col cols="4">
           <b-form-group id="amount" label="จำนวนกล่อง" label-for="amount">
             <b-form-input
@@ -164,6 +186,7 @@
             ></b-form-input>
           </b-form-group>
         </b-col>
+         <b-col cols="4"></b-col>
 
         <b-col cols="4" v-for="(val, index) in boxes" :key="val.id" class="card my-1">
           <b-row>
@@ -240,6 +263,8 @@ export default {
       rateunit: null,
       totalShipping: null,
       totalInTH: null,
+      totalService: 50,
+      totalAllShip: null,
       productType: 0,
       area: 0,
       shippingData: [],
@@ -287,6 +312,7 @@ export default {
           totalInTH: this.totalInTH,
           productType: this.productType,
           area: this.area,
+          totalAllShip: this.totalAllShip,
           charge: 50
         })
         .then(() => {
@@ -450,6 +476,8 @@ export default {
           ];
         }
       }
+
+      this.totalAllShip = this.totalShipping + this.totalInTH+this.charge;
     }
   },
   mounted() {
