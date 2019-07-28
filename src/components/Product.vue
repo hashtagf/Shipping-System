@@ -36,6 +36,7 @@
               id="price"
               v-model="form.price"
               type="number"
+              step="0.01"
               required
               placeholder="ราคาขาย"
             ></b-form-input>
@@ -48,6 +49,7 @@
               id="cost"
               v-model="form.cost"
               type="number"
+              step="0.01"
               required
               placeholder="ราคาทุน"
             ></b-form-input>
@@ -68,6 +70,33 @@
             :taggable="true"
             @tag="addTag"
           ></multiselect>
+        </b-col>
+
+        <b-col cols="12">
+          <br />
+        </b-col>
+
+        <b-col cols="6">
+          <b-form-group id="note" label="หมายเหตุ" label-for="note">
+            <b-form-input
+              id="note"
+              v-model="form.note"
+              type="text"
+              placeholder="หมายเหตุ"
+            ></b-form-input>
+          </b-form-group>
+        </b-col>
+
+        <b-col cols="6">
+          <b-form-group id="urlShop" label="เว็บร้านค้า" label-for="urlShop">
+            <b-form-input
+              id="urlShop"
+              v-model="form.urlShop"
+              type="url"
+              required
+              placeholder="url ร้านค้า"
+            ></b-form-input>
+          </b-form-group>
         </b-col>
 
         <b-col cols="12">
@@ -135,6 +164,8 @@
             <th scope="col">ราคาต้นทุน</th>
             <th scope="col">ราคาขาย</th>
             <th scope="col">คุณสมบัติ</th>
+            <th scope="col">หมายเหตุ</th>
+            <th scope="col">url ร้าน</th>
             <th scope="col">ร้านส่งออก</th>
             <th scope="col">เซ็นรับ</th>
             <th scope="col">เข้าโกดังไทย</th>
@@ -193,6 +224,32 @@
                   :taggable="true"
                   @tag="addTag"
                 ></multiselect>
+            </td>
+            <td>
+              <div v-if="val!=editText">{{val.note}}</div>
+              <b-form-input v-else
+                id="note"
+                v-model="form.editNote"
+                type="text"
+                placeholder="หมายเหตุ"
+              ></b-form-input>
+            </td>
+            <td>  
+              <!-- <a href="' + val.urlShop + '">Link text</a> -->     
+              <div v-if="val!=editText">{{val.urlShop}}</div>
+              <!-- <form action="val.urlShop">
+                <vs-button  
+                  color="danger"
+                  type="filled"
+                >SHOP</vs-button>  
+              </form> -->
+              <b-form-input v-else
+                id="urlShop"
+                v-model="form.editUrlShop"
+                type="url"
+                required
+                placeholder="url ร้านค้า"
+              ></b-form-input>
             </td>
             <td>
               <div v-if="val!=editText">{{val.export}} วัน </div>
@@ -317,6 +374,7 @@ export default {
     onSubmit() {
       //console.log(this.form);
       this.showData = [];
+      
       productFirestore.add({
         name: this.form.name,
         price: this.form.price,
@@ -324,7 +382,9 @@ export default {
         properties: this.form.properties,
         export: this.form.export,
         sign: this.form.sign,
-        import: this.form.import
+        import: this.form.import,
+        note: this.form.note,
+        urlShop: this.form.urlShop
       });
       this.$swal({
         title: "สำเร็จ",
@@ -386,6 +446,8 @@ export default {
       this.form.editExport = val.export;
       this.form.editSign = val.sign;
       this.form.editImport = val.import;
+      this.form.editUrlShop = val.urlShop;
+      this.form.editNote = val.note;
     },
     editUpdate(val){
       this.$swal({
@@ -428,6 +490,7 @@ export default {
         this.$vs.loading.close();
         this.showData = documents;
         console.log(this.showData);
+
       });
   }
 };

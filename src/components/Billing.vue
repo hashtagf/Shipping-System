@@ -14,6 +14,15 @@
             </b-form-select>
           </b-form-group>
         </b-col>
+        <b-col cols="12">
+            <b-form-input
+              id="noteBill"
+              v-model="form.noteBill"
+              type="text"
+              placeholder="หมายเหตุ"
+            ></b-form-input>
+            <br>
+        </b-col>
         <b-col cols="12" class="my-auto" style="height:550px;">
           <b-row style="height: 500px" class="table-responsive mb-2">
             <b-col cols="12">
@@ -191,8 +200,13 @@ export default {
         rateTHBprice: this.form.rateTHBprice,
         rateTHBcost: this.form.rateTHBcost,
         total: this.total,
+<<<<<<< HEAD
         status: "รอการจัดส่ง",
         status_money: "ยังไม่ชำระ"
+=======
+        noteBill: this.form.noteBill,
+        status: "รอการจัดส่ง"
+>>>>>>> 278b3ddffccd032c29ec229c4e0a5eaf2252ee9c
       });
       this.$swal({
         title: "สำเร็จ",

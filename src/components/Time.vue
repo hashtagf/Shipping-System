@@ -20,7 +20,7 @@
             <th scope="col">Tranking Number</th>
             <th scope="col">รหัสลูกค้า</th>
             <th scope="col">ลูกค้า</th>
-            <th scope="col" style="table-layout: fixed;">วันที่สั่ง</th>
+            <th scope="col">วันที่สั่งสินค้า</th>
             <th scope="col">ร้านส่งออก</th>
             <th scope="col">เซ็นรับ</th>
             <th scope="col">เข้าระบบ</th>
@@ -168,7 +168,13 @@
               </span>
             </td>
             <td>
-              <span v-if="val.timeShipping">
+              <p>
+                <b-badge variant="warning">{{"จัดส่งรอบวันพุธ"}}</b-badge>
+              </p>
+              <p>
+                <b-badge variant="warning">{{"จัดส่งรอบวันเสาร์"}}</b-badge>
+              </p>
+              <!-- <span v-if="val.timeShipping">
                 <span v-if="val.timeShipping.toCustomer">
                   {{val.timeShipping.toCustomer | moment("DD-MM-YY")}}
                   <p>
@@ -190,7 +196,7 @@
                 <p v-if="val.timeShipping.toTH">
                   <b-badge variant="warning">{{"วันที่คาดการณ์"}}</b-badge>
                 </p>
-              </span>
+              </span> -->
             </td>
             <td>
               <p v-if="val.timeShipping">
@@ -254,7 +260,13 @@ export default {
       if (this.search.length > 0) {
         fireSQL
           .rxQuery(
+<<<<<<< HEAD
             "SELECT timeShipping FROM Billings",
+=======
+            // "SELECT * FROM Billings WHERE status  LIKE '" + this.search + "%'",
+            // "SELECT * FROM Billings WHERE timeShipping '" + orderByChild("tracking")  + "%' LIKE '" + this.search + "%'",
+            "SELECT * FROM Billings WHERE timeShipping '".orderByChild(tracking)+"'  LIKE '" + this.search + "%'",
+>>>>>>> 278b3ddffccd032c29ec229c4e0a5eaf2252ee9c
             { includeId: "id" }
           )
           .subscribe(documents => {
