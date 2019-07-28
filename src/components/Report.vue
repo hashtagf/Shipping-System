@@ -127,7 +127,6 @@
                 <th scope="col">ลูกค้า</th>
                 <th scope="col">ราคารวม(จากบิล)</th>
                 <th scope="col">ส่วนต่าง(จากบิล)</th>
-                <th scope="col">กำไรจากค่าขนส่ง</th>
               </tr>
             </thead>
             <tbody>
@@ -147,9 +146,6 @@
                     class="text-info"
                   >{{new Intl.NumberFormat({ style: 'currency'}).format((val.total.price * val.rateTHBprice) - (val.total.cost * val.rateTHBcost))}}</b>
                 </td>
-                <td>
-                  ????
-                </td>
               </tr>
             </tbody>
             <tfoot class="thead-light">
@@ -161,14 +157,57 @@
                 <td class="h5 text-info">
                   <b>{{new Intl.NumberFormat({ style: 'currency'}).format(profit)}}</b>
                 </td>
-                <td class="h5">
-                  ????
-                </td>
               </tr>
             </tfoot>
           </table>
         </div>
       </div>
+
+      <div class="Main justify-content-center row">
+        <div class="col-7 text-center my-3">
+          <h3>สรุปยอดกำไรจากค่าขนส่ง</h3>
+        </div>
+        <div class="col-10 table-responsive">
+          <table class="table border table-hover table-bordered">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col" width="2.5%">#</th>
+                <th scope="col">ประเภทการส่ง</th>
+                <th scope="col">ค่าขนส่งระหว่างประเทศ(THB)</th>
+                <th scope="col">ค่าขนส่งภายในประเทศ(THB)</th>
+                <th scope="col">ค่าบริการ</th>
+            
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(val , index) in shippings" :key="val.id">
+                <th scope="row">{{index + 1}}</th>
+                <td>{{val.shippingTH}}</td>
+                <td>{{val.totalShipping}}</td>
+                <td>
+                    {{val.totalInTH}}
+                </td>
+                <td>
+                  {{val.charge}}
+                </td>
+              </tr>
+            </tbody>
+            <tfoot class="thead-light">
+              <tr class>
+                <td class="h5" colspan="3">ยอดรวมกำไรจากค่าขนส่ง</td>
+                <td>
+                  <b
+                    class="text-info"
+                  >{{new Intl.NumberFormat({ style: 'currency'}).format(profitShipping)}}</b>
+                </td>
+   
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+
 
       <b-modal id="billingDetail" title="ข้อมูลการขนส่ง" size="xl">
         <div id="printMe">
@@ -259,6 +298,7 @@ import "firesql/rx";
 const fireSQL = new FireSQL(firebase.firestore());
 import CustomerName from "../getdatabase/CustomerName.vue";
 var billingFirestore = firebase.firestore().collection("Billings");
+var shippingFirestore = firebase.firestore().collection("Shippings");
 export default {
   name: "Billing",
   data() {
@@ -271,7 +311,9 @@ export default {
       customerIndex: [],
       output: null,
       profit: 0,
-      total: 0
+      total: 0,
+      shippings:[],
+      profitShipping: 0
     };
   },
   components: {
@@ -333,10 +375,16 @@ export default {
         });
       });
     fireSQL
-      .rxQuery("SELECT * FROM Customers", { includeId: "id" })
+      .rxQuery("SELECT * FROM Shippings")
       .subscribe(documents => {
         this.$vs.loading.close();
-        this.customer = documents;
+        this.shippings = documents;
+         this.shippings.forEach(val => {
+          this.profitShipping +=
+            val.totalAllShip;
+        });
+
+
       });
   }
 };
