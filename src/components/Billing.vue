@@ -1,5 +1,5 @@
 <template>
-  <b-container class="Billing" v-if="isLogin">
+  <b-container class="Billing mb-5" v-if="isLogin">
     <b-row class="mb-5">
       <b-col cols="12">
         <h3>เปิดบิล</h3>
