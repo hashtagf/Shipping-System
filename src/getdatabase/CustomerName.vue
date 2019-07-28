@@ -22,7 +22,12 @@ export default {
   },
   data() {
     return {
-      showData: "Loading"
+      showData: {
+        nickname: "Loading",
+        address: "Loading",
+        fullname: "Loading",
+        tel: "Loading"
+      }
     };
   },
   mounted() {

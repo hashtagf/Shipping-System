@@ -45,7 +45,7 @@
 
               <!-- <div v-if="product.product.name == product.product.name">
                 รวม
-              </div> -->
+              </div>-->
             </td>
 
             <td>
@@ -62,8 +62,10 @@
                 v-for="(product,index)  in val.billing"
                 :key="index"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(product.count)}}</div>
-              
-              <b class="text-primary">{{new Intl.NumberFormat({ style: 'currency'}).format(val.total.count)}}</b>
+
+              <b
+                class="text-primary"
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(val.total.count)}}</b>
             </td>
             <td>
               <div
@@ -98,12 +100,14 @@
               >{{new Intl.NumberFormat({ style: 'currency'}).format(val.total.price * val.rateTHBprice)}}</b>
             </td>
             <td>
-              <h5><b-badge
-                variant="success"
-                v-if="val.status === 'รับสินค้าแล้ว'"
-                :to="'/TimeShipping/' + val.id"
-              >{{val.status}}</b-badge>
-              <b-badge variant="info" :to="'/TimeShipping/' + val.id" v-else>{{val.status}}</b-badge></h5>
+              <h5>
+                <b-badge
+                  variant="success"
+                  v-if="val.status === 'รับสินค้าแล้ว'"
+                  :to="'/TimeShipping/' + val.id"
+                >{{val.status}}</b-badge>
+                <b-badge variant="info" :to="'/TimeShipping/' + val.id" v-else>{{val.status}}</b-badge>
+              </h5>
             </td>
             <td>
               <b-badge variant="success" v-if="val.status_money === 'ชำระแล้ว'">{{val.status_money}}</b-badge>
@@ -190,10 +194,10 @@
                   class="float-left"
                   :idCustomer="billingReport.customer"
                   noteBill="true"
-                ></customer-name> -->
+                ></customer-name>-->
                 {{billingReport.noteBill}}
               </label>
-            </b-col>            
+            </b-col>
 
             <b-col cols="12">
               <div class="col-11 text-center my-1">
@@ -265,12 +269,7 @@
             <b-col cols="12 h5">รหัสบิลลูกค้า : {{billingShipping.id}}</b-col>
             <b-col cols="12" v-if="billingReport">
               <span class="float-left mr-2">ที่อยู่ :</span>
-               <customer-name
-                  class="float-left"
-                  :idCustomer="billingReport.customer"
-                  address="true"
-                ></customer-name>
-      
+              <customer-name class="float-left" :idCustomer="billingReport.customer" address="true"></customer-name>
             </b-col>
             <b-col cols="6" v-if="billingShipping.shipping === 'CAR'">
               การขนส่งระหว่างประเทศ :
@@ -308,16 +307,14 @@
               อัตราต่อหน่วย :
               <b>{{billingShipping.rateunit}}</b> บาท
             </b-col>
-            <b-col cols="6">
-            </b-col>
+            <b-col cols="6"></b-col>
             <b-col cols="6">
               ค่าขนส่งระหว่างประเทศ :
               <b
                 class="text-warning"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(billingShipping.totalShipping)}}</b> บาท
             </b-col>
-            <b-col cols="6">
-            </b-col>
+            <b-col cols="6"></b-col>
             <b-col cols="6" v-if="billingShipping.totalInTH === 0">
               ค่าขนส่งภายในประเทศ :
               <b
@@ -331,7 +328,6 @@
               >{{new Intl.NumberFormat({ style: 'currency'}).format(billingShipping.totalInTH)}}</b> บาท
             </b-col>
 
-
             <b-col cols="6">
               ค่าบริการ :
               <b
@@ -340,8 +336,7 @@
             </b-col>
             <b-col cols="6">
               กำหนดเข้าไทยโดยประมาณ : ?????
-              
-            <!-- <span v-if="val.timeShipping">
+              <!-- <span v-if="val.timeShipping">
                 <span v-if="val.timeShipping.toTH">
                   {{val.timeShipping.toTH | moment("DD-MM-YY")}}
                   <p>
@@ -363,8 +358,7 @@
                 <p v-if="val.timeShipping.exportCN">
                   <b-badge variant="warning">{{"วันที่คาดการณ์"}}</b-badge>
                 </p>
-              </span> -->
-
+              </span>-->
             </b-col>
             <b-col cols="12 my-3 h5">
               รวมค่าขนส่ง :
@@ -430,28 +424,6 @@ export default {
       this.billingReport = this.billing[index];
       console.log(this.billingReport);
       this.customerIndex = [];
-      //val.customer current ID customer
-      // for (var cust in customer) {
-      //   if (val.customer == customer[cust].id) {
-      //     this.customerFullname = customer[cust].nickname;
-      //     this.customerIndex.push({
-      //       nickname: customer[cust].nickname,
-      //       fullname: customer[cust].fullname,
-      //       tel: customer[cust].tel,
-      //       address: customer[cust].address
-      //     });
-      //   }
-      // }
-      // console.log(this.customerIndex);
-
-      // this.billingReport.push({
-      //   index: index,
-      //   time: val.timestamp,
-      //   name: val.customer,
-      //   product: val.billing,
-      //   customer: customer,
-      //   total: val.total
-      // });
       this.TotalPrice = val.total.price * val.rateTHBprice;
       this.customerFullname = customer.fullname;
     },
@@ -488,11 +460,11 @@ export default {
         console.log("Printing done or got cancelled!");
       });
     },
-    billingShippingSelect(id,index, val, customer) {
+    billingShippingSelect(id, index, val, customer) {
       this.$vs.loading({
         type: "sound"
       });
-
+      this.billingShipping = null;
       shippingFirestore
         .doc(id)
         .get()

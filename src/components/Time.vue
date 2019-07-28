@@ -10,7 +10,7 @@
       <b-form-input id="search" v-model="search" type="text" required placeholder="Tranking Number"></b-form-input>
     </div>
 
-    <div class="col-10 table-responsive">
+    <div class="col-10 table-responsive" v-if="billing">
       <table class="table border table-hover table-bordered">
         <thead class="thead-light">
           <tr>
@@ -55,7 +55,7 @@
             </td>
             <td>
               <p>{{val.timestamp | moment("DD-MM-YY" )}}</p>
-              <b-badge variant="success">{{""}}</b-badge>
+              <b-badge variant="success">{{"วันที่สั่งสินค้า"}}</b-badge>
             </td>
             <td>
               <span v-if="val.timeShipping">
@@ -167,13 +167,7 @@
               </span>
             </td>
             <td>
-              <p>
-                <b-badge variant="warning">{{"จัดส่งรอบวันพุธ"}}</b-badge>
-              </p>
-              <p>
-                <b-badge variant="warning">{{"จัดส่งรอบวันเสาร์"}}</b-badge>
-              </p>
-              <!-- <span v-if="val.timeShipping">
+              <span v-if="val.timeShipping">
                 <span v-if="val.timeShipping.toCustomer">
                   {{val.timeShipping.toCustomer | moment("DD-MM-YY")}}
                   <p>
@@ -195,7 +189,7 @@
                 <p v-if="val.timeShipping.toTH">
                   <b-badge variant="warning">{{"วันที่คาดการณ์"}}</b-badge>
                 </p>
-              </span>-->
+              </span>
             </td>
             <td>
               <p v-if="val.timeShipping">

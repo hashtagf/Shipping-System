@@ -57,7 +57,7 @@
         </b-col>
 
         <b-col cols="6">
-          <label class="typo__label" >คุณสมบัติ</label>
+          <label class="typo__label">คุณสมบัติ</label>
           <multiselect
             class
             v-model="form.properties"
@@ -78,12 +78,7 @@
 
         <b-col cols="6">
           <b-form-group id="note" label="หมายเหตุ" label-for="note">
-            <b-form-input
-              id="note"
-              v-model="form.note"
-              type="text"
-              placeholder="หมายเหตุ"
-            ></b-form-input>
+            <b-form-input id="note" v-model="form.note" type="text" placeholder="หมายเหตุ"></b-form-input>
           </b-form-group>
         </b-col>
 
@@ -177,7 +172,8 @@
           <tr v-for="(val) in showData" :key="val.id">
             <td>
               <div v-if="val!=editText">{{val.name}}</div>
-              <b-form-input v-else
+              <b-form-input
+                v-else
                 id="name"
                 v-model="form.editName"
                 type="text"
@@ -187,17 +183,19 @@
             </td>
             <td>
               <div v-if="val!=editText">{{val.cost}}</div>
-              <b-form-input v-else
+              <b-form-input
+                v-else
                 id="cost"
                 v-model="form.editCost"
                 type="number"
                 required
                 placeholder="ราคาต้นทุน"
-              ></b-form-input>        
+              ></b-form-input>
             </td>
             <td>
               <div v-if="val!=editText">{{val.price}}</div>
-              <b-form-input v-else
+              <b-form-input
+                v-else
                 id="price"
                 v-model="form.editPrice"
                 type="number"
@@ -207,43 +205,51 @@
             </td>
             <td>
               <div v-if="val!=editText">
-              <label 
-                v-for="prop in val.properties"
-                :key="prop.name"
-                :value="prop.name"
-              >{{prop.name}} &nbsp;&nbsp;</label></div>
-              <multiselect v-else
-               
-                  v-model="form.properties"
-                  tag-placeholder="Press enter to select"
-                  placeholder="เพิ่มรายการ"
-                  label="name"
-                  track-by="code"
-                  :options="options"
-                  :multiple="true"
-                  :taggable="true"
-                  @tag="addTag"
-                ></multiselect>
+                <label
+                  v-for="prop in val.properties"
+                  :key="prop.name"
+                  :value="prop.name"
+                >{{prop.name}} &nbsp;&nbsp;</label>
+              </div>
+              <multiselect
+                v-else
+                v-model="form.properties"
+                tag-placeholder="Press enter to select"
+                placeholder="เพิ่มรายการ"
+                label="name"
+                track-by="code"
+                :options="options"
+                :multiple="true"
+                :taggable="true"
+                @tag="addTag"
+              ></multiselect>
             </td>
             <td>
               <div v-if="val!=editText">{{val.note}}</div>
-              <b-form-input v-else
+              <b-form-input
+                v-else
                 id="note"
                 v-model="form.editNote"
                 type="text"
                 placeholder="หมายเหตุ"
               ></b-form-input>
             </td>
-            <td>  
-              <!-- <a href="' + val.urlShop + '">Link text</a> -->     
-              <div v-if="val!=editText">{{val.urlShop}}</div>
+            <td>
+              <!-- <a href="' + val.urlShop + '">Link text</a> -->
+              <div v-if="val!=editText">
+                <p v-if="!val.urlShop">N/A</p>
+                <a v-else :href="val.urlShop" target="_blank">
+                  <vs-button color="primary" type="filled" icon="link"></vs-button>
+                </a>
+              </div>
               <!-- <form action="val.urlShop">
                 <vs-button  
                   color="danger"
                   type="filled"
                 >SHOP</vs-button>  
-              </form> -->
-              <b-form-input v-else
+              </form>-->
+              <b-form-input
+                v-else
                 id="urlShop"
                 v-model="form.editUrlShop"
                 type="url"
@@ -252,8 +258,9 @@
               ></b-form-input>
             </td>
             <td>
-              <div v-if="val!=editText">{{val.export}} วัน </div>
-              <b-form-input v-else
+              <div v-if="val!=editText">{{val.export}} วัน</div>
+              <b-form-input
+                v-else
                 id="export"
                 v-model="form.editExport"
                 type="number"
@@ -263,18 +270,19 @@
             </td>
             <td>
               <div v-if="val!=editText">{{val.import}} วัน</div>
-              <b-form-input v-else
+              <b-form-input
+                v-else
                 id="sign"
                 v-model="form.editImport"
                 type="number"
                 required
                 placeholder="จำนวนวัน"
               ></b-form-input>
-
             </td>
             <td>
-              <div v-if="val!=editText">{{val.sign}} วัน </div>
-              <b-form-input v-else
+              <div v-if="val!=editText">{{val.sign}} วัน</div>
+              <b-form-input
+                v-else
                 id="import"
                 v-model="form.editSign"
                 type="number"
@@ -283,40 +291,24 @@
               ></b-form-input>
             </td>
             <td>
-              <vs-button v-if="val!=editText"
+              <vs-button
+                v-if="val!=editText"
                 color="primary"
                 type="filled"
                 icon="edit"
                 @click="editShow(val)"
-              ></vs-button> 
+              ></vs-button>
               <div v-else>
-              <vs-button  
-                color="danger"
-                type="filled"
-                icon="cancel"
-                @click="editHide(val)"
-              ></vs-button>  
-              <vs-button  
-                color="primary"
-                type="filled"
-                icon="check"
-                @click="editUpdate(val)"
-              ></vs-button>  
-              </div> 
+                <vs-button color="danger" type="filled" icon="cancel" @click="editHide(val)"></vs-button>
+                <vs-button color="primary" type="filled" icon="check" @click="editUpdate(val)"></vs-button>
+              </div>
             </td>
             <td>
-              <vs-button
-                color="danger"
-                type="filled"
-                icon="delete"
-                @click="delProduct(val)"
-              ></vs-button>
+              <vs-button color="danger" type="filled" icon="delete" @click="delProduct(val)"></vs-button>
             </td>
           </tr>
         </tbody>
       </table>
-
-
     </b-row>
   </b-container>
 </template>
@@ -374,7 +366,7 @@ export default {
     onSubmit() {
       //console.log(this.form);
       this.showData = [];
-      
+
       productFirestore.add({
         name: this.form.name,
         price: this.form.price,
@@ -431,12 +423,11 @@ export default {
         }
       });
     },
-    editHide(val){
+    editHide(val) {
       console.log("hide edit input");
       this.editText = null;
-
     },
-    editShow(val){
+    editShow(val) {
       console.log("show edit input");
       this.editText = val;
       this.form.editName = val.name;
@@ -449,7 +440,7 @@ export default {
       this.form.editUrlShop = val.urlShop;
       this.form.editNote = val.note;
     },
-    editUpdate(val){
+    editUpdate(val) {
       this.$swal({
         title: "ต้องการอัพเดตข้อมูลสินค้า ?",
         type: "warning",
@@ -458,26 +449,23 @@ export default {
         cancelButtonColor: "#d33",
         confirmButtonText: "อัพเดตข้อมูล!"
       }).then(result => {
-     productFirestore.doc(val.id).update({
-        name: this.form.editName,
-        cost: this.form.editCost,
-        price: this.form.editPrice,
-        properties: this.form.properties,
-        export: this.form.editExport,
-        sign: this.form.editSign,
-        import: this.form.editImport
+        productFirestore.doc(val.id).update({
+          name: this.form.editName,
+          cost: this.form.editCost,
+          price: this.form.editPrice,
+          properties: this.form.properties,
+          export: this.form.editExport,
+          sign: this.form.editSign,
+          import: this.form.editImport
+        });
+        this.$swal({
+          title: "สำเร็จ",
+          text: "อัพเดตข้อมูลสำเร็จ",
+          type: "success",
+          timer: 2000
+        });
+        this.editText = null;
       });
-          this.$swal({
-            title: "สำเร็จ",
-            text: "อัพเดตข้อมูลสำเร็จ",
-            type: "success",
-            timer: 2000
-          });
-          this.editText = null;
-      })
-      
-      
-
     }
   },
   mounted() {
@@ -490,7 +478,6 @@ export default {
         this.$vs.loading.close();
         this.showData = documents;
         console.log(this.showData);
-
       });
   }
 };
