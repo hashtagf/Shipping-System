@@ -8,7 +8,7 @@
               <b-form-input v-model="email" type="text" required placeholder="Email "></b-form-input>
             </b-form-group>
             <b-form-group id="rateTHBcost" label="Password" label-for="rateTHBcost">
-              <b-form-input v-model="password" type="text" required placeholder="Password"></b-form-input>
+              <b-form-input v-model="password" type="password" required placeholder="Password"></b-form-input>
             </b-form-group>
             <b-button variant="primary" @click="login()">Login</b-button>
           </div>
