@@ -172,31 +172,53 @@
             <thead class="thead-light">
               <tr>
                 <th scope="col" width="2.5%">#</th>
-                <th scope="col">ประเภทการส่ง</th>
-                <th scope="col">ค่าขนส่งระหว่างประเทศ(THB)</th>
-                <th scope="col">ค่าขนส่งภายในประเทศ(THB)</th>
-                <th scope="col">ค่าบริการ</th>
+                <th scope="col">Tracking Number</th>
+                <th scope="col">ลูกค้า</th>
+                <th scope="col">ค่าขนส่งระหว่างประเทศ</th>
+                <th scope="col">ค่าขนส่งภายในประเทศ</th>
+                <th scope="col">ผลรวม</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(val , index) in shippings" :key="val.id">
                 <th scope="row">{{index + 1}}</th>
-                <td>{{val.shippingTH}}</td>
-                <td>{{val.totalShipping}}</td>
-                <td>{{val.totalInTH}}</td>
-                <td>{{val.charge}}</td>
+                <td>{{billing[index].tracking}}</td>
+                <td>
+                  <customer-name :idCustomer="billing[index].customer" name="true"></customer-name>
+                </td>
+                <td>
+                  <b
+                    class="text-info" 
+                  >ต้นทุน : {{new Intl.NumberFormat({ style: 'currency'}).format(val.totalShippingCost)}}</b><br>
+                  <b
+                    class="text-info" 
+                  >จ่ายจริง : {{new Intl.NumberFormat({ style: 'currency'}).format(val.totalShipping)}}</b>
+                </td>
+                <td>
+                 <b
+                    class="text-success" 
+                  >{{new Intl.NumberFormat({ style: 'currency'}).format(val.totalInTH)}}</b> 
+                </td>
+                <td>
+                 <b
+                    class="text-primary" 
+                  >{{new Intl.NumberFormat({ style: 'currency'}).format(val.totalAllShip -val.totalAllShipCost)}}</b> 
+                </td>
               </tr>
             </tbody>
             <tfoot class="thead-light">
               <tr class>
-                <td class="h5" colspan="3">ยอดรวมกำไรจากค่าขนส่ง</td>
-                <td>
+                <td class="h5" colspan="4">ยอดรวมกำไรจากค่าขนส่ง</td>
+                <td  colspan="3">
                   <b
-                    class="text-info"
+                    class="text-info" 
                   >{{new Intl.NumberFormat({ style: 'currency'}).format(profitShipping)}}</b>
                 </td>
+
               </tr>
             </tfoot>
+
+
           </table>
         </div>
       </div>
@@ -369,7 +391,7 @@ export default {
         this.$vs.loading.close();
         this.shippings = documents;
         this.shippings.forEach(val => {
-          this.profitShipping += val.totalAllShip;
+          this.profitShipping += val.totalAllShip-val.totalAllShipCost;
         });
       });
     } else {
