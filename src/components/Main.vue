@@ -308,7 +308,7 @@
               อัตราต่อหน่วย :
               <b>{{billingShipping.rateunit}}</b> บาท
             </b-col>
-            <b-col cols="6"></b-col>
+            <b-col cols="6" class="mt-5"></b-col>
             <b-col cols="6">
               ค่าขนส่งระหว่างประเทศ :
               <b
@@ -329,43 +329,27 @@
               >{{new Intl.NumberFormat({ style: 'currency'}).format(billingShipping.totalInTH)}}</b> บาท
             </b-col>
 
-            <b-col cols="6">
+            <b-col cols="12">
               ค่าบริการ :
               <b
                 class="text-warning"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(billingShipping.charge)}}</b> บาท
-            </b-col>
-            <b-col cols="6">
-              กำหนดเข้าไทยโดยประมาณ : ?????
-              <!-- <span v-if="val.timeShipping">
-                <span v-if="val.timeShipping.toTH">
-                  {{val.timeShipping.toTH | moment("DD-MM-YY")}}
-                  <p>
-                    <b-badge variant="success">{{"วันที่ได้จริง"}}</b-badge>
-                  </p>
-                </span>
-                <span v-else>
-                  -
-                  <p>
-                    <b-badge variant="secondary">{{"รอดำเนินการ"}}</b-badge>
-                  </p>
-                </span>
-              </span>
-              <p v-else>
-                <b-badge variant="secondary">{{"รอดำเนินการ"}}</b-badge>
-              </p>
-              <span v-if="val.timeShipping">
-                {{val.timeShipping.exportCN | moment("add",parseInt(val.billing[0].product.import) + " days","DD-MM-YY")}}
-                <p v-if="val.timeShipping.exportCN">
-                  <b-badge variant="warning">{{"วันที่คาดการณ์"}}</b-badge>
-                </p>
-              </span>-->
             </b-col>
             <b-col cols="12 my-3 h5">
               รวมค่าขนส่ง :
               <b
                 class="text-info"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(parseFloat(billingShipping.totalInTH) + billingShipping.totalShipping + billingShipping.charge)}}</b> บาท
+            </b-col>
+            <b-col cols="6">
+              กำหนดเข้าไทยโดยประมาณ :
+              <span v-if="billingReport.timeShipping">
+                <b
+                  v-if="billingReport.timeShipping.toTH"
+                >{{billingReport.timeShipping.toTH | moment("DD/MM/Y")}}</b>
+                <b v-else>ยังไม่สามารถคำนวณได้</b>
+              </span>
+              <b v-else>ยังไม่สามารถคำนวณได้</b>
             </b-col>
             <b-col cols="12">
               <table class="table table-bordered">
