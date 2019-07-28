@@ -12,6 +12,7 @@ const Report = () => import("../components/Report.vue");
 const TimeShipping = () => import("../components/TimeShipping.vue");
 const CustomerID = () => import("../components/CustomerID.vue");
 const Time = () => import("../components/Time.vue");
+const Login = () => import("../components/Login.vue");
 Vue.use(Router);
 
 export default new Router({
@@ -98,7 +99,7 @@ export default new Router({
         footer: Footer
       }
     },
-    ,
+
     {
       path: "/Time",
       name: "Time",
@@ -107,6 +108,11 @@ export default new Router({
         default: Time,
         footer: Footer
       }
+    },
+    {
+      path: "/Login",
+      name: "Login",
+      component: Login
     }
   ]
 });
