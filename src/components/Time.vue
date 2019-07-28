@@ -254,7 +254,7 @@ export default {
       if (this.search.length > 0) {
         fireSQL
           .rxQuery(
-            "SELECT * FROM Billings WHERE timeShipping.tracking  LIKE '" + this.search + "%'",
+            "SELECT timeShipping FROM Billings",
             { includeId: "id" }
           )
           .subscribe(documents => {

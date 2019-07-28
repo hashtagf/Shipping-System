@@ -24,6 +24,7 @@
             <th scope="col">ค่าเงิน(THB)</th>
             <th scope="col">รวมราคา (THB)</th>
             <th scope="col">สถานะ</th>
+            <th scope="col">สถานะการชำระเงิน</th>
             <th scope="col" width="10%">จัดการบิล</th>
           </tr>
         </thead>
@@ -96,6 +97,15 @@
                 :to="'/TimeShipping/' + val.id"
               >{{val.status}}</b-badge>
               <b-badge variant="info" :to="'/TimeShipping/' + val.id" v-else>{{val.status}}</b-badge>
+            </td>
+            <td>
+              <b-badge variant="success" v-if="val.status_money === 'ชำระแล้ว'">{{val.status_money}}</b-badge>
+              <b-badge
+                class="btn btn-warning"
+                variant="warning"
+                @click="updateStatusMoney(val.id)"
+                v-else
+              >{{val.status_money}}</b-badge>
             </td>
             <td>
               <vs-button
@@ -378,6 +388,27 @@ export default {
       // });
       this.TotalPrice = val.total.price * val.rateTHBprice;
       this.customerFullname = customer.fullname;
+    },
+    updateStatusMoney(id) {
+      this.$swal({
+        title: "ชำระเงินแล้ว ?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33"
+      }).then(result => {
+        if (result.value) {
+          billingFirestore.doc(id).update({
+            status_money: "ชำระแล้ว"
+          });
+          this.$swal({
+            title: "สำเร็จ",
+            text: "ชำระเงินสำเร็จ",
+            type: "success",
+            timer: 2000
+          });
+        }
+      });
     },
     print() {
       // Pass the element id here
