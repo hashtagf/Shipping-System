@@ -15,7 +15,6 @@
             <th scope="col">#</th>
             <th scope="col">วันที่</th>
             <th scope="col">ลูกค้า</th>
-            <th scope="col">สถานะการชำระเงิน</th>
             <th scope="col">รายการสินค้า</th>
             <th scope="col">คุณสมบัติ</th>
             <th scope="col">จำนวน</th>
@@ -36,15 +35,7 @@
             <td>
               <customer-name :idCustomer="val.customer" name="true" v-model="customer"></customer-name>
             </td>
-            <td>
-              <h5><b-badge variant="primary" v-if="val.status_money == 'ชำระแล้ว'">
-                {{val.status_money}}
-              </b-badge>
-              <b-badge variant="danger" v-else-if="val.status_money == 'ยังไม่ได้ชำระ'">
-                {{val.status_money}}
-              </b-badge></h5>
-              
-            </td>
+
             <td>
               <div
                 class="border-bottom"
