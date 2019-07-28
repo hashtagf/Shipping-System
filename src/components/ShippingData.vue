@@ -96,18 +96,23 @@ export default {
   },
   methods: {},
   mounted() {
-    this.$vs.loading({
-      type: "sound"
-    });
-    shippingDataFirestore.orderBy("priority").onSnapshot(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        this.showData.push({
-          id: doc.id,
-          data: doc.data()
-        });
+    this.isLogin = this.$session.get("isLogin");
+    if (this.isLogin) {
+      this.$vs.loading({
+        type: "sound"
       });
-      this.$vs.loading.close();
-    });
+      shippingDataFirestore.orderBy("priority").onSnapshot(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          this.showData.push({
+            id: doc.id,
+            data: doc.data()
+          });
+        });
+        this.$vs.loading.close();
+      });
+    } else {
+      this.$router.push("/");
+    }
   }
 };
 </script>

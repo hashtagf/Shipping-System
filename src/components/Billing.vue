@@ -1,5 +1,5 @@
 <template>
-  <b-container class="Billing">
+  <b-container class="Billing" v-if="isLogin">
     <b-row class="mb-5">
       <b-col cols="12">
         <h3>เปิดบิล</h3>
@@ -178,7 +178,8 @@ export default {
         count: 0,
         price: 0,
         cost: 0
-      }
+      },
+      isLogin: null
     };
   },
   watch: {
@@ -197,7 +198,8 @@ export default {
         total: this.total,
         status: "รอการจัดส่ง",
         status_money: "ยังไม่ชำระ",
-        tracking: "-"
+        tracking: "-",
+        noteBill: this.form.noteBill
       });
       this.$swal({
         title: "สำเร็จ",
@@ -251,25 +253,29 @@ export default {
     }
   },
   mounted() {
-    productFirestore.onSnapshot(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        this.product.push({
-          id: doc.id,
-          data: doc.data()
+    this.isLogin = this.$session.get("isLogin");
+    if (this.isLogin) {
+      console.log(this.isLogin);
+      productFirestore.onSnapshot(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          this.product.push({
+            id: doc.id,
+            data: doc.data()
+          });
         });
       });
-      console.log(this.optionProduct);
-    });
-    customerFirestore.onSnapshot(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        this.optionCustomer.push({
-          text: doc.data().nickname,
-          value: doc.id,
-          data: doc.data()
+      customerFirestore.onSnapshot(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          this.optionCustomer.push({
+            text: doc.data().nickname,
+            value: doc.id,
+            data: doc.data()
+          });
         });
       });
-      console.log(this.optionCustomer);
-    });
+    } else {
+      this.$router.push("/");
+    }
   }
 };
 </script>

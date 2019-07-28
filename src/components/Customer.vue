@@ -40,7 +40,7 @@
           </b-form-group>
         </b-col>
 
-       <b-col cols="4">
+        <b-col cols="4">
           <b-form-group id="tel" label="เบอร์โทรศัพท์" label-for="tel">
             <b-form-input
               id="tel"
@@ -91,21 +91,20 @@
       <table class="table border table-hover table-bordered">
         <thead class="thead-light">
           <tr>
-            
             <th scope="col" class="text-center">ชื่อเล่น</th>
             <th scope="col" class="text-center">ชื่อ-นามสกุล</th>
             <th scope="col" class="text-center">โทรศัพท์</th>
             <th scope="col" class="text-center" width="40%">ที่อยู่</th>
-            <th scope="col" class="text-center" >แก้ไข</th>
+            <th scope="col" class="text-center">แก้ไข</th>
             <th scope="col" class="text-center" width="5%">ลบ</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(val) in showData" :key="val.id">
-
             <td>
               <div v-if="val!=editText">{{val.nickname}}</div>
-              <b-form-input v-else
+              <b-form-input
+                v-else
                 id="nickname"
                 v-model="form.editNickname"
                 type="text"
@@ -115,7 +114,8 @@
             </td>
             <td>
               <div v-if="val!=editText">{{val.fullname}}</div>
-              <b-form-input v-else
+              <b-form-input
+                v-else
                 id="fullname"
                 v-model="form.editFullname"
                 type="text"
@@ -125,7 +125,8 @@
             </td>
             <td>
               <div v-if="val!=editText">{{val.tel}}</div>
-              <b-form-input v-else
+              <b-form-input
+                v-else
                 id="tel"
                 v-model="form.editTel"
                 type="tel"
@@ -135,7 +136,8 @@
             </td>
             <td>
               <div v-if="val!=editText">{{val.address}}</div>
-              <b-form-input v-else
+              <b-form-input
+                v-else
                 id="address"
                 v-model="form.editAddress"
                 type="text"
@@ -144,29 +146,19 @@
               ></b-form-input>
             </td>
             <td>
-              <vs-button v-if="val!=editText"
+              <vs-button
+                v-if="val!=editText"
                 color="primary"
                 type="filled"
                 icon="edit"
                 @click="editShow(val)"
-              ></vs-button> 
+              ></vs-button>
               <div v-else>
-              <vs-button  
-                color="danger"
-                type="filled"
-                icon="cancel"
-                @click="editHide(val)"
-              ></vs-button>  
-              <vs-button  
-                color="primary"
-                type="filled"
-                icon="check"
-                @click="editUpdate(val)"
-              ></vs-button>  
+                <vs-button color="danger" type="filled" icon="cancel" @click="editHide(val)"></vs-button>
+                <vs-button color="primary" type="filled" icon="check" @click="editUpdate(val)"></vs-button>
               </div>
             </td>
             <td>
-    
               <vs-button
                 v-b-modal.billingDetail
                 color="danger"
@@ -174,7 +166,6 @@
                 icon="delete"
                 @click="delCustomer(val)"
               ></vs-button>
-
             </td>
           </tr>
         </tbody>
@@ -232,8 +223,7 @@ export default {
         nickname: this.form.nickname,
         fullname: this.form.fullname,
         tel: this.form.tel,
-        address: this.form.address,
-
+        address: this.form.address
       });
       this.$swal({
         title: "สำเร็จ",
@@ -265,13 +255,11 @@ export default {
       });
       //productFirestore.child(val.id).remove();
     },
-    editHide(val){
+    editHide(val) {
       console.log("hide edit input");
-     this.editText = null;
- 
-
+      this.editText = null;
     },
-    editShow(val){
+    editShow(val) {
       console.log("show edit input");
       // console.log(val);
       this.editText = val;
@@ -279,9 +267,8 @@ export default {
       this.form.editFullname = val.fullname;
       this.form.editTel = val.tel;
       this.form.editAddress = val.address;
-
     },
-    editUpdate(val){
+    editUpdate(val) {
       this.$swal({
         title: "ต้องการอัพเดตข้อมูลสินค้า ?",
         type: "warning",
@@ -290,36 +277,38 @@ export default {
         cancelButtonColor: "#d33",
         confirmButtonText: "อัพเดตข้อมูล!"
       }).then(result => {
-     customerFirestore.doc(val.id).update({
-        nickname: this.form.editNickname,
-        fullname: this.form.editFullname,
-        tel: this.form.editTel,
-        address: this.form.editAddress,
-
+        customerFirestore.doc(val.id).update({
+          nickname: this.form.editNickname,
+          fullname: this.form.editFullname,
+          tel: this.form.editTel,
+          address: this.form.editAddress
+        });
+        this.$swal({
+          title: "สำเร็จ",
+          text: "อัพเดตข้อมูลสำเร็จ",
+          type: "success",
+          timer: 2000
+        });
+        this.editText = null;
       });
-          this.$swal({
-            title: "สำเร็จ",
-            text: "อัพเดตข้อมูลสำเร็จ",
-            type: "success",
-            timer: 2000
-          });
-          this.editText = null;
-      })
-
-
     }
   },
   mounted() {
-    this.$vs.loading({
-      type: "sound"
-    });
-    fireSQL
-      .rxQuery("SELECT * FROM Customers", { includeId: "id" })
-      .subscribe(documents => {
-        this.$vs.loading.close();
-        this.showData = documents;
-        console.log(this.showData);
+    this.isLogin = this.$session.get("isLogin");
+    if (this.isLogin) {
+      this.$vs.loading({
+        type: "sound"
       });
+      fireSQL
+        .rxQuery("SELECT * FROM Customers", { includeId: "id" })
+        .subscribe(documents => {
+          this.$vs.loading.close();
+          this.showData = documents;
+          console.log(this.showData);
+        });
+    } else {
+      this.$router.push("/");
+    }
   }
 };
 </script>

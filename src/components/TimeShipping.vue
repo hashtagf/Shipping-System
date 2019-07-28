@@ -184,26 +184,31 @@ export default {
     }
   },
   mounted() {
-    this.$vs.loading({
-      type: "sound"
-    });
-    customerIDFirestore.onSnapshot(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        this.optionCustomer.push({
-          text: doc.data().id,
-          value: doc.id,
-          data: doc.data()
+    this.isLogin = this.$session.get("isLogin");
+    if (this.isLogin) {
+      this.$vs.loading({
+        type: "sound"
+      });
+      customerIDFirestore.onSnapshot(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          this.optionCustomer.push({
+            text: doc.data().id,
+            value: doc.id,
+            data: doc.data()
+          });
         });
       });
-    });
-    billingFirestore.doc(this.$route.params.id).onSnapshot(doc => {
-      if (doc.data().timeShipping) this.showData = doc.data().timeShipping;
-      else {
-        this.showData.timestamp = doc.data().timestamp;
-      }
-      this.$vs.loading.close();
-    });
-    console.log(this.showData);
+      billingFirestore.doc(this.$route.params.id).onSnapshot(doc => {
+        if (doc.data().timeShipping) this.showData = doc.data().timeShipping;
+        else {
+          this.showData.timestamp = doc.data().timestamp;
+        }
+        this.$vs.loading.close();
+      });
+      console.log(this.showData);
+    } else {
+      this.$router.push("/");
+    }
   }
 };
 </script>

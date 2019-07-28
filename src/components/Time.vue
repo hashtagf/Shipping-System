@@ -275,24 +275,29 @@ export default {
   },
   methods: {},
   mounted() {
+    this.isLogin = this.$session.get("isLogin");
+    if (this.isLogin) {
+      fireSQL
+        .rxQuery("SELECT * FROM Billings ORDER BY timestamp DESC", {
+          includeId: "id"
+        })
+        .subscribe(documents => {
+          this.$vs.loading.close();
+          this.billing = documents;
+          console.log(this.billing);
+        });
+      fireSQL
+        .rxQuery("SELECT * FROM Customers", { includeId: "id" })
+        .subscribe(documents => {
+          this.$vs.loading.close();
+          this.customer = documents;
+        });
+    } else {
+      this.$router.push("/");
+    }
     this.$vs.loading({
       type: "sound"
     });
-    fireSQL
-      .rxQuery("SELECT * FROM Billings ORDER BY timestamp DESC", {
-        includeId: "id"
-      })
-      .subscribe(documents => {
-        this.$vs.loading.close();
-        this.billing = documents;
-        console.log(this.billing);
-      });
-    fireSQL
-      .rxQuery("SELECT * FROM Customers", { includeId: "id" })
-      .subscribe(documents => {
-        this.$vs.loading.close();
-        this.customer = documents;
-      });
   }
 };
 </script>

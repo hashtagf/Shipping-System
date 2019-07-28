@@ -267,6 +267,7 @@
               <br />
             </b-col>
             <b-col cols="12 h5">รหัสบิลลูกค้า : {{billingShipping.id}}</b-col>
+            <b-col cols="12 h6">Tracking Number : {{billingReport.tracking}}</b-col>
             <b-col cols="12" v-if="billingReport">
               <span class="float-left mr-2">ที่อยู่ :</span>
               <customer-name class="float-left" :idCustomer="billingReport.customer" address="true"></customer-name>
@@ -481,31 +482,36 @@ export default {
     }
   },
   mounted() {
-    this.$vs.loading({
-      type: "sound"
-    });
-    shippingDataFirestore
-      .orderBy("priority")
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          this.shippingData.push(doc.data());
+    this.isLogin = this.$session.get("isLogin");
+    if (this.isLogin) {
+      this.$vs.loading({
+        type: "sound"
+      });
+      shippingDataFirestore
+        .orderBy("priority")
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            this.shippingData.push(doc.data());
+          });
         });
-      });
-    fireSQL
-      .rxQuery("SELECT * FROM Billings ORDER BY timestamp DESC", {
-        includeId: "id"
-      })
-      .subscribe(documents => {
-        this.$vs.loading.close();
-        this.billing = documents;
-      });
-    fireSQL
-      .rxQuery("SELECT * FROM Customers", { includeId: "id" })
-      .subscribe(documents => {
-        this.$vs.loading.close();
-        this.customer = documents;
-      });
+      fireSQL
+        .rxQuery("SELECT * FROM Billings ORDER BY timestamp DESC", {
+          includeId: "id"
+        })
+        .subscribe(documents => {
+          this.$vs.loading.close();
+          this.billing = documents;
+        });
+      fireSQL
+        .rxQuery("SELECT * FROM Customers", { includeId: "id" })
+        .subscribe(documents => {
+          this.$vs.loading.close();
+          this.customer = documents;
+        });
+    } else {
+      this.$router.push("/");
+    }
   }
 };
 </script>

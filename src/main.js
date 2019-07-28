@@ -10,7 +10,9 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 import BootstrapVue from "bootstrap-vue";
 import "material-icons/iconfont/material-icons.css";
 import Vuesax from "vuesax";
-import VueHtmlToPaper from 'vue-html-to-paper';
+import VueHtmlToPaper from "vue-html-to-paper";
+import VueSession from "vue-session";
+Vue.use(VueSession);
 
 import "vuesax/dist/vuesax.css"; //Vuesax styles
 Vue.use(Vuesax);
@@ -26,16 +28,11 @@ new Vue({
   template: "<App/>"
 });
 const options = {
-  name: '_blank',
-  specs: [
-    'fullscreen=yes',
-    'titlebar=yes',
-    'scrollbars=yes'
-  ],
+  name: "_blank",
+  specs: ["fullscreen=yes", "titlebar=yes", "scrollbars=yes"],
   styles: [
-    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
-    'https://unpkg.com/kidlat-css/css/kidlat.css'
+    "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css",
+    "https://unpkg.com/kidlat-css/css/kidlat.css"
   ]
-}
+};
 Vue.use(VueHtmlToPaper, options);
- 

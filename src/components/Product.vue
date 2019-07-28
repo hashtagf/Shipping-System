@@ -469,16 +469,21 @@ export default {
     }
   },
   mounted() {
-    this.$vs.loading({
-      type: "sound"
-    });
-    fireSQL
-      .rxQuery("SELECT * FROM Products", { includeId: "id" })
-      .subscribe(documents => {
-        this.$vs.loading.close();
-        this.showData = documents;
-        console.log(this.showData);
+    this.isLogin = this.$session.get("isLogin");
+    if (this.isLogin) {
+      this.$vs.loading({
+        type: "sound"
       });
+      fireSQL
+        .rxQuery("SELECT * FROM Products", { includeId: "id" })
+        .subscribe(documents => {
+          this.$vs.loading.close();
+          this.showData = documents;
+          console.log(this.showData);
+        });
+    } else {
+      this.$router.push("/");
+    }
   }
 };
 </script>

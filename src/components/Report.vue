@@ -176,7 +176,6 @@
                 <th scope="col">ค่าขนส่งระหว่างประเทศ(THB)</th>
                 <th scope="col">ค่าขนส่งภายในประเทศ(THB)</th>
                 <th scope="col">ค่าบริการ</th>
-            
               </tr>
             </thead>
             <tbody>
@@ -184,12 +183,8 @@
                 <th scope="row">{{index + 1}}</th>
                 <td>{{val.shippingTH}}</td>
                 <td>{{val.totalShipping}}</td>
-                <td>
-                    {{val.totalInTH}}
-                </td>
-                <td>
-                  {{val.charge}}
-                </td>
+                <td>{{val.totalInTH}}</td>
+                <td>{{val.charge}}</td>
               </tr>
             </tbody>
             <tfoot class="thead-light">
@@ -200,14 +195,11 @@
                     class="text-info"
                   >{{new Intl.NumberFormat({ style: 'currency'}).format(profitShipping)}}</b>
                 </td>
-   
               </tr>
             </tfoot>
           </table>
         </div>
       </div>
-
-
 
       <b-modal id="billingDetail" title="ข้อมูลการขนส่ง" size="xl">
         <div id="printMe">
@@ -312,7 +304,7 @@ export default {
       output: null,
       profit: 0,
       total: 0,
-      shippings:[],
+      shippings: [],
       profitShipping: 0
     };
   },
@@ -357,35 +349,35 @@ export default {
     }
   },
   mounted() {
+    this.isLogin = this.$session.get("isLogin");
+    if (this.isLogin) {
+      fireSQL
+        .rxQuery("SELECT * FROM Billings ORDER BY timestamp DESC", {
+          includeId: "id"
+        })
+        .subscribe(documents => {
+          this.$vs.loading.close();
+          this.billing = documents;
+          this.billing.forEach(val => {
+            this.total += val.total.cost * val.rateTHBcost;
+            this.profit +=
+              val.total.price * val.rateTHBprice -
+              val.total.cost * val.rateTHBcost;
+          });
+        });
+      fireSQL.rxQuery("SELECT * FROM Shippings").subscribe(documents => {
+        this.$vs.loading.close();
+        this.shippings = documents;
+        this.shippings.forEach(val => {
+          this.profitShipping += val.totalAllShip;
+        });
+      });
+    } else {
+      this.$router.push("/");
+    }
     this.$vs.loading({
       type: "sound"
     });
-    fireSQL
-      .rxQuery("SELECT * FROM Billings ORDER BY timestamp DESC", {
-        includeId: "id"
-      })
-      .subscribe(documents => {
-        this.$vs.loading.close();
-        this.billing = documents;
-        this.billing.forEach(val => {
-          this.total += val.total.cost * val.rateTHBcost;
-          this.profit +=
-            val.total.price * val.rateTHBprice -
-            val.total.cost * val.rateTHBcost;
-        });
-      });
-    fireSQL
-      .rxQuery("SELECT * FROM Shippings")
-      .subscribe(documents => {
-        this.$vs.loading.close();
-        this.shippings = documents;
-         this.shippings.forEach(val => {
-          this.profitShipping +=
-            val.totalAllShip;
-        });
-
-
-      });
   }
 };
 </script>

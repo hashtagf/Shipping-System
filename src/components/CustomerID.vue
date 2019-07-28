@@ -29,7 +29,6 @@
         </b-col>
         <b-col cols="3"></b-col>
 
-
         <b-col cols="12">
           <br />
         </b-col>
@@ -47,35 +46,35 @@
       <b-col cols="12">
         <h3>รายการรหัสลูกค้า</h3>
       </b-col>
-        <b-col cols="2"></b-col>
-        <b-col cols="8">
+      <b-col cols="2"></b-col>
+      <b-col cols="8">
         <table class="table border table-hover table-bordered">
-            <thead class="thead-light">
+          <thead class="thead-light">
             <tr>
-                <th scope="col" class="text-center">#</th>
-                <th scope="col" class="text-center">รหัสลูกค้า</th>
-                <th scope="col" class="text-center"> </th>
+              <th scope="col" class="text-center">#</th>
+              <th scope="col" class="text-center">รหัสลูกค้า</th>
+              <th scope="col" class="text-center"></th>
             </tr>
-            </thead>
-            <tbody>
+          </thead>
+          <tbody>
             <tr v-for="(val, index) in showData" :key="val.id">
-                <td>{{index+1}}</td>
-                <td>{{val.id}}</td>
+              <td>{{index+1}}</td>
+              <td>{{val.id}}</td>
 
-                <td>
+              <td>
                 <vs-button
-                    v-b-modal.billingDetail
-                    color="danger"
-                    type="filled"
-                    icon="delete"
-                    @click="delCustomerID(val)"
+                  v-b-modal.billingDetail
+                  color="danger"
+                  type="filled"
+                  icon="delete"
+                  @click="delCustomerID(val)"
                 ></vs-button>
-                </td>
+              </td>
             </tr>
-            </tbody>
+          </tbody>
         </table>
-        </b-col>
-        <b-col cols="2"></b-col>
+      </b-col>
+      <b-col cols="2"></b-col>
     </b-row>
   </b-container>
 </template>
@@ -95,31 +94,31 @@ export default {
       search: null
     };
   },
-//   watch: {
-//     search() {
-//       if (this.search.length > 0) {
-//         fireSQL
-//           .rxQuery(
-//             "SELECT * FROM Customers WHERE nickname LIKE '" +
-//               this.search +
-//               "%'",
-//             { includeId: "id" }
-//           )
-//           .subscribe(documents => {
-//             this.showData = documents;
-//           });
-//         console.log(this.showData);
-//       } else {
-//         fireSQL
-//           .rxQuery("SELECT * FROM Customers", { includeId: "id" })
-//           .subscribe(documents => {
-//             this.$vs.loading.close();
-//             this.showData = documents;
-//             console.log(this.showData);
-//           });
-//       }
-//     }
-//   },
+  //   watch: {
+  //     search() {
+  //       if (this.search.length > 0) {
+  //         fireSQL
+  //           .rxQuery(
+  //             "SELECT * FROM Customers WHERE nickname LIKE '" +
+  //               this.search +
+  //               "%'",
+  //             { includeId: "id" }
+  //           )
+  //           .subscribe(documents => {
+  //             this.showData = documents;
+  //           });
+  //         console.log(this.showData);
+  //       } else {
+  //         fireSQL
+  //           .rxQuery("SELECT * FROM Customers", { includeId: "id" })
+  //           .subscribe(documents => {
+  //             this.$vs.loading.close();
+  //             this.showData = documents;
+  //             console.log(this.showData);
+  //           });
+  //       }
+  //     }
+  //   },
   methods: {
     onSubmit() {
       this.showData = [];
@@ -159,16 +158,21 @@ export default {
     }
   },
   mounted() {
-    this.$vs.loading({
-      type: "sound"
-    });
-    fireSQL
-      .rxQuery("SELECT * FROM CustomerID", { includeId: "id" })
-      .subscribe(documents => {
-        this.$vs.loading.close();
-        this.showData = documents;
-        console.log(this.showData);
+    this.isLogin = this.$session.get("isLogin");
+    if (this.isLogin) {
+      this.$vs.loading({
+        type: "sound"
       });
+      fireSQL
+        .rxQuery("SELECT * FROM CustomerID", { includeId: "id" })
+        .subscribe(documents => {
+          this.$vs.loading.close();
+          this.showData = documents;
+          console.log(this.showData);
+        });
+    } else {
+      this.$router.push("/");
+    }
   }
 };
 </script>

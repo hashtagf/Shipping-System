@@ -19,7 +19,7 @@ export default new Router({
   mode: "history",
   routes: [
     {
-      path: "/",
+      path: "/Main",
       name: "Main",
       components: {
         header: Header,
@@ -110,7 +110,7 @@ export default new Router({
       }
     },
     {
-      path: "/Login",
+      path: "/",
       name: "Login",
       component: Login
     }

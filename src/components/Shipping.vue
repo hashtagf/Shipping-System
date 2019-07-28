@@ -505,47 +505,52 @@ export default {
     }
   },
   mounted() {
+    this.isLogin = this.$session.get("isLogin");
+    if (this.isLogin) {
+      shippingDataFirestore
+        .orderBy("priority")
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            this.shippingData.push(doc.data());
+          });
+        });
+      shippingDataTHFirestore
+        .orderBy("kg")
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            this.shippingDataTH.push(doc.data());
+          });
+        });
+      shippingFirestore
+        .doc(this.$route.params.id)
+        .get()
+        .then(doc => {
+          if (doc.exists) {
+            this.boxes = doc.data().boxes;
+            this.value = doc.data().value;
+            this.amount = doc.data().amount;
+            this.capacity = doc.data().capacity;
+            this.weight = doc.data().weight;
+            this.showData = doc.data().showData;
+            this.shippingTH = doc.data().shippingTH;
+            this.shipping = doc.data().shipping;
+            this.rateunit = doc.data().rateunit;
+            this.totalShipping = doc.data().totalShipping;
+            this.totalInTH = doc.data().totalInTH;
+            this.productType = doc.data().productType;
+            this.area = doc.data().area;
+            this.totalInTh = doc.data().totalInTh;
+          }
+          this.$vs.loading.close();
+        });
+    } else {
+      this.$router.push("/");
+    }
     this.$vs.loading({
       type: "sound"
     });
-    shippingDataFirestore
-      .orderBy("priority")
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          this.shippingData.push(doc.data());
-        });
-      });
-    shippingDataTHFirestore
-      .orderBy("kg")
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          this.shippingDataTH.push(doc.data());
-        });
-      });
-    shippingFirestore
-      .doc(this.$route.params.id)
-      .get()
-      .then(doc => {
-        if (doc.exists) {
-          this.boxes = doc.data().boxes;
-          this.value = doc.data().value;
-          this.amount = doc.data().amount;
-          this.capacity = doc.data().capacity;
-          this.weight = doc.data().weight;
-          this.showData = doc.data().showData;
-          this.shippingTH = doc.data().shippingTH;
-          this.shipping = doc.data().shipping;
-          this.rateunit = doc.data().rateunit;
-          this.totalShipping = doc.data().totalShipping;
-          this.totalInTH = doc.data().totalInTH;
-          this.productType = doc.data().productType;
-          this.area = doc.data().area;
-          this.totalInTh = doc.data().totalInTh;
-        }
-        this.$vs.loading.close();
-      });
   }
 };
 </script>
