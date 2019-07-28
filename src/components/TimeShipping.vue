@@ -164,6 +164,7 @@ export default {
         );
       }
       billingFirestore.doc(this.$route.params.id).update({
+        tracking: this.showData.tracking,
         timeShipping: this.showData,
         status: status
       });

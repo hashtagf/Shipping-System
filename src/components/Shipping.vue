@@ -154,12 +154,7 @@
         </b-col>
         <b-col cols="3">
           <b-form-group id="totalService" label="ค่าบริการ" label-for="totalService">
-            <b-form-input
-              id="totalService"
-              type="number"
-              readonly
-              placeholder="50"
-            ></b-form-input>
+            <b-form-input id="totalService" type="number" readonly placeholder="50"></b-form-input>
           </b-form-group>
         </b-col>
         <b-col cols="3">
@@ -186,7 +181,7 @@
             ></b-form-input>
           </b-form-group>
         </b-col>
-         <b-col cols="4"></b-col>
+        <b-col cols="4"></b-col>
 
         <b-col cols="4" v-for="(val, index) in boxes" :key="val.id" class="card my-1">
           <b-row>
@@ -269,7 +264,10 @@ export default {
       area: 0,
       shippingData: [],
       shippingDataTH: [],
-      charge: 50
+      charge: 50,
+      totalAllShipCost: 0,
+      totalShippingCost: 0,
+      rateunitcost: null
     };
   },
   watch: {
@@ -313,7 +311,9 @@ export default {
           productType: this.productType,
           area: this.area,
           totalAllShip: this.totalAllShip,
-          charge: 50
+          charge: 50,
+          totalAllShipCost: this.totalAllShipCost,
+          totalShippingCost: this.totalShippingCost
         })
         .then(() => {
           this.$swal({
@@ -413,34 +413,52 @@ export default {
       let totalCapicity = 0;
       let positionWeight;
       let positionCapicity;
+      let totalWeightCost = 0;
+      let totalCapicityCost = 0;
       if (this.shipping === "CAR") {
         if (this.weight <= 100) {
           positionWeight = 0;
           totalWeight =
             this.shippingData[this.productType].car[0] * this.weight;
+          totalWeightCost =
+            this.shippingData[this.productType].costcar[0] * this.weight;
         } else {
           positionWeight = 1;
           totalWeight =
             this.shippingData[this.productType].car[1] * this.weight;
+          totalWeightCost =
+            this.shippingData[this.productType].costcar[1] * this.weight;
         }
         if (this.capacity <= 1) {
           positionCapicity = 2;
           totalCapicity =
             this.shippingData[this.productType].car[2] * this.capacity;
+          totalCapicityCost =
+            this.shippingData[this.productType].costcar[2] * this.capacity;
         } else {
           positionCapicity = 3;
           totalCapicity =
             this.shippingData[this.productType].car[3] * this.capacity;
+          totalCapicityCost =
+            this.shippingData[this.productType].costcar[3] * this.capacity;
         }
 
         if (totalWeight > totalCapicity) {
           this.totalShipping = totalWeight;
+          this.totalShippingCost = totalWeightCost;
           this.rateunit = this.shippingData[this.productType].car[
+            positionWeight
+          ];
+          this.rateunitcost = this.shippingData[this.productType].costcar[
             positionWeight
           ];
         } else {
           this.totalShipping = totalCapicity;
+          this.totalShippingCost = totalCapicityCost;
           this.rateunit = this.shippingData[this.productType].car[
+            positionCapicity
+          ];
+          this.rateunitcost = this.shippingData[this.productType].costcar[
             positionCapicity
           ];
         }
@@ -469,15 +487,21 @@ export default {
           this.rateunit = this.shippingData[this.productType].ship[
             positionWeight
           ];
+          this.rateunitcost = this.shippingData[this.productType].costship[
+            positionWeight
+          ];
         } else {
           this.totalShipping = totalCapicity;
           this.rateunit = this.shippingData[this.productType].ship[
             positionCapicity
           ];
+          this.rateunitcost = this.shippingData[this.productType].costship[
+            positionCapicity
+          ];
         }
       }
-
-      this.totalAllShip = this.totalShipping + this.totalInTH+this.charge;
+      this.totalAllShipCost = this.totalInTH + this.totalShippingCost;
+      this.totalAllShip = this.totalShipping + this.totalInTH + this.charge;
     }
   },
   mounted() {
