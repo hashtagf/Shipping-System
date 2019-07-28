@@ -200,13 +200,8 @@ export default {
         rateTHBprice: this.form.rateTHBprice,
         rateTHBcost: this.form.rateTHBcost,
         total: this.total,
-<<<<<<< HEAD
         status: "รอการจัดส่ง",
         status_money: "ยังไม่ชำระ"
-=======
-        noteBill: this.form.noteBill,
-        status: "รอการจัดส่ง"
->>>>>>> 278b3ddffccd032c29ec229c4e0a5eaf2252ee9c
       });
       this.$swal({
         title: "สำเร็จ",
