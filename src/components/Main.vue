@@ -336,7 +336,14 @@
               >{{new Intl.NumberFormat({ style: 'currency'}).format(billingShipping.charge)}}</b> บาท
             </b-col>
             <b-col cols="6">
-              กำหนดเข้าไทยโดยประมาณ : ?????
+              กำหนดเข้าไทยโดยประมาณ :
+              <span v-if="billingReport.timeShipping">
+                <b
+                  v-if="billingReport.timeShipping.toTH"
+                >{{billingReport.timeShipping.toTH | moment("DD/MM/Y")}}</b>
+                <b v-else>ยังไม่สามารถคำนวณได้</b>
+              </span>
+              <b v-else>ยังไม่สามารถคำนวณได้</b>
               <!-- <span v-if="val.timeShipping">
                 <span v-if="val.timeShipping.toTH">
                   {{val.timeShipping.toTH | moment("DD-MM-YY")}}
