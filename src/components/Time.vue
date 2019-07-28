@@ -10,7 +10,6 @@
       <b-form-input id="search" v-model="search" type="text" required placeholder="Tranking Number"></b-form-input>
     </div>
 
- 
     <div class="col-10 table-responsive">
       <table class="table border table-hover table-bordered">
         <thead class="thead-light">
@@ -196,7 +195,7 @@
                 <p v-if="val.timeShipping.toTH">
                   <b-badge variant="warning">{{"วันที่คาดการณ์"}}</b-badge>
                 </p>
-              </span> -->
+              </span>-->
             </td>
             <td>
               <p v-if="val.timeShipping">
@@ -258,16 +257,16 @@ export default {
   watch: {
     search() {
       if (this.search.length > 0) {
+        console.log(this.search);
         fireSQL
           .rxQuery(
-            "SELECT timeShipping FROM Billings",
+            "SELECT * FROM Billings WHERE tracking LIKE '" + this.search + "%'",
             { includeId: "id" }
           )
           .subscribe(documents => {
             this.billing = documents;
           });
         console.log(this.billing);
-        console.log("-------");
       } else {
         fireSQL
           .rxQuery("SELECT * FROM Billings", { includeId: "id" })
