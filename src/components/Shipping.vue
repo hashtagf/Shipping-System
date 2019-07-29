@@ -304,16 +304,16 @@ export default {
           capacity: this.capacity,
           weight: this.weight,
           shippingTH: this.shippingTH.toFixed(2),
-          shipping: this.shipping,
+          shipping: this.shipping.toFixed(2),
           rateunit: this.rateunit,
-          totalShipping: this.totalShipping,
-          totalInTH: this.totalInTH,
+          totalShipping: this.totalShipping.toFixed(2),
+          totalInTH: this.totalInTH.toFixed(2),
           productType: this.productType,
           area: this.area,
-          totalAllShip: this.totalAllShip,
+          totalAllShip: this.totalAllShip.toFixed(2),
           charge: 50,
-          totalAllShipCost: this.totalAllShipCost,
-          totalShippingCost: this.totalShippingCost
+          totalAllShipCost: this.totalAllShipCost.toFixed(2),
+          totalShippingCost: this.totalShippingCost.toFixed(2)
         })
         .then(() => {
           this.$swal({
@@ -500,8 +500,14 @@ export default {
           ];
         }
       }
-      this.totalAllShipCost = this.totalInTH + this.totalShippingCost;
-      this.totalAllShip = this.totalShipping + this.totalInTH + this.charge;
+      this.totalAllShipCost = (this.totalInTH + this.totalShippingCost).toFixed(
+        2
+      );
+      this.totalAllShip = (
+        this.totalShipping +
+        this.totalInTH +
+        this.charge
+      ).toFixed(2);
     }
   },
   mounted() {
