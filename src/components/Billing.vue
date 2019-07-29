@@ -53,6 +53,9 @@
         </b-col>
         <b-modal id="addProduct" title="เพิ่มสินค้า" size="xl">
           <b-row>
+            <b-col cols="5" class="mb-2">
+              <b-form-input id="search" v-model="search" type="text" required placeholder="ค้นหา"></b-form-input>
+            </b-col>
             <b-col cols="12" class="table-responsive" style="height:700px;">
               <table class="table">
                 <thead>
@@ -64,12 +67,12 @@
                 </thead>
                 <tbody>
                   <tr v-for="(val, index) in product" :key="val.id">
-                    <td>{{val.data.name}}</td>
+                    <td>{{val.name}}</td>
                     <td>
                       <b-form-select v-model="properties[index]" required>
                         <option :value="undefined" selected slot="first">เลือกคุณสมบัติ</option>
                         <option
-                          v-for="prop in val.data.properties"
+                          v-for="prop in val.properties"
                           :key="prop.name"
                           :value="prop.name"
                         >{{prop.name}}</option>
@@ -77,9 +80,9 @@
                     </td>
                     <td>
                       ราคาขาย
-                      <b>{{val.data.price}}</b> CNY
+                      <b>{{val.price}}</b> CNY
                       <br />ราคาต้นทุน
-                      <b>{{val.data.cost}}</b> CNY
+                      <b>{{val.cost}}</b> CNY
                     </td>
                     <td>
                       <b-form-input
@@ -91,7 +94,7 @@
                       ></b-form-input>
                     </td>
                     <td>
-                      <b-button variant="primary" @click="addCart(val.data, index)">เลือกสินค้า</b-button>
+                      <b-button variant="primary" @click="addCart(index)">เลือกสินค้า</b-button>
                     </td>
                   </tr>
                 </tbody>
@@ -179,11 +182,32 @@ export default {
         price: 0,
         cost: 0
       },
-      isLogin: null
+      isLogin: null,
+      search: null
     };
   },
   watch: {
-    product() {}
+    search() {
+      if (this.search.length > 0) {
+        fireSQL
+          .rxQuery(
+            "SELECT * FROM Products WHERE name LIKE '" + this.search + "%'",
+            { includeId: "id" }
+          )
+          .subscribe(documents => {
+            this.product = documents;
+          });
+        console.log(this.product);
+      } else {
+        fireSQL
+          .rxQuery("SELECT * FROM Products", { includeId: "id" })
+          .subscribe(documents => {
+            this.$vs.loading.close();
+            this.product = documents;
+            console.log(this.product);
+          });
+      }
+    }
   },
   methods: {
     onSubmit() {
@@ -212,15 +236,17 @@ export default {
       this.customer = null;
       event.target.reset();
     },
-    addCart(data, index) {
+    addCart(index) {
       this.cart.push({
         count: this.count[index],
         properties: this.properties[index],
-        product: data
+        product: this.product[index]
       });
       this.total.count += parseInt(this.count[index]);
-      this.total.price += parseFloat(data.price) * parseInt(this.count[index]);
-      this.total.cost += parseFloat(data.cost) * parseInt(this.count[index]);
+      this.total.price +=
+        parseFloat(this.product[index].price) * parseInt(this.count[index]);
+      this.total.cost +=
+        parseFloat(this.product[index].cost) * parseInt(this.count[index]);
       console.log(this.cart);
       this.count[index] = null;
       this.properties[index] = null;
@@ -256,14 +282,13 @@ export default {
     this.isLogin = this.$session.get("isLogin");
     if (this.isLogin) {
       console.log(this.isLogin);
-      productFirestore.onSnapshot(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          this.product.push({
-            id: doc.id,
-            data: doc.data()
-          });
+      fireSQL
+        .rxQuery("SELECT * FROM Products", { includeId: "id" })
+        .subscribe(documents => {
+          this.$vs.loading.close();
+          this.product = documents;
+          console.log(this.product);
         });
-      });
       customerFirestore.onSnapshot(querySnapshot => {
         querySnapshot.forEach(doc => {
           this.optionCustomer.push({

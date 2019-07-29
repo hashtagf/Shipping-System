@@ -97,17 +97,15 @@
             <td>
               <b
                 class="text-success"
-              >{{new Intl.NumberFormat({ style: 'currency'}).format(val.total.price * val.rateTHBprice)}}</b>
+              >{{new Intl.NumberFormat({ style: 'currency'}).format((parseFloat(val.total.price) + parseFloat(val.shipping)) * val.rateTHBprice)}}</b>
             </td>
             <td>
-              <h5>
-                <b-badge
-                  variant="success"
-                  v-if="val.status === 'รับสินค้าแล้ว'"
-                  :to="'/TimeShipping/' + val.id"
-                >{{val.status}}</b-badge>
-                <b-badge variant="info" :to="'/TimeShipping/' + val.id" v-else>{{val.status}}</b-badge>
-              </h5>
+              <b-badge
+                variant="success"
+                v-if="val.status === 'รับสินค้าแล้ว'"
+                :to="'/TimeShipping/' + val.id"
+              >{{val.status}}</b-badge>
+              <b-badge variant="info" :to="'/TimeShipping/' + val.id" v-else>{{val.status}}</b-badge>
             </td>
             <td>
               <b-badge variant="success" v-if="val.status_money === 'ชำระแล้ว'">{{val.status_money}}</b-badge>
@@ -140,6 +138,7 @@
                 icon="local_shipping"
                 @click="billingShippingSelect(val.id,index ,val,customer)"
               ></vs-button>
+              <vs-button color="danger" type="filled" icon="delete" @click="deleteBilling(val.id)"></vs-button>
             </td>
           </tr>
         </tbody>
@@ -266,8 +265,8 @@
               <h4>Express Shipping</h4>
               <br />
             </b-col>
-            <b-col cols="12 h5">รหัสบิลลูกค้า : {{billingShipping.id}}</b-col>
-            <b-col cols="12 h6">Tracking Number : {{billingReport.tracking}}</b-col>
+
+            <b-col cols="12 h5">Tracking Number : {{billingReport.tracking}}</b-col>
             <b-col cols="12" v-if="billingReport">
               <span class="float-left mr-2">ที่อยู่ :</span>
               <customer-name class="float-left" :idCustomer="billingReport.customer" address="true"></customer-name>
@@ -427,6 +426,26 @@ export default {
           this.$swal({
             title: "สำเร็จ",
             text: "ชำระเงินสำเร็จ",
+            type: "success",
+            timer: 2000
+          });
+        }
+      });
+    },
+    deleteBilling(id) {
+      this.$swal({
+        title: "ต้องการลบบิล ?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33"
+      }).then(result => {
+        if (result.value) {
+          billingFirestore.doc(id).delete();
+          shippingFirestore.doc(id).delete();
+          this.$swal({
+            title: "สำเร็จ",
+            text: "ลบบิลเรียบร้อย",
             type: "success",
             timer: 2000
           });

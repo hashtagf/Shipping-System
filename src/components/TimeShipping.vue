@@ -93,7 +93,7 @@
         <b-button type="submit" variant="primary" block @click="updateStatus()">อัพเดทการขนส่ง</b-button>
       </b-col>
       <b-col cols="6">
-        <b-button variant="danger" to="/" block>ย้อนกลับ</b-button>
+        <b-button variant="danger" to="/Time" block>ย้อนกลับ</b-button>
       </b-col>
     </b-row>
   </b-container>

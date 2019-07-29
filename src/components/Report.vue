@@ -23,7 +23,7 @@
             <th scope="col">รวมราคา (THB)</th>
             <th scope="col">ส่วนต่าง (THB)</th>
             <th scope="col">สถานะ</th>
-            <th scope="col" width="10%">จัดการบิล</th>
+            <th scope="col">สถานะการชำระเงิน</th>
           </tr>
         </thead>
         <tbody>
@@ -81,7 +81,7 @@
             <td>
               <b
                 class="text-info"
-              >{{new Intl.NumberFormat({ style: 'currency'}).format((val.total.price * val.rateTHBprice) - (val.total.cost * val.rateTHBcost))}}</b>
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(((parseFloat(val.total.price) + parseFloat(val.shipping)) * val.rateTHBprice) - (val.total.cost * val.rateTHBcost))}}</b>
             </td>
             <td>
               <b-badge
@@ -92,6 +92,10 @@
               <b-badge variant="info" :to="'/TimeShipping/' + val.id" v-else>{{val.status}}</b-badge>
             </td>
             <td>
+              <b-badge variant="success" v-if="val.status_money === 'ชำระแล้ว'">{{val.status_money}}</b-badge>
+              <b-badge class="btn btn-warning" variant="warning" v-else>{{val.status_money}}</b-badge>
+            </td>
+            <!-- <td>
               <vs-button
                 color="warning"
                 :to="'/Shipping/' + val.id"
@@ -106,7 +110,7 @@
                 icon="zoom_in"
                 @click="billingDetail(index ,val,customer)"
               ></vs-button>
-            </td>
+            </td>-->
           </tr>
         </tbody>
       </table>
@@ -144,7 +148,7 @@
                 <td>
                   <b
                     class="text-info"
-                  >{{new Intl.NumberFormat({ style: 'currency'}).format((val.total.price * val.rateTHBprice) - (val.total.cost * val.rateTHBcost))}}</b>
+                  >{{new Intl.NumberFormat({ style: 'currency'}).format(((parseFloat(val.total.price) + parseFloat(val.shipping)) * val.rateTHBprice) - (val.total.cost * val.rateTHBcost))}}</b>
                 </td>
               </tr>
             </tbody>
@@ -188,37 +192,35 @@
                 </td>
                 <td>
                   <b
-                    class="text-info" 
-                  >ต้นทุน : {{new Intl.NumberFormat({ style: 'currency'}).format(val.totalShippingCost)}}</b><br>
+                    class="text-info"
+                  >ต้นทุน : {{new Intl.NumberFormat({ style: 'currency'}).format(val.totalShippingCost)}}</b>
+                  <br />
                   <b
-                    class="text-info" 
+                    class="text-info"
                   >จ่ายจริง : {{new Intl.NumberFormat({ style: 'currency'}).format(val.totalShipping)}}</b>
                 </td>
                 <td>
-                 <b
-                    class="text-success" 
-                  >{{new Intl.NumberFormat({ style: 'currency'}).format(val.totalInTH)}}</b> 
+                  <b
+                    class="text-success"
+                  >{{new Intl.NumberFormat({ style: 'currency'}).format(val.totalInTH)}}</b>
                 </td>
                 <td>
-                 <b
-                    class="text-primary" 
-                  >{{new Intl.NumberFormat({ style: 'currency'}).format(val.totalAllShip -val.totalAllShipCost)}}</b> 
+                  <b
+                    class="text-primary"
+                  >{{new Intl.NumberFormat({ style: 'currency'}).format(val.totalAllShip -val.totalAllShipCost)}}</b>
                 </td>
               </tr>
             </tbody>
             <tfoot class="thead-light">
               <tr class>
                 <td class="h5" colspan="4">ยอดรวมกำไรจากค่าขนส่ง</td>
-                <td  colspan="3">
+                <td colspan="3">
                   <b
-                    class="text-info" 
+                    class="text-info"
                   >{{new Intl.NumberFormat({ style: 'currency'}).format(profitShipping)}}</b>
                 </td>
-
               </tr>
             </tfoot>
-
-
           </table>
         </div>
       </div>
@@ -391,7 +393,7 @@ export default {
         this.$vs.loading.close();
         this.shippings = documents;
         this.shippings.forEach(val => {
-          this.profitShipping += val.totalAllShip-val.totalAllShipCost;
+          this.profitShipping += val.totalAllShip - val.totalAllShipCost;
         });
       });
     } else {

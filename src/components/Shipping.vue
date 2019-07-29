@@ -303,7 +303,7 @@ export default {
           amount: this.amount,
           capacity: this.capacity,
           weight: this.weight,
-          shippingTH: this.shippingTH,
+          shippingTH: this.shippingTH.toFixed(2),
           shipping: this.shipping,
           rateunit: this.rateunit,
           totalShipping: this.totalShipping,
@@ -322,7 +322,7 @@ export default {
             type: "success",
             timer: 2000
           });
-          this.$router.push("/");
+          this.$router.push("/Main");
         })
         .catch(error => {
           this.$swal({

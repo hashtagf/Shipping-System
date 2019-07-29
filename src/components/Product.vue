@@ -269,17 +269,6 @@
               ></b-form-input>
             </td>
             <td>
-              <div v-if="val!=editText">{{val.import}} วัน</div>
-              <b-form-input
-                v-else
-                id="sign"
-                v-model="form.editImport"
-                type="number"
-                required
-                placeholder="จำนวนวัน"
-              ></b-form-input>
-            </td>
-            <td>
               <div v-if="val!=editText">{{val.sign}} วัน</div>
               <b-form-input
                 v-else
@@ -290,6 +279,18 @@
                 placeholder="จำนวนวัน"
               ></b-form-input>
             </td>
+            <td>
+              <div v-if="val!=editText">{{val.import}} วัน</div>
+              <b-form-input
+                v-else
+                id="sign"
+                v-model="form.editImport"
+                type="number"
+                required
+                placeholder="จำนวนวัน"
+              ></b-form-input>
+            </td>
+
             <td>
               <vs-button
                 v-if="val!=editText"
