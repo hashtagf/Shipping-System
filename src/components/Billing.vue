@@ -267,6 +267,7 @@ export default {
         confirmButtonText: "ลบออกจากบิล!"
       }).then(result => {
         if (result.value) {
+          this.total.count -= parseInt(this.cart[index].count);
           this.cart.splice(index, 1);
           this.$swal({
             title: "สำเร็จ",

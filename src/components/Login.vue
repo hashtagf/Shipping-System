@@ -49,6 +49,7 @@ export default {
           this.$session.set("isLogin", true);
         })
         .catch(error => {
+          this.$vs.loading.close();
           this.$swal({
             type: "error",
             title: "เกิดข้อผิดพลาด",

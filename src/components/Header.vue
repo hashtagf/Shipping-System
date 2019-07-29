@@ -9,7 +9,10 @@
           <b-nav-item to="/Billing">เปิดบิล</b-nav-item>
           <!-- <b-nav-item to="/Shipping">ส่งสินค้า</b-nav-item> -->
           <b-nav-item to="/Time">เวลาขนส่ง</b-nav-item>
-          <b-nav-item to="/Report">รายงานสรุป</b-nav-item>
+          <b-nav-item-dropdown text="รายงาน" left>
+            <b-dropdown-item to="/Report">สรุปแต่ละรายการ</b-dropdown-item>
+            <b-dropdown-item to="/ReportProfit">สรุปผลกำไร</b-dropdown-item>
+          </b-nav-item-dropdown>
           <b-nav-item-dropdown text="จัดการข้อมูล" left>
             <b-dropdown-item to="/Product">สินค้า</b-dropdown-item>
             <b-dropdown-item to="/Customer">ลูกค้า</b-dropdown-item>

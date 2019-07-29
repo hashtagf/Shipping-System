@@ -243,6 +243,7 @@ import CustomerName from "../getdatabase/CustomerName.vue";
 var shippingFirestore = firebase.firestore().collection("Shippings");
 var shippingDataFirestore = firebase.firestore().collection("ShippingData");
 var shippingDataTHFirestore = firebase.firestore().collection("ShippingDataTH");
+var billingFirestore = firebase.firestore().collection("Billings");
 export default {
   name: "Shipping",
   data() {
@@ -267,7 +268,8 @@ export default {
       charge: 50,
       totalAllShipCost: 0,
       totalShippingCost: 0,
-      rateunitcost: null
+      rateunitcost: null,
+      timestamp: null
     };
   },
   watch: {
@@ -295,27 +297,32 @@ export default {
   },
   methods: {
     onSubmit() {
+      this.$vs.loading({
+        type: "sound"
+      });
       shippingFirestore
         .doc(this.$route.params.id)
         .set({
+          timestamp: this.timestamp,
           boxes: this.boxes,
           value: this.value,
           amount: this.amount,
           capacity: this.capacity,
           weight: this.weight,
-          shippingTH: this.shippingTH.toFixed(2),
-          shipping: this.shipping.toFixed(2),
+          shippingTH: this.shippingTH,
+          shipping: this.shipping,
           rateunit: this.rateunit,
-          totalShipping: this.totalShipping.toFixed(2),
-          totalInTH: this.totalInTH.toFixed(2),
+          totalShipping: this.totalShipping,
+          totalInTH: this.totalInTH,
           productType: this.productType,
           area: this.area,
-          totalAllShip: this.totalAllShip.toFixed(2),
+          totalAllShip: this.totalAllShip,
           charge: 50,
-          totalAllShipCost: this.totalAllShipCost.toFixed(2),
-          totalShippingCost: this.totalShippingCost.toFixed(2)
+          totalAllShipCost: this.totalAllShipCost,
+          totalShippingCost: this.totalShippingCost
         })
         .then(() => {
+          this.$vs.loading.close();
           this.$swal({
             title: "สำเร็จ",
             text: "เพิ่มข้อมูลค่าขนส่งเรียบร้อย",
@@ -325,9 +332,10 @@ export default {
           this.$router.push("/Main");
         })
         .catch(error => {
+          this.$vs.loading.close();
           this.$swal({
             title: "ผิดพลาด",
-            text: "ไม่สามารถเพิ่มข้อมูลได้เ",
+            text: "ไม่สามารถเพิ่มข้อมูลได้",
             type: "error",
             timer: 2000
           });
@@ -513,6 +521,12 @@ export default {
   mounted() {
     this.isLogin = this.$session.get("isLogin");
     if (this.isLogin) {
+      billingFirestore
+        .doc(this.$route.params.id)
+        .get()
+        .then(doc => {
+          this.timestamp = doc.data().timestamp;
+        });
       shippingDataFirestore
         .orderBy("priority")
         .get()
