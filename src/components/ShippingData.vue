@@ -17,11 +17,65 @@
           </tr>
           <tr v-for="(val ,index) in showData" :key="index">
             <td>{{index + 1}}</td>
-            <td>{{val.data.name}}</td>
-            <td>{{val.data.car[0]}}</td>
-            <td>{{val.data.car[1]}}</td>
-            <td>{{val.data.car[2]}}</td>
-            <td>{{val.data.car[3]}}</td>
+            <td>
+              <div v-if="val!=editText">{{val.data.name}}</div>
+                <b-form-input v-else
+                  id="export"
+                  type="text"
+                  required
+                  placeholder="ชื่อ"
+                ></b-form-input>   
+            </td>
+            <td>
+              <div v-if="val!=editText">{{val.data.car[0]}}</div>
+                <b-form-input v-else
+                  id="export"
+                  type="number"
+                  step="0.01"
+                  required
+                  placeholder="ราคา"
+                ></b-form-input>   
+            </td>
+            <td>
+              <div v-if="val!=editText">{{val.data.car[1]}}</div>
+                <b-form-input v-else
+                  id="export"
+                  type="number"
+                  step="0.01"
+                  required
+                  placeholder="ราคา"
+                ></b-form-input>   
+            </td>
+            <td>
+              <div v-if="val!=editText">{{val.data.car[2]}}</div>
+                <b-form-input v-else
+                  id="export"
+                  type="number"
+                  step="0.01"
+                  required
+                  placeholder="ราคา"
+                ></b-form-input>       
+            </td>
+            <td>
+              <div v-if="val!=editText">{{val.data.car[3]}}</div>
+                <b-form-input v-else
+                  id="export"
+                  type="number"
+                  step="0.01"
+                  required
+                  placeholder="ราคา"
+                ></b-form-input>     
+            </td>
+            <td>
+              <div  v-if="val!=editText">
+              <vs-button color="primary" type="filled" icon="edit" @click="editShow(val)"></vs-button>
+              </div>
+              <div v-else>
+                <vs-button color="danger" type="filled" icon="cancel" @click="editHide(val)"></vs-button>
+                <vs-button color="primary" type="filled" icon="check" ></vs-button>
+
+              </div>
+            </td>
           </tr>
 
           <tr>
@@ -88,13 +142,51 @@ export default {
   name: "Shipping",
   data() {
     return {
-      showData: []
+      showData: [],
+      editText: null
     };
   },
   components: {
     CustomerName
   },
-  methods: {},
+  methods: {
+    editHide(val) {
+      console.log("hide edit input");
+      this.editText = null;
+    },
+    editShow(val) {
+      console.log("show edit input");
+      this.editText = val;
+    },
+    editUpdate(val) {
+      this.$swal({
+        title: "ต้องการอัพเดตข้อมูลสินค้า ?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "อัพเดตข้อมูล!"
+      }).then(result => {
+        shippingDataFirestore.doc(val.id).update({
+          car: [
+            this.form.editFullname,
+            this.form.editFullname
+          ],
+          fullname: this.form.editFullname,
+          tel: this.form.editTel,
+          address: this.form.editAddress
+        });
+        this.$swal({
+          title: "สำเร็จ",
+          text: "อัพเดตข้อมูลสำเร็จ",
+          type: "success",
+          timer: 2000
+        });
+        this.editText = null;
+      });
+    }
+
+  },
   mounted() {
     this.isLogin = this.$session.get("isLogin");
     if (this.isLogin) {
