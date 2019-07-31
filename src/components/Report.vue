@@ -71,7 +71,7 @@
               >{{new Intl.NumberFormat({ style: 'currency'}).format( product.product.cost * product.count)}}</div>
               <b
                 class="text-primary"
-              >{{new Intl.NumberFormat({ style: 'currency'}).format(parseFloat(val.shipping) + val.total.cost) }}...</b>
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(parseFloat(val.shipping) + val.total.cost) }}</b>
             </td>
             <td>
               <b
