@@ -165,7 +165,8 @@ export default {
             this.All +=
               parseFloat(val.total.price) * parseFloat(val.rateTHBprice);
             this.AllCost +=
-              parseFloat(val.total.cost) * parseFloat(val.rateTHBcost);
+              (parseFloat(val.total.cost) + parseFloat(val.shipping)) *
+              parseFloat(val.rateTHBcost);
             if (!this.totalcost[momentjs(val.timestamp).format("MM/Y")])
               this.totalcost[momentjs(val.timestamp).format("MM/Y")] = 0;
             if (!this.total[momentjs(val.timestamp).format("MM/Y")])
@@ -174,7 +175,8 @@ export default {
               this.profit[momentjs(val.timestamp).format("MM/Y")] = 0;
 
             this.totalcost[momentjs(val.timestamp).format("MM/Y")] +=
-              parseFloat(val.total.cost) * parseFloat(val.rateTHBcost);
+              (parseFloat(val.total.cost) + parseFloat(val.shipping)) *
+              parseFloat(val.rateTHBcost);
 
             this.total[momentjs(val.timestamp).format("MM/Y")] +=
               (parseFloat(val.total.price) + parseFloat(val.shipping)) *
@@ -193,7 +195,8 @@ export default {
                 (parseFloat(val.total.price) + parseFloat(val.shipping)) *
                 parseFloat(val.rateTHBprice);
               this.nowCost +=
-                parseFloat(val.total.cost) * parseFloat(val.rateTHBcost);
+                (parseFloat(val.total.cost) + parseFloat(val.shipping)) *
+                parseFloat(val.rateTHBcost);
             }
           });
         });
