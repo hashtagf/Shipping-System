@@ -75,14 +75,14 @@
               >{{product.product.price}}</div>
             </td>
             <td>
-              <div class>{{val.shipping}}</div>
+              <div class>{{new Intl.NumberFormat({ style: 'currency'}).format(val.shipping)}}</div>
             </td>
             <td>
               <div
                 class="border-bottom"
                 v-for="(product,index) in val.billing"
                 :key="index"
-              >{{product.product.price * product.count}}</div>
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(product.product.price * product.count)}}</div>
               <b
                 class="text-primary"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(parseFloat(val.total.price) + parseFloat(val.shipping))}}</b>
@@ -307,7 +307,11 @@
               อัตราต่อหน่วย :
               <b>{{billingShipping.rateunit}}</b> บาท
             </b-col>
-            <b-col cols="6" class="mt-5"></b-col>
+            <b-col cols="12">
+              หมายเหตุ :
+              <b>{{billingShipping.noteShipping}}</b>
+            </b-col>
+            <!-- <b-col cols="6" class="mt-5"></b-col> -->
             <b-col cols="6">
               ค่าขนส่งระหว่างประเทศ :
               <b

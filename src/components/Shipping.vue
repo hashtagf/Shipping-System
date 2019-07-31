@@ -168,7 +168,16 @@
             ></b-form-input>
           </b-form-group>
         </b-col>
-        <b-col cols="4"></b-col>
+        <b-col cols="8">
+          <b-form-group id="noteShipping" label="หมายเหตุ" label-for="noteShipping">
+            <b-form-input
+              id="noteShipping"
+              type="text"
+              v-model="noteShipping"
+              placeholder="หมายเหตุ"
+            ></b-form-input>
+          </b-form-group>
+        </b-col>
         <b-col cols="4">
           <b-form-group id="amount" label="จำนวนกล่อง" label-for="amount">
             <b-form-input
@@ -181,7 +190,7 @@
             ></b-form-input>
           </b-form-group>
         </b-col>
-        <b-col cols="4"></b-col>
+      
 
         <b-col cols="4" v-for="(val, index) in boxes" :key="val.id" class="card my-1">
           <b-row>
@@ -319,7 +328,8 @@ export default {
           totalAllShip: this.totalAllShip,
           charge: 50,
           totalAllShipCost: this.totalAllShipCost,
-          totalShippingCost: this.totalShippingCost
+          totalShippingCost: this.totalShippingCost,
+          noteShipping: this.noteShipping
         })
         .then(() => {
           this.$vs.loading.close();
@@ -562,6 +572,7 @@ export default {
             this.productType = doc.data().productType;
             this.area = doc.data().area;
             this.totalInTh = doc.data().totalInTh;
+            this.noteShipping = doc.data().noteShipping;
           }
           this.$vs.loading.close();
         });

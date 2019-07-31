@@ -13,9 +13,11 @@
             <th scope="col">รายการสินค้า</th>
             <th scope="col">คุณสมบัติ</th>
             <th scope="col">จำนวน</th>
-            <th scope="col">ราคา</th>
-            <th scope="col">รวมราคา</th>
+            <th scope="col">ราคา(CNY)</th>
+            <th scope="col">ค่าขนส่งในจีน (CNY)</th>
+            <th scope="col">รวมราคา (CNY)</th>
             <th scope="col">รวมราคา (THB)</th>
+            <th scope="col">ค่าเงิน (THB)</th>
             <th scope="col">ส่วนต่าง (THB)</th>
             <th scope="col">สถานะ</th>
             <th scope="col">สถานะการชำระเงิน</th>
@@ -48,22 +50,25 @@
                 class="border-bottom"
                 v-for="(product,index)  in val.billing"
                 :key="index"
-              >{{product.count}}</div>
-              <b class="text-primary">{{val.total.count}}</b>
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(product.count)}}</div>
+              <b class="text-primary">{{new Intl.NumberFormat({ style: 'currency'}).format(val.total.count)}}</b>
             </td>
             <td>
               <div
                 class="border-bottom"
                 v-for="(product,index)  in val.billing"
                 :key="index"
-              >{{product.product.cost}}</div>
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(product.product.cost)}}</div>
+            </td>
+            <td>
+              {{new Intl.NumberFormat({ style: 'currency'}).format(val.shipping)}}
             </td>
             <td>
               <div
                 class="border-bottom"
                 v-for="(product,index) in val.billing"
                 :key="index"
-              >{{product.product.cost * product.count}}</div>
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(product.product.cost * product.count)}}</div>
               <b
                 class="text-primary"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(val.total.cost)}}</b>
@@ -72,6 +77,11 @@
               <b
                 class="text-success"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(val.total.cost * val.rateTHBcost)}}</b>
+            </td>
+            <td>
+              <b
+                class="text-primary"
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(val.rateTHBcost)}}</b>
             </td>
             <td>
               <b
