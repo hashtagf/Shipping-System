@@ -220,13 +220,13 @@
                     <td>{{index + 1}}</td>
                     <td>{{prod.product.name}}</td>
                     <td>{{prod.properties}}</td>
-                    <td>{{new Intl.NumberFormat({ style: 'currency'}).format(prod.count)}}</td>
+                    <td>{{prod.count}}</td>
                     <td>{{new Intl.NumberFormat({ style: 'currency'}).format(prod.product.price)}}</td>
                     <td>{{new Intl.NumberFormat({ style: 'currency'}).format(prod.count * prod.product.price)}}</td>
                   </tr>
                   <tr>
                     <td colspan="3">ยอดเงินรวม</td>
-                    <td>{{new Intl.NumberFormat({ style: 'currency'}).format(billingReport.total.count)}}</td>
+                    <td>{{billingReport.total.count}}</td>
                     <td></td>
                     <td>{{new Intl.NumberFormat({ style: 'currency'}).format(billingReport.total.price)}}</td>
                   </tr>
