@@ -26,7 +26,7 @@
                   <b>{{new Intl.NumberFormat({ style: 'currency'}).format(nowTotal-nowCost)}}</b>
                 </td>
               </tr>
-              <tr>
+              <!-- <tr>
                 <td class="h5">จากค่าขนส่ง</td>
                 <td class="h5">{{new Intl.NumberFormat({ style: 'currency'}).format(nowShipping)}}</td>
                 <td class="h5 text-success">
@@ -35,14 +35,14 @@
                 <td class="h5 text-info">
                   <b>{{new Intl.NumberFormat({ style: 'currency'}).format(nowShipping-nowShippingCost)}}</b>
                 </td>
-              </tr>
+              </tr>-->
             </tbody>
           </table>
         </div>
       </div>
       <div class="Main justify-content-center row">
         <div class="col-7 text-center my-3">
-          <h3>สรุปผลกำไรแต่ละเดือน</h3>
+          <h3>สรุปผลกำไรค่าสินค้าแต่ละเดือน</h3>
         </div>
         <div class="col-10 table-responsive">
           <table class="table border table-hover table-bordered">
@@ -59,7 +59,7 @@
                 <td>{{key}}</td>
                 <td>{{new Intl.NumberFormat({ style: 'currency'}).format(total[key])}}</td>
                 <td>{{new Intl.NumberFormat({ style: 'currency'}).format(totalcost[key])}}</td>
-                <td>{{new Intl.NumberFormat({ style: 'currency'}).format(profit[key])}}</td>
+                <td>{{new Intl.NumberFormat({ style: 'currency'}).format(total[key] - totalcost[key])}}</td>
               </tr>
               <tr>
                 <td class="h5">รวม</td>
@@ -163,7 +163,8 @@ export default {
           this.$vs.loading.close();
           documents.forEach(val => {
             this.All +=
-              parseFloat(val.total.price) * parseFloat(val.rateTHBprice);
+              (parseFloat(val.total.price) + parseFloat(val.shipping)) *
+              parseFloat(val.rateTHBprice);
             this.AllCost +=
               (parseFloat(val.total.cost) + parseFloat(val.shipping)) *
               parseFloat(val.rateTHBcost);
@@ -185,7 +186,8 @@ export default {
             this.profit[momentjs(val.timestamp).format("MM/Y")] +=
               (parseFloat(val.total.price) + parseFloat(val.shipping)) *
               parseFloat(val.rateTHBprice);
-            -parseFloat(val.total.cost) * parseFloat(val.rateTHBcost);
+            -(parseFloat(val.total.cost) + parseFloat(val.shipping)) *
+              parseFloat(val.rateTHBcost);
 
             if (
               momentjs(val.timestamp).format("DD/MM/Y") ===

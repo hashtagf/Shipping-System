@@ -190,7 +190,6 @@
             ></b-form-input>
           </b-form-group>
         </b-col>
-      
 
         <b-col cols="4" v-for="(val, index) in boxes" :key="val.id" class="card my-1">
           <b-row>
@@ -278,7 +277,8 @@ export default {
       totalAllShipCost: 0,
       totalShippingCost: 0,
       rateunitcost: null,
-      timestamp: null
+      timestamp: null,
+      noteShipping: null
     };
   },
   watch: {

@@ -87,7 +87,7 @@
             <td>
               <b
                 class="text-info"
-              >{{new Intl.NumberFormat({ style: 'currency'}).format(((parseFloat(val.total.price) + parseFloat(val.shipping)) * val.rateTHBprice) - (val.total.cost * val.rateTHBcost))}}</b>
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(((parseFloat(val.total.price) + parseFloat(val.shipping)) * val.rateTHBprice) - ((val.total.cost + + parseFloat(val.shipping)) * val.rateTHBcost))}}</b>
             </td>
             <td>
               <b-badge
