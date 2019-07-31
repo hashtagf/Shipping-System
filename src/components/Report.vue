@@ -71,12 +71,12 @@
               >{{new Intl.NumberFormat({ style: 'currency'}).format( product.product.cost * product.count)}}</div>
               <b
                 class="text-primary"
-              >{{new Intl.NumberFormat({ style: 'currency'}).format(parseFloat(val.shipping) + val.total.cost) }}</b>
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(parseFloat(val.shipping) + val.total.cost) }}...</b>
             </td>
             <td>
               <b
                 class="text-success"
-              >{{new Intl.NumberFormat({ style: 'currency'}).format(parseFloat(val.shipping) + (val.total.cost * val.rateTHBcost))}}</b>
+              >{{new Intl.NumberFormat({ style: 'currency'}).format((parseFloat(val.shipping) + parseFloat(val.total.cost)) *  val.rateTHBcost )}}</b>
             </td>
             <td>
               <b
