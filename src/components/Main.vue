@@ -297,15 +297,15 @@
             </b-col>
             <b-col cols="6">
               ปริมาตร :
-              <b>{{billingShipping.capacity}}</b> ลูกบาศก์เมตร
+              <b>{{new Intl.NumberFormat({ style: 'currency'}).format(billingShipping.capacity)}}</b> ลูกบาศก์เมตร
             </b-col>
             <b-col cols="6">
               น้ำหนัก :
-              <b>{{billingShipping.weight}}</b> กิโลกรัม
+              <b>{{new Intl.NumberFormat({ style: 'currency'}).format(billingShipping.weight)}}</b> กิโลกรัม
             </b-col>
             <b-col cols="6">
               อัตราต่อหน่วย :
-              <b>{{billingShipping.rateunit}}</b> บาท
+              <b>{{new Intl.NumberFormat({ style: 'currency'}).format(billingShipping.rateunit)}}</b> บาท
             </b-col>
             <b-col cols="12">
               หมายเหตุ :
