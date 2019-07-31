@@ -8,7 +8,7 @@
         <vs-button color="primary" type="filled" icon="add_circle">เปิดบิล</vs-button>
       </router-link>
     </div>
-    <div class="col-10 table-responsive">
+    <div class="col-12 col-lg-10 table-responsive">
       <table class="table border table-hover table-bordered">
         <thead class="thead-light">
           <tr>
