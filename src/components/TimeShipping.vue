@@ -6,9 +6,18 @@
       </b-col>
     </b-row>
     <b-row>
-      <b-col cols="12" class="text-left my-3">
+      <b-col cols="8" class="text-left my-3">
         <h5>รายละเอียดการจัดส่ง - หมายเลขบิล : {{$route.params.id}}</h5>
       </b-col>
+      <b-col cols="4">
+        <b-form-group id="statusPrice" label="สถานะค่าส่ง" label-for="statusPrice">
+          <b-badge variant="success" v-if="showData.statusPrice">{{showData.statusPrice}}</b-badge>
+          <b-badge variant="info" v-else @click="updateStatusPrice()">
+            <a href="#" class="text-white">{{"รอการชำระค่าขนส่ง"}}</a>
+          </b-badge>
+        </b-form-group>
+      </b-col>
+   
     </b-row>
     <b-row>
       <b-col cols="4">
@@ -23,18 +32,21 @@
         </b-form-group>
       </b-col>
       <b-col cols="4">
+        <b-form-group id="trackingTH" label="TrackingTH Number" label-for="trackingTH">
+          <b-form-input
+            id="trackingTH"
+            v-model="showData.trackingTH"
+            type="text"
+            required
+            placeholder="TrackingTH Number"
+          ></b-form-input>
+        </b-form-group>
+      </b-col>
+      <b-col cols="4">
         <b-form-group id="idCustomer" label="รหัสลูกค้า" label-for="idCustomer">
           <b-form-select v-model="showData.idCustomer" :options="optionCustomer" required>
             <option :value="undefined" slot="first">เลือกรหัสลูกค้า</option>
           </b-form-select>
-        </b-form-group>
-      </b-col>
-      <b-col cols="4">
-        <b-form-group id="statusPrice" label="สถานะค่าส่ง" label-for="statusPrice">
-          <b-badge variant="success" v-if="showData.statusPrice">{{showData.statusPrice}}</b-badge>
-          <b-badge variant="info" v-else @click="updateStatusPrice()">
-            <a href="#" class="text-white">{{"รอการชำระค่าขนส่ง"}}</a>
-          </b-badge>
         </b-form-group>
       </b-col>
     </b-row>
@@ -165,6 +177,7 @@ export default {
       }
       billingFirestore.doc(this.$route.params.id).update({
         tracking: this.showData.tracking | "-",
+        trackingTH: this.showData.trackingTH | "-",
         timeShipping: this.showData,
         status: status
       });

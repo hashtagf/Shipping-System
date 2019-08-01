@@ -266,7 +266,8 @@
               <br />
             </b-col>
 
-            <b-col cols="12 h5">Tracking Number : {{billingReport.tracking}}</b-col>
+            <b-col cols="6 h5">Tracking Number : {{billingReport.tracking}}</b-col>
+            <b-col cols="6 h5">TrackingTH Number : {{billingReport.trackingTH}}</b-col>
             <b-col cols="12" v-if="billingReport">
               <span class="float-left mr-2">ที่อยู่ :</span>
               <customer-name class="float-left" :idCustomer="billingReport.customer" address="true"></customer-name>
