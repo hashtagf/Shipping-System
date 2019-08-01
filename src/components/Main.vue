@@ -166,15 +166,21 @@
                   fullname="true"
                 ></customer-name>
               </label>
-            </b-col>
-
+            </b-col>  
+            <b-col cols="4"></b-col>
             <b-col cols="4">
               <label>
                 <span class="float-left mr-2">เบอร์โทร :</span>
                 <customer-name class="float-left" :idCustomer="billingReport.customer" tel="true"></customer-name>
               </label>
             </b-col>
-
+            <b-col cols="4">
+              <label>
+                <span class="float-left mr-2">ID Line :</span>
+                <customer-name class="float-left" :idCustomer="billingReport.customer" line="true"></customer-name>
+              </label>
+            </b-col>
+            <b-col cols="4"></b-col>
             <b-col cols="12">
               <label>
                 <span class="float-left mr-2">ที่อยู่ :</span>
