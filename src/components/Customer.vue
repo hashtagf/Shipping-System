@@ -28,7 +28,7 @@
           </b-form-group>
         </b-col>
 
-        <b-col cols="4">
+        <b-col cols="5">
           <b-form-group id="fullname" label="ชื่อ-นามสกุล" label-for="fullname">
             <b-form-input
               id="fullname"
@@ -48,6 +48,17 @@
               type="tel"
               required
               placeholder="เบอร์โทรศัพท์"
+            ></b-form-input>
+          </b-form-group>
+        </b-col>
+        <b-col cols="5">
+          <b-form-group id="line" label="ID Line" label-for="line">
+            <b-form-input
+              id="line"
+              v-model="form.line"
+              type="line"
+              required
+              placeholder="ID Line"
             ></b-form-input>
           </b-form-group>
         </b-col>
@@ -94,6 +105,7 @@
             <th scope="col" class="text-center">ชื่อเล่น</th>
             <th scope="col" class="text-center">ชื่อ-นามสกุล</th>
             <th scope="col" class="text-center">โทรศัพท์</th>
+            <th scope="col" class="text-center">ID Line</th>
             <th scope="col" class="text-center" width="40%">ที่อยู่</th>
             <th scope="col" class="text-center">แก้ไข</th>
             <th scope="col" class="text-center" width="5%">ลบ</th>
@@ -132,6 +144,17 @@
                 type="tel"
                 required
                 placeholder="เบอร์โทรศัพท์"
+              ></b-form-input>
+            </td>
+            <td>
+              <div v-if="val!=editText">{{val.line}}</div>
+              <b-form-input
+                v-else
+                id="line"
+                v-model="form.editLine"
+                type="line"
+                required
+                placeholder="ID Line"
               ></b-form-input>
             </td>
             <td>
@@ -223,7 +246,8 @@ export default {
         nickname: this.form.nickname,
         fullname: this.form.fullname,
         tel: this.form.tel,
-        address: this.form.address
+        address: this.form.address,
+        IDline: this.form.line
       });
       this.$swal({
         title: "สำเร็จ",
@@ -267,6 +291,7 @@ export default {
       this.form.editFullname = val.fullname;
       this.form.editTel = val.tel;
       this.form.editAddress = val.address;
+      this.form.editLine = val.line;
     },
     editUpdate(val) {
       this.$swal({
@@ -281,7 +306,8 @@ export default {
           nickname: this.form.editNickname,
           fullname: this.form.editFullname,
           tel: this.form.editTel,
-          address: this.form.editAddress
+          address: this.form.editAddress,
+          line: this.form.editLine
         });
         this.$swal({
           title: "สำเร็จ",
