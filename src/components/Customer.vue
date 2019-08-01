@@ -52,13 +52,13 @@
           </b-form-group>
         </b-col>
         <b-col cols="5">
-          <b-form-group id="line" label="ID Line" label-for="line">
+          <b-form-group id="line" label="LINE ID" label-for="line">
             <b-form-input
               id="line"
               v-model="form.line"
               type="line"
               required
-              placeholder="ID Line"
+              placeholder="LINE ID"
             ></b-form-input>
           </b-form-group>
         </b-col>
@@ -105,7 +105,7 @@
             <th scope="col" class="text-center">ชื่อเล่น</th>
             <th scope="col" class="text-center">ชื่อ-นามสกุล</th>
             <th scope="col" class="text-center">โทรศัพท์</th>
-            <th scope="col" class="text-center">ID Line</th>
+            <th scope="col" class="text-center">LINE ID</th>
             <th scope="col" class="text-center" width="40%">ที่อยู่</th>
             <th scope="col" class="text-center">แก้ไข</th>
             <th scope="col" class="text-center" width="5%">ลบ</th>
@@ -154,7 +154,7 @@
                 v-model="form.editLine"
                 type="line"
                 required
-                placeholder="ID Line"
+                placeholder="LINE ID"
               ></b-form-input>
             </td>
             <td>
