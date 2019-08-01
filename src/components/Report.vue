@@ -18,7 +18,9 @@
             <th scope="col">รวมราคา (CNY)</th>
             <th scope="col">ค่าเงิน (THB)</th>
             <th scope="col">รวมราคา (THB)</th>
+            <th scope="col">ค่าขนส่ง (THB)</th>
             <th scope="col">ส่วนต่าง (THB)</th>
+            <th scope="col">ส่วนต่างค่าขนส่ง (THB)</th>
             <th scope="col">สถานะ</th>
             <th scope="col">สถานะการชำระเงิน</th>
           </tr>
@@ -83,11 +85,22 @@
                 class="text-success"
               >{{new Intl.NumberFormat({ style: 'currency'}).format((parseFloat(val.shipping) + parseFloat(val.total.cost)) * val.rateTHBcost )}}</b>
             </td>
-
+            <td>
+              <b
+                v-if="shippings[index]"
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(shippings[index].totalAllShipCost)}}</b>
+            </td>
             <td>
               <b
                 class="text-info"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(((parseFloat(val.total.price) + parseFloat(val.shipping)) * val.rateTHBprice) - ((val.total.cost + + parseFloat(val.shipping)) * val.rateTHBcost))}}</b>
+            </td>
+
+            <td>
+              <b
+                v-if="shippings[index]"
+                class="text-info"
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(shippings[index].totalAllShip - shippings[index].totalAllShipCost)}}</b>
             </td>
             <td>
               <b-badge
@@ -215,34 +228,7 @@ export default {
         .subscribe(documents => {
           this.$vs.loading.close();
           this.shippings = documents;
-          documents.forEach(val => {
-            if (!this.reportShipping[momentjs(val.timestamp).format("MM/Y")])
-              this.reportShipping[momentjs(val.timestamp).format("MM/Y")] = 0;
-            if (
-              !this.reportShippingCost[momentjs(val.timestamp).format("MM/Y")]
-            )
-              this.reportShippingCost[
-                momentjs(val.timestamp).format("MM/Y")
-              ] = 0;
-            if (
-              !this.reportShippingProfit[momentjs(val.timestamp).format("MM/Y")]
-            )
-              this.reportShippingProfit[
-                momentjs(val.timestamp).format("MM/Y")
-              ] = 0;
-
-            this.reportShipping[
-              momentjs(val.timestamp).format("MM/Y")
-            ] += parseFloat(val.totalAllShip);
-
-            this.reportShippingCost[
-              momentjs(val.timestamp).format("MM/Y")
-            ] += parseFloat(val.totalAllShipCost);
-
-            this.reportShippingProfit[momentjs(val.timestamp).format("MM/Y")] +=
-              parseFloat(val.totalAllShip) - parseFloat(val.totalAllShipCost);
-          });
-          console.log(this.reportShipping);
+          console.log(this.shippings);
         });
     } else {
       this.$router.push("/");
