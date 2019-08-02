@@ -7,7 +7,7 @@
       <!-- <router-link to="/Billing">
         <vs-button color="primary" type="filled" icon="add_circle">เปิดบิล</vs-button>
       </router-link>-->
-      <b-form-input id="search" v-model="search" type="text" required placeholder="Tranking Number"></b-form-input>
+      <b-form-input id="search" v-model="search" type="text" required placeholder="ค้นหาเลขที่บิล"></b-form-input>
     </div>
 
     <div class="col-10 table-responsive" v-if="billing">

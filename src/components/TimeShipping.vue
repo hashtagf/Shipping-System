@@ -21,24 +21,24 @@
     </b-row>
     <b-row>
       <b-col cols="4">
-        <b-form-group id="tracking" label="Tracking Number" label-for="tracking">
+        <b-form-group id="tracking" label="เลขที่บิล" label-for="tracking">
           <b-form-input
             id="tracking"
             v-model="showData.tracking"
             type="text"
             required
-            placeholder="Tracking Number"
+            placeholder="เลขที่บิล"
           ></b-form-input>
         </b-form-group>
       </b-col>
       <b-col cols="4">
-        <b-form-group id="trackingTH" label="TrackingTH Number" label-for="trackingTH">
+        <b-form-group id="trackingTH" label="เลขที่บิล (TH)" label-for="trackingTH">
           <b-form-input
             id="trackingTH"
             v-model="showData.trackingTH"
             type="text"
             required
-            placeholder="TrackingTH Number"
+            placeholder="เลขที่บิล (TH)"
           ></b-form-input>
         </b-form-group>
       </b-col>
