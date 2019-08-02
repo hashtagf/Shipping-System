@@ -16,7 +16,7 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">รายการ</th>
-            <th scope="col">Tranking Number</th>
+            <th scope="col">เลขที่บิล</th>
             <th scope="col">รหัสลูกค้า</th>
             <th scope="col">ลูกค้า</th>
             <th scope="col">วันที่สั่งสินค้า</th>
@@ -28,6 +28,7 @@
             <th scope="col">ส่งไปบ้าน</th>
             <th scope="col">รับสินค้า</th>
             <th scope="col">ค่าขนส่ง</th>
+            <th scope="col">Tranking Number</th>
           </tr>
         </thead>
         <tbody v-if="billing">
@@ -221,6 +222,10 @@
               <p v-else>
                 <b-badge variant="info">{{"รอการชำระค่าขนส่ง"}}</b-badge>
               </p>
+            </td>
+            <td>
+              <span v-if="val.tranking">{{val.timeShipping.tranking}}</span>
+              <span v-else>-</span>
             </td>
           </tr>
         </tbody>

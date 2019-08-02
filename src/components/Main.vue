@@ -351,6 +351,7 @@
                 class="text-info"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(parseFloat(billingShipping.totalInTH) + billingShipping.totalShipping + billingShipping.charge)}}</b> บาท
             </b-col>
+            <b-col cols="6 ">Tranking  Number : {{billingReport.tranking}}</b-col><b-col cols="6"></b-col>
             <b-col cols="6">
               กำหนดเข้าไทยโดยประมาณ :
               <span v-if="billingReport.timeShipping">
