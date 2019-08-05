@@ -78,16 +78,16 @@
             </td>
             <td>
               <b
-                v-if="editText"
+                v-if="editRateCost !== index"
                 class="text-primary"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(val.rateTHBcost)}}</b>
               <b-form-input
                 v-else
-                id="tel"
-                v-model="form.editTel"
-                type="tel"
+                v-model="valueEdit"
+                type="number"
+                step="0.01"
                 required
-                placeholder="เบอร์โทรศัพท์"
+                placeholder="เรทเงิน"
               ></b-form-input>
             </td>
             <td>
@@ -126,7 +126,7 @@
             </td>
             <td>
               <vs-button
-                v-if="val!=editText"
+                v-if="editRateCost !== index"
                 color="primary"
                 type="filled"
                 icon="edit"
@@ -173,7 +173,8 @@ export default {
       reportShipping: {},
       reportShippingCost: {},
       reportShippingProfit: {},
-      editRateCost: null
+      editRateCost: null,
+      valueEdit: 0
     };
   },
   components: {
@@ -217,8 +218,33 @@ export default {
     },
     editShow(index) {
       console.log("show edit input");
-      // console.log(val);
-      this.editRateCost = this.billing[index].rateTHBcost;
+      this.editRateCost = index;
+      this.valueEdit = this.billing[index].rateTHBcost;
+    },
+    editHide(index) {
+      this.editRateCost = null;
+      this.valueEdit = 0;
+    },
+    editUpdate(index) {
+      this.$swal({
+        title: "ต้องการเรทเงิน ?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "อัพเดตข้อมูล!"
+      }).then(result => {
+        billingFirestore.doc(this.billing[index].id).update({
+          rateTHBcost: this.valueEdit
+        });
+        this.$swal({
+          title: "สำเร็จ",
+          text: "อัพเดตข้อมูลสำเร็จ",
+          type: "success",
+          timer: 2000
+        });
+        this.editRateCost = null;
+      });
     }
   },
   async mounted() {
@@ -231,25 +257,6 @@ export default {
         .subscribe(documents => {
           this.$vs.loading.close();
           this.billing = documents;
-
-          documents.forEach(val => {
-            if (!this.totalcost[momentjs(val.timestamp).format("MM/Y")])
-              this.totalcost[momentjs(val.timestamp).format("MM/Y")] = 0;
-            if (!this.total[momentjs(val.timestamp).format("MM/Y")])
-              this.total[momentjs(val.timestamp).format("MM/Y")] = 0;
-            if (!this.profit[momentjs(val.timestamp).format("MM/Y")])
-              this.profit[momentjs(val.timestamp).format("MM/Y")] = 0;
-
-            this.totalcost[momentjs(val.timestamp).format("MM/Y")] +=
-              parseFloat(val.total.cost) * parseFloat(val.rateTHBcost);
-
-            this.total[momentjs(val.timestamp).format("MM/Y")] +=
-              parseFloat(val.total.price) * parseFloat(val.rateTHBprice);
-
-            this.profit[momentjs(val.timestamp).format("MM/Y")] +=
-              parseFloat(val.total.price) * parseFloat(val.rateTHBprice) -
-              parseFloat(val.total.cost) * parseFloat(val.rateTHBcost);
-          });
         });
 
       fireSQL

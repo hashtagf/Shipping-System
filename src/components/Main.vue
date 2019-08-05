@@ -166,7 +166,7 @@
                   fullname="true"
                 ></customer-name>
               </label>
-            </b-col>  
+            </b-col>
             <b-col cols="4"></b-col>
             <b-col cols="4">
               <label>
@@ -272,11 +272,48 @@
               <br />
             </b-col>
 
-            <b-col cols="6 h5">เลขที่บิล : {{billingReport.tracking}}</b-col>
-            <!-- <b-col cols="6 h5">TrackingTH Number : {{billingReport.trackingTH}}</b-col> -->
-            <b-col cols="12" v-if="billingReport">
-              <span class="float-left mr-2">ที่อยู่ :</span>
-              <customer-name class="float-left" :idCustomer="billingReport.customer" address="true"></customer-name>
+            <b-col cols="12 h5">เลขที่บิล : {{billingReport.tracking}}</b-col>
+            <b-col cols="4">
+              <label>
+                <span class="float-left mr-2">ชื่อเล่น :</span>
+                <customer-name class="float-left" :idCustomer="billingReport.customer" name="true"></customer-name>
+              </label>
+            </b-col>
+
+            <b-col cols="4">
+              <label>
+                <span class="float-left mr-2">ชื่อ-นามสกุล :</span>
+                <customer-name
+                  class="float-left"
+                  :idCustomer="billingReport.customer"
+                  fullname="true"
+                ></customer-name>
+              </label>
+            </b-col>
+            <b-col cols="4"></b-col>
+            <b-col cols="4">
+              <label>
+                <span class="float-left mr-2">เบอร์โทร :</span>
+                <customer-name class="float-left" :idCustomer="billingReport.customer" tel="true"></customer-name>
+              </label>
+            </b-col>
+            <b-col cols="4">
+              <label>
+                <span class="float-left mr-2">ID Line :</span>
+                <customer-name class="float-left" :idCustomer="billingReport.customer" line="true"></customer-name>
+              </label>
+            </b-col>
+            <b-col cols="4"></b-col>
+            <b-col cols="12">
+              <label>
+                <span class="float-left mr-2">ที่อยู่ :</span>
+
+                <customer-name
+                  class="float-left"
+                  :idCustomer="billingReport.customer"
+                  address="true"
+                ></customer-name>
+              </label>
             </b-col>
             <b-col cols="6" v-if="billingShipping.shipping === 'CAR'">
               การขนส่งระหว่างประเทศ :
@@ -351,7 +388,8 @@
                 class="text-info"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(parseFloat(billingShipping.totalInTH) + billingShipping.totalShipping + billingShipping.charge)}}</b> บาท
             </b-col>
-            <b-col cols="6 ">Tracking  Number : {{billingReport.trackingTH}}</b-col><b-col cols="6"></b-col>
+            <b-col cols="6">Tracking Number : {{billingReport.trackingTH}}</b-col>
+            <b-col cols="6"></b-col>
             <b-col cols="6">
               กำหนดเข้าไทยโดยประมาณ :
               <span v-if="billingReport.timeShipping">
