@@ -272,8 +272,8 @@
               <br />
             </b-col>
 
-            <b-col cols="6 h5">Tracking Number : {{billingReport.tracking}}</b-col>
-            <b-col cols="6 h5">TrackingTH Number : {{billingReport.trackingTH}}</b-col>
+            <b-col cols="6 h5">เลขที่บิล : {{billingReport.tracking}}</b-col>
+            <!-- <b-col cols="6 h5">TrackingTH Number : {{billingReport.trackingTH}}</b-col> -->
             <b-col cols="12" v-if="billingReport">
               <span class="float-left mr-2">ที่อยู่ :</span>
               <customer-name class="float-left" :idCustomer="billingReport.customer" address="true"></customer-name>
@@ -351,7 +351,7 @@
                 class="text-info"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(parseFloat(billingShipping.totalInTH) + billingShipping.totalShipping + billingShipping.charge)}}</b> บาท
             </b-col>
-            <b-col cols="6 ">Tranking  Number : {{billingReport.tranking}}</b-col><b-col cols="6"></b-col>
+            <b-col cols="6 ">Tracking  Number : {{billingReport.trackingTH}}</b-col><b-col cols="6"></b-col>
             <b-col cols="6">
               กำหนดเข้าไทยโดยประมาณ :
               <span v-if="billingReport.timeShipping">

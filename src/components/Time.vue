@@ -28,7 +28,7 @@
             <th scope="col">ส่งไปบ้าน</th>
             <th scope="col">รับสินค้า</th>
             <th scope="col">ค่าขนส่ง</th>
-            <th scope="col">Tranking Number</th>
+            <th scope="col">Tracking Number</th>
           </tr>
         </thead>
         <tbody v-if="billing">
@@ -224,7 +224,7 @@
               </p>
             </td>
             <td>
-              <span v-if="val.tranking">{{val.timeShipping.tranking}}</span>
+              <span v-if="val.tranking">{{val.timeShipping.trackingTH}}</span>
               <span v-else>-</span>
             </td>
           </tr>

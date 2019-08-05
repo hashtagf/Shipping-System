@@ -9,8 +9,14 @@
       <b-col cols="8" class="text-left my-3">
         <h5>รายละเอียดการจัดส่ง - หมายเลขบิล : {{$route.params.id}}</h5>
       </b-col>
-
-   
+      <b-col cols="4">
+        <b-form-group id="statusPrice" label="สถานะค่าส่ง" label-for="statusPrice">
+          <b-badge variant="success" v-if="showData.statusPrice">{{showData.statusPrice}}</b-badge>
+          <b-badge variant="info" v-else @click="updateStatusPrice()">
+            <a href="#" class="text-white">{{"รอการชำระค่าขนส่ง"}}</a>
+          </b-badge>
+        </b-form-group>
+      </b-col>
     </b-row>
     <b-row>
       <b-col cols="4">
@@ -25,17 +31,17 @@
         </b-form-group>
       </b-col>
       <b-col cols="4">
-        <b-form-group id="trackingTH" label="เลขที่บิล (TH)" label-for="trackingTH">
+        <b-form-group id="trackingTH" label="Tracking Number" label-for="trackingTH">
           <b-form-input
             id="trackingTH"
             v-model="showData.trackingTH"
             type="text"
             required
-            placeholder="เลขที่บิล (TH)"
+            placeholder="Tracking Number"
           ></b-form-input>
         </b-form-group>
       </b-col>
-      <b-col cols="4">
+      <!-- <b-col cols="4">
         <b-form-group id="tranking" label="tranking Number" label-for="tranking">
           <b-form-input
             id="tranking"
@@ -45,7 +51,7 @@
             placeholder="tranking Number"
           ></b-form-input>
         </b-form-group>
-      </b-col>
+      </b-col> -->
       <b-col cols="4">
         <b-form-group id="idCustomer" label="รหัสลูกค้า" label-for="idCustomer">
           <b-form-select v-model="showData.idCustomer" :options="optionCustomer" required>
@@ -54,14 +60,7 @@
         </b-form-group>
       </b-col>
       <b-col cols="4"></b-col>
-      <b-col cols="4">
-        <b-form-group id="statusPrice" label="สถานะค่าส่ง" label-for="statusPrice">
-          <b-badge variant="success" v-if="showData.statusPrice">{{showData.statusPrice}}</b-badge>
-          <b-badge variant="info" v-else @click="updateStatusPrice()">
-            <a href="#" class="text-white">{{"รอการชำระค่าขนส่ง"}}</a>
-          </b-badge>
-        </b-form-group>
-      </b-col>
+
     </b-row>
     <b-row>
       <b-col cols="12">
