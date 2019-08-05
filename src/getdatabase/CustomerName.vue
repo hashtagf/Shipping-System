@@ -4,6 +4,7 @@
     <span v-if="address">{{showData.address}}</span>
     <span v-if="fullname">{{showData.fullname}}</span>
     <span v-if="tel">{{showData.tel}}</span>
+    <span v-if="line">{{showData.line}}</span>
   </div>
 </template>
 
@@ -18,7 +19,8 @@ export default {
     name: false,
     address: false,
     fullname: false,
-    tel: false
+    tel: false,
+    line: false
   },
   data() {
     return {
@@ -26,7 +28,8 @@ export default {
         nickname: "Loading",
         address: "Loading",
         fullname: "Loading",
-        tel: "Loading"
+        tel: "Loading",
+        line: "Loading"
       }
     };
   },

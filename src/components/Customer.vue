@@ -247,7 +247,7 @@ export default {
         fullname: this.form.fullname,
         tel: this.form.tel,
         address: this.form.address,
-        IDline: this.form.line
+        line: this.form.line
       });
       this.$swal({
         title: "สำเร็จ",
