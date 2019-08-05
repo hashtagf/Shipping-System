@@ -123,7 +123,7 @@ export default {
     onSubmit() {
       this.showData = [];
       console.log(this.form);
-      customerIDFirestore.add({
+      customerIDFirestore.doc(this.form.customerID).set({
         id: this.form.customerID
       });
       this.$swal({
