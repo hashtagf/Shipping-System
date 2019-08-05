@@ -23,6 +23,7 @@
             <th scope="col">ส่วนต่างค่าขนส่ง (THB)</th>
             <th scope="col">สถานะ</th>
             <th scope="col">สถานะการชำระเงิน</th>
+            <th scope="col">จัดการบิล</th>
           </tr>
         </thead>
         <tbody>
@@ -77,8 +78,17 @@
             </td>
             <td>
               <b
+                v-if="editText"
                 class="text-primary"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(val.rateTHBcost)}}</b>
+              <b-form-input
+                v-else
+                id="tel"
+                v-model="form.editTel"
+                type="tel"
+                required
+                placeholder="เบอร์โทรศัพท์"
+              ></b-form-input>
             </td>
             <td>
               <b
@@ -113,6 +123,19 @@
             <td>
               <b-badge variant="success" v-if="val.status_money === 'ชำระแล้ว'">{{val.status_money}}</b-badge>
               <b-badge class="btn btn-warning" variant="warning" v-else>{{val.status_money}}</b-badge>
+            </td>
+            <td>
+              <vs-button
+                v-if="val!=editText"
+                color="primary"
+                type="filled"
+                icon="edit"
+                @click="editShow(index)"
+              ></vs-button>
+              <div v-else>
+                <vs-button color="danger" type="filled" icon="cancel" @click="editHide(index)"></vs-button>
+                <vs-button color="primary" type="filled" icon="check" @click="editUpdate(index)"></vs-button>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -149,7 +172,8 @@ export default {
       totalcost: {},
       reportShipping: {},
       reportShippingCost: {},
-      reportShippingProfit: {}
+      reportShippingProfit: {},
+      editRateCost: null
     };
   },
   components: {
@@ -190,6 +214,11 @@ export default {
       this.$htmlToPaper("printMe", () => {
         console.log("Printing done or got cancelled!");
       });
+    },
+    editShow(index) {
+      console.log("show edit input");
+      // console.log(val);
+      this.editRateCost = this.billing[index].rateTHBcost;
     }
   },
   async mounted() {
