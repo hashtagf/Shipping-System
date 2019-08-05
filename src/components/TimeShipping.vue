@@ -191,7 +191,6 @@ export default {
         tracking: this.showData.tracking | "-",
         trackingTH: this.showData.trackingTH | "-",
         timeShipping: this.showData,
-        tranking: this.showData.tranking,
         status: status
       });
       this.$swal({

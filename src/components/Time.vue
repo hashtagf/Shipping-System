@@ -259,7 +259,7 @@ export default {
         console.log(this.search);
         fireSQL
           .rxQuery(
-            "SELECT * FROM Billings WHERE tracking LIKE '" + this.search + "%'",
+            "SELECT * FROM Billings WHERE `timeShipping.tracking` LIKE '" + this.search + "%'",
             { includeId: "id" }
           )
           .subscribe(documents => {
