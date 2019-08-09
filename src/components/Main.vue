@@ -272,7 +272,7 @@
               <br />
             </b-col>
 
-            <b-col cols="12 h5">เลขที่บิล : {{billingReport.tracking}}</b-col>
+            <b-col cols="12 h5">เลขที่บิล : {{billingReport.timeShipping.tracking}}</b-col>
             <b-col cols="4">
               <label>
                 <span class="float-left mr-2">ชื่อเล่น :</span>

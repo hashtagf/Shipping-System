@@ -203,7 +203,7 @@
                 id="box"
                 v-model="boxes[index]"
                 type="number"
-                step="0.01"
+                step="0.001"
                 required
                 placeholder="น้ำหนัก"
               ></b-form-input>
@@ -218,7 +218,7 @@
                 id="value"
                 v-model="value[index]"
                 type="number"
-                step="0.01"
+                step="0.001"
                 required
                 placeholder="ปริมาตร"
               ></b-form-input>
