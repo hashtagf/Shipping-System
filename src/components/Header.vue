@@ -19,6 +19,7 @@
             <b-dropdown-item to="/CustomerID">รหัสลูกค้า</b-dropdown-item>
             <b-dropdown-item to="/ShippingData">ค่าขนส่ง</b-dropdown-item>
           </b-nav-item-dropdown>
+          <b-nav-item to="/MyNote">บันทึกส่วนตัว</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>

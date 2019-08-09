@@ -13,6 +13,7 @@ const ReportProfit = () => import("../components/ReportProfit.vue");
 const TimeShipping = () => import("../components/TimeShipping.vue");
 const CustomerID = () => import("../components/CustomerID.vue");
 const Time = () => import("../components/Time.vue");
+const MyNote = () => import("../components/MyNote.vue");
 const Login = () => import("../components/Login.vue");
 Vue.use(Router);
 
@@ -116,6 +117,16 @@ export default new Router({
       components: {
         header: Header,
         default: Time,
+        footer: Footer
+      }
+    },
+
+    {
+      path: "/MyNote",
+      name: "MyNote",
+      components: {
+        header: Header,
+        default: MyNote,
         footer: Footer
       }
     },
