@@ -1,13 +1,19 @@
 <template>
   <div class="Main justify-content-center row">
-    <div class="col-7 text-left my-3">
-      <h3>บิลลูกค้า</h3>
+    <div class="col-1 text-left my-3"></div>
+    <div class="col-1 text-left my-3">
+      <h3>บิลลูกค้า  </h3>
     </div>
-    <div class="col-3 justify-content my-3">
+    <div class="col-3 my-3">
+      <b-form-input id="search" v-model="search" type="text" required placeholder="ค้นหาลูกค้า**ยังหาได้แค่ ID ของ customers"></b-form-input>
+    </div>
+    <div class="col-5 text-left my-3"></div>
+    <div class="col-2 justify-content my-3">
       <router-link to="/Billing">
         <vs-button color="primary" type="filled" icon="add_circle">เปิดบิล</vs-button>
       </router-link>
     </div>
+    
     <div class="col-12 col-lg-10 table-responsive">
       <table class="table border table-hover table-bordered">
         <thead class="thead-light">
@@ -447,11 +453,37 @@ export default {
       customerIndex: [],
       output: null,
       shippingData: [],
-      billingShipping: null
+      billingShipping: null,
+      search: null
     };
   },
   components: {
     CustomerName
+  },
+  watch: {
+    search() {
+      if (this.search.length > 0) {
+        console.log(this.search);
+        fireSQL
+          .rxQuery(
+            "SELECT * FROM Billings WHERE customer LIKE '" + this.search + "%'",
+            { includeId: "id" }
+          )
+          .subscribe(documents => {
+            this.billing = documents;
+          });
+        console.log(this.billing);
+      } else {
+        fireSQL
+          .rxQuery("SELECT * FROM Billings", { includeId: "id" })
+          .subscribe(documents => {
+            this.$vs.loading.close();
+            this.billing = documents;
+            console.log(this.billing);
+            console.log("+++++++");
+          });
+      }
+    }
   },
   methods: {
     billingDetail(index, val, customer) {

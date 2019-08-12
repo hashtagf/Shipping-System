@@ -98,7 +98,7 @@
             <td>
               <b
                 v-if="shippings[index]"
-              >{{new Intl.NumberFormat({ style: 'currency'}).format(shippings[index].totalAllShipCost)}}</b>
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(shippings[index].totalAllShipCost)}}****แก้</b>
             </td>
             <td>
               <b
