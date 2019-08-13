@@ -394,7 +394,7 @@
                 class="text-info"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(parseFloat(billingShipping.totalInTH) + billingShipping.totalShipping + billingShipping.charge)}}</b> บาท
             </b-col>
-            <b-col cols="6">Tracking Number : {{billingReport.trackingTH}}</b-col>
+            <b-col cols="6">Tracking Number : {{billingReport.timeShipping.trackingTH}}</b-col>
             <b-col cols="6"></b-col>
             <b-col cols="6">
               กำหนดเข้าไทยโดยประมาณ :
