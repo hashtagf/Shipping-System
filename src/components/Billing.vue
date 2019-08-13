@@ -168,6 +168,7 @@ export default {
   name: "Billing",
   data() {
     return {
+      nickname: null,
       showData: [],
       form: [],
       customer: null,
@@ -211,11 +212,22 @@ export default {
   },
   methods: {
     onSubmit() {
-      //console.log(this.form);
+      console.log(this.customer)
+      for (var index in this.showData) {
+        if(this.customer == this.showData[index].id){
+          console.log(this.showData[index].nickname);
+          this.nickname = this.showData[index].nickname;
+        }
+        // console.log(this.showData[index]);
+      }
+      // console.log("hello ");
+      // console.log(this.customer);
+      // console.log(this.optionCustomer);
       billingFirestore.add({
         billing: this.cart,
         timestamp: Date.now(),
         customer: this.customer,
+        nickname: this.nickname,
         shipping: this.form.shipping,
         rateTHBprice: this.form.rateTHBprice,
         rateTHBcost: this.form.rateTHBcost,
@@ -236,6 +248,7 @@ export default {
       this.customer = null;
       event.target.reset();
     },
+
     addCart(index) {
       this.cart.push({
         count: this.count[index],
@@ -299,9 +312,18 @@ export default {
           });
         });
       });
+      fireSQL
+        .rxQuery("SELECT * FROM Customers", { includeId: "id" })
+        .subscribe(documents => {
+          this.$vs.loading.close();
+          this.showData = documents;
+          console.log("Hi");
+          console.log(this.showData);
+        });
     } else {
       this.$router.push("/");
     }
+
   }
 };
 </script>

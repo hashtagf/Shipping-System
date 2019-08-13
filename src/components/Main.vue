@@ -5,7 +5,7 @@
       <h3>บิลลูกค้า  </h3>
     </div>
     <div class="col-3 my-3">
-      <b-form-input id="search" v-model="search" type="text" required placeholder="ค้นหาลูกค้า**ยังหาได้แค่ ID ของ customers"></b-form-input>
+      <b-form-input id="search" v-model="search" type="text" required placeholder="ค้นหาลูกค้า"></b-form-input>
     </div>
     <div class="col-5 text-left my-3"></div>
     <div class="col-2 justify-content my-3">
@@ -466,7 +466,7 @@ export default {
         console.log(this.search);
         fireSQL
           .rxQuery(
-            "SELECT * FROM Billings WHERE customer LIKE '" + this.search + "%'",
+            "SELECT * FROM Billings WHERE nickname LIKE '" + this.search + "%'",
             { includeId: "id" }
           )
           .subscribe(documents => {
