@@ -98,12 +98,12 @@
             <td>
               <b
                 v-if="shippings[index]"
-              >{{new Intl.NumberFormat({ style: 'currency'}).format(shippings[index].totalAllShipCost)}}****แก้</b>
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(shippings[index].totalAllShipCost)}}****แก้{{new Intl.NumberFormat({ style: 'currency'}).format(shippings[index].totalAllShip)}}</b>
             </td>
             <td>
               <b
                 class="text-info"
-              >{{new Intl.NumberFormat({ style: 'currency'}).format(((parseFloat(val.total.price) + parseFloat(val.shipping)) * val.rateTHBprice) - ((val.total.cost + + parseFloat(val.shipping)) * val.rateTHBcost))}}</b>
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(((parseFloat(val.total.price) + parseFloat(val.shipping)) * parseFloat(val.rateTHBprice)) - ((parseFloat(val.total.cost) + parseFloat(val.shipping)) * parseFloat(val.rateTHBcost)))}} ****แก้</b>
             </td>
 
             <td>
