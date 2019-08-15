@@ -16,10 +16,9 @@
             <th scope="col">ราคา(CNY)</th>
             <th scope="col">ค่าขนส่งในจีน (CNY)</th>
             <th scope="col">รวมราคา (CNY)</th>
-            <th scope="col">ค่าเงิน (THB)</th>
+            <th scope="col">เรทเงินต้นทุน (THB)</th>
             <th scope="col">รวมราคา (THB)</th>
-            <th scope="col">ค่าขนส่งต้นทุน (THB)</th>
-            <th scope="col">ค่าขนส่งปกติ (THB)</th>
+            <th scope="col">ค่าขนส่ง (THB)</th>
             <th scope="col">ส่วนต่าง (THB)</th>
             <th scope="col">ส่วนต่างค่าขนส่ง (THB)</th>
             <th scope="col">สถานะ</th>
@@ -82,6 +81,7 @@
                 v-if="editRateCost !== index"
                 class="text-primary"
               >{{new Intl.NumberFormat({ style: 'currency'}).format(val.rateTHBcost)}}</b>
+              
               <b-form-input
                 v-else
                 v-model="valueEdit"
@@ -97,21 +97,21 @@
               >{{new Intl.NumberFormat({ style: 'currency'}).format((parseFloat(val.shipping) + parseFloat(val.total.cost)) * val.rateTHBcost )}}</b>
             </td>
             <td>
-              <b
+              <a
                 v-if="shippings[index]"
-              >{{new Intl.NumberFormat({ style: 'currency'}).format(shippings[index].totalAllShipCost)}}</b>
-            </td>
-            <td>
-              <b
+              >ต้นทุน : {{new Intl.NumberFormat({ style: 'currency'}).format(shippings[index].totalAllShipCost)}}</a>
+              <a
                 v-if="shippings[index]"
-              >{{new Intl.NumberFormat({ style: 'currency'}).format(shippings[index].totalAllShip)}}</b>
+              >ลูกค้า : {{new Intl.NumberFormat({ style: 'currency'}).format(shippings[index].totalAllShip)}}</a>
             </td>
+ 
             <td>
               <b
                 class="text-info"
-              >{{new Intl.NumberFormat({ style: 'currency'}).format(((parseFloat(val.total.price) + parseFloat(val.shipping)) * parseFloat(val.rateTHBprice)) - ((parseFloat(val.total.cost) + parseFloat(val.shipping)) * parseFloat(val.rateTHBcost)))}} ****แก้</b>
-              {{new Intl.NumberFormat({ style: 'currency'}).format((parseFloat(val.total.price) + parseFloat(val.shipping)) * parseFloat(val.rateTHBprice))}}-ขาย
-              {{new Intl.NumberFormat({ style: 'currency'}).format((parseFloat(val.total.cost) + parseFloat(val.shipping)) * parseFloat(val.rateTHBcost))}}--ต้นทุน
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(((parseFloat(val.total.price) + parseFloat(val.shipping)) * parseFloat(val.rateTHBprice))-(parseFloat(val.total.cost) + parseFloat(val.shipping)) * parseFloat(val.rateTHBcost))}} ****แก้</b>
+              ขาย : {{new Intl.NumberFormat({ style: 'currency'}).format((parseFloat(val.total.price) + parseFloat(val.shipping)) * parseFloat(val.rateTHBprice))}}
+              ต้นทุน : {{new Intl.NumberFormat({ style: 'currency'}).format((parseFloat(val.total.cost) + parseFloat(val.shipping)) * parseFloat(val.rateTHBcost))}}
+          
         
 
 
