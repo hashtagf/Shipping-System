@@ -212,9 +212,9 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(this.customer)
+      console.log(this.customer);
       for (var index in this.showData) {
-        if(this.customer == this.showData[index].id){
+        if (this.customer == this.showData[index].id) {
           console.log(this.showData[index].nickname);
           this.nickname = this.showData[index].nickname;
         }
@@ -281,6 +281,10 @@ export default {
       }).then(result => {
         if (result.value) {
           this.total.count -= parseInt(this.cart[index].count);
+          this.total.price -=
+            parseFloat(this.product[index].price) * parseInt(this.count[index]);
+          this.total.cost -=
+            parseFloat(this.product[index].cost) * parseInt(this.count[index]);
           this.cart.splice(index, 1);
           this.$swal({
             title: "สำเร็จ",
@@ -323,7 +327,6 @@ export default {
     } else {
       this.$router.push("/");
     }
-
   }
 };
 </script>
