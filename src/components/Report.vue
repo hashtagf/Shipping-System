@@ -18,7 +18,7 @@
             <th scope="col">รวมราคา (CNY)</th>
             <th scope="col">เรทเงินต้นทุน (THB)</th>
             <th scope="col">รวมราคา (THB)</th>
-            <th scope="col">ค่าขนส่ง (THB)</th>
+             <th scope="col">ค่าขนส่ง (THB)</th>
             <th scope="col">ส่วนต่าง (THB)</th>
             <th scope="col">ส่วนต่างค่าขนส่ง (THB)</th>
             <th scope="col">สถานะ</th>
@@ -106,11 +106,11 @@
             </td>
  
             <td>
-              <b
+              <a
                 class="text-info"
-              >{{new Intl.NumberFormat({ style: 'currency'}).format(((parseFloat(val.total.price) + parseFloat(val.shipping)) * parseFloat(val.rateTHBprice))-(parseFloat(val.total.cost) + parseFloat(val.shipping)) * parseFloat(val.rateTHBcost))}} ****แก้</b>
-              ขาย : {{new Intl.NumberFormat({ style: 'currency'}).format((parseFloat(val.total.price) + parseFloat(val.shipping)) * parseFloat(val.rateTHBprice))}}
-              ต้นทุน : {{new Intl.NumberFormat({ style: 'currency'}).format((parseFloat(val.total.cost) + parseFloat(val.shipping)) * parseFloat(val.rateTHBcost))}}
+              >{{new Intl.NumberFormat({ style: 'currency'}).format(((parseFloat(val.total.price) + parseFloat(val.shipping)) * parseFloat(val.rateTHBprice))-(parseFloat(val.total.cost) + parseFloat(val.shipping)) * parseFloat(val.rateTHBcost))}}</a><br>
+              <a>ขาย : {{new Intl.NumberFormat({ style: 'currency'}).format((parseFloat(val.total.price) + parseFloat(val.shipping)) * parseFloat(val.rateTHBprice))}}</a>
+              <a>ทุน : {{new Intl.NumberFormat({ style: 'currency'}).format((parseFloat(val.total.cost) + parseFloat(val.shipping)) * parseFloat(val.rateTHBcost))}}</a>
           
         
 
