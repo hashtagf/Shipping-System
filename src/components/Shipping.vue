@@ -98,7 +98,7 @@
               type="number"
               v-model="capacity"
               required
-              step="0.01"
+              step="0.001"
               placeholder="ปริมาตร"
             ></b-form-input>
           </b-form-group>

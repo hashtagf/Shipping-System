@@ -224,8 +224,9 @@
               </p>
             </td>
             <td>
-              <span v-if="val.tranking">{{val.timeShipping.trackingTH}}</span>
+              <span v-if="val.timeShipping">{{val.timeShipping.trackingTH}}</span>
               <span v-else>-</span>
+
             </td>
           </tr>
         </tbody>
