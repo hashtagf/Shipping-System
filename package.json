@@ -16,7 +16,7 @@
     "firebase-tools": "^7.0.0",
     "firesql": "^2.0.2",
     "material-icons": "^0.3.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "rxfire": "^3.6.4",
     "rxjs": "^6.5.2",
     "sass-loader": "^7.1.0",
